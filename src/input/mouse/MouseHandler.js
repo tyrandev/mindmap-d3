@@ -25,7 +25,6 @@ export default class MouseHandler {
       this.nodeController,
       this.modeManager
     );
-
     this.initMouseListeners();
   }
 
@@ -39,6 +38,7 @@ export default class MouseHandler {
       this.rightClickHandler.handleRightClick.bind(this.rightClickHandler)
     );
     svg.addEventListener("mouseleave", this.handleSvgMouseLeave.bind(this));
+    svg.addEventListener("click", this.handleSvgClick.bind(this));
   }
 
   handleSvgMouseDown(event) {
@@ -77,6 +77,19 @@ export default class MouseHandler {
     this.draggingNode = null;
     this.dragOffsetX = 0;
     this.dragOffsetY = 0;
+  }
+
+  handleSvgClick(event) {
+    if (event.button !== 0) return;
+
+    const { node: clickedNode, x, y } = this.getNodeAtMousePosition();
+
+    // it does not work
+    if (clickedNode) {
+      this.handleSingleClick(clickedNode, x, y);
+    } else {
+      console.log("No node clicked at position: x:", x, " y:", y);
+    }
   }
 
   handleSingleClick(clickedNode, x, y) {
