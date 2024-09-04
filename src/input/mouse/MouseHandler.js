@@ -3,7 +3,7 @@ import MousePosition from "./MousePosition.js";
 import ColorPicker from "../../gui/topmenu/ColorPicker.js";
 import * as MouseConstants from "../../constants/MouseConstants.js";
 import WheelHandler from "./WheelHandler.js";
-import RightClickHandler from "./RightClickHandler.js"; // Import the new class
+import RightClickHandler from "./RightClickHandler.js";
 
 export default class MouseHandler {
   constructor(systemCore) {
@@ -16,8 +16,8 @@ export default class MouseHandler {
     this.dragOffsetX = 0;
     this.dragOffsetY = 0;
     this.colorPicker = ColorPicker.getColorPicker();
-    this.wheelHandler = new WheelHandler(this.selectionController);
     this.modeManager = MouseModeManager;
+    this.wheelHandler = new WheelHandler(this.selectionController);
     this.rightClickHandler = new RightClickHandler(systemCore);
     this.initMouseListeners();
   }
@@ -35,17 +35,25 @@ export default class MouseHandler {
   }
 
   handleSvgMouseDown(event) {
-    if (event.button !== 0) return;
-    this.mouseDown = true;
     const { x, y } = this.getMouseCoordinates();
+
+    if (event.button !== 0) return;
+
+    this.mouseDown = true;
     const draggedNode = this.nodeController.getNodeAtPosition(x, y);
-    if (!draggedNode) return;
-    this.draggingNode = draggedNode;
-    this.dragOffsetX = draggedNode.x - x;
-    this.dragOffsetY = draggedNode.y - y;
-    if (this.selectionController.selectedNode !== draggedNode) {
-      this.selectionController.selectNode(draggedNode);
-      this.handleSingleClick(draggedNode, x, y);
+
+    if (draggedNode) {
+      this.draggingNode = draggedNode;
+      this.dragOffsetX = draggedNode.x - x;
+      this.dragOffsetY = draggedNode.y - y;
+
+      if (this.selectionController.selectedNode !== draggedNode) {
+        this.selectionController.selectNode(draggedNode);
+        this.handleSingleClick(draggedNode, x, y);
+      }
+    } else {
+      this.selectionController.unselectNode();
+      this.modeManager.setMode(MouseConstants.MOUSE_MODES.NORMAL);
     }
   }
 
