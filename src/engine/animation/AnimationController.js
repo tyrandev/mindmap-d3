@@ -1,6 +1,6 @@
 import FpsTracker from "./FpsTracker.js";
 
-const TARGET_FPS = 120;
+const TARGET_FPS = 60;
 
 export default class AnimationController {
   constructor(onAnimateCallback) {

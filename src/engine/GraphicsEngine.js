@@ -1,10 +1,9 @@
-import CanvasGraphics from "./animation/CanvasGraphics.js";
 import ContentRenderer from "./renderer/ContentRenderer.js";
 import AnimationController from "./animation/AnimationController.js";
+import svgManager from "../view/SvgManager.js";
 
 export default class GraphicsEngine {
   constructor(nodeContainer) {
-    this.canvasGraphics = new CanvasGraphics();
     this.nodeRenderer = new ContentRenderer(nodeContainer);
     this.animationController = new AnimationController(
       this.onAnimate.bind(this)
@@ -21,11 +20,11 @@ export default class GraphicsEngine {
   }
 
   onAnimate() {
-    this.clearAndRenderCanvas();
+    this.clearAndRenderSvg();
   }
 
-  clearAndRenderCanvas() {
-    this.canvasGraphics.clearCanvas();
+  clearAndRenderSvg() {
+    svgManager.getSvg().selectAll("*").remove();
     this.nodeRenderer.drawNodes();
   }
 }

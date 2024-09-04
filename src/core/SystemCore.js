@@ -1,8 +1,10 @@
 import OSUtil from "../util/os/OSUtil.js";
 import BrowserUtil from "../util/browser/BrowserUtil.js";
 import svgManager from "../view/SvgManager.js";
+import Circle from "../model/geometric/circle/Circle.js";
+import NodeContainer from "../model/geometric/node/NodeContainer.js";
 import Rectangle from "../model/geometric/rectangle/Rectangle.js";
-import RectangleRenderer from "../engine/renderer/shapes/RectangleRenderer.js";
+import GraphicsEngine from "../engine/GraphicsEngine.js";
 
 export default class SystemCore {
   startApplication() {
@@ -10,26 +12,33 @@ export default class SystemCore {
     console.log(BrowserUtil.getBrowser());
     console.log("Application started");
     this.initializeD3();
+    this.setupAndStartGraphicsEngine();
   }
 
   initializeD3() {
-    // Initialize the SVG manager
-    const svg = svgManager.initialize("#mindMapSvg");
+    svgManager.initialize("#mindMapSvg");
+  }
 
-    // Create a Rectangle instance
-    const rectangle = new Rectangle(
-      svgManager.getCenterX(),
-      svgManager.getCenterY()
-    );
-    rectangle.setText("Sample Rectangle");
-    rectangle.setDimensions(150, 100); // Set custom dimensions if needed
-    rectangle.fillColor = "lightblue";
-    rectangle.borderColor = "black";
+  setupAndStartGraphicsEngine() {
+    // Create NodeContainer
+    const nodeContainer = new NodeContainer();
 
-    // Create a RectangleRenderer instance
-    const rectangleRenderer = new RectangleRenderer(svg);
+    // Create nodes
+    const rectangleNode = new Rectangle(100, 100);
+    rectangleNode.setText("Rectangle Node");
 
-    // Draw the rectangle with text
-    rectangleRenderer.drawShapeWithText(rectangle);
+    const circleNode = new Circle(300, 100);
+    circleNode.setText("Circle Node");
+
+    // Add nodes to container
+    nodeContainer.putNodeAndChildrenIntoContainer(rectangleNode);
+    nodeContainer.putNodeAndChildrenIntoContainer(circleNode);
+
+    // Set children (if needed)
+    // rectangleNode.addChildNode(circleNode); // Example
+
+    // Create GraphicsEngine and start animation
+    const graphicsEngine = new GraphicsEngine(nodeContainer);
+    graphicsEngine.start();
   }
 }
