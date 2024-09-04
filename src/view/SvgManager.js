@@ -13,10 +13,18 @@ class SvgManager {
     this.svgHeight = 0;
     SvgManager.instance = this;
     this.initialize();
+    this.preventDefaultContextMenu();
+    this.enableFocus();
   }
 
   initialize() {
     const svgElement = d3.select(SVG_MINDMAP_SELECTOR).node();
+    if (!svgElement) {
+      throw new Error(
+        `SVG element with selector ${SVG_MINDMAP_SELECTOR} not found.`
+      );
+    }
+
     this.svgWidth = svgElement.clientWidth;
     this.svgHeight = svgElement.clientHeight;
 
@@ -60,6 +68,26 @@ class SvgManager {
       x: this.getCenterX(),
       y: this.getCenterY(),
     };
+  }
+
+  preventDefaultContextMenu() {
+    const svgElement = this.getSvgElement();
+    if (svgElement) {
+      svgElement.addEventListener("contextmenu", (event) => {
+        event.preventDefault(); // Prevent default context menu
+      });
+    } else {
+      console.error("SVG element not found for context menu prevention.");
+    }
+  }
+
+  enableFocus() {
+    const svgElement = this.getSvgElement();
+    if (svgElement) {
+      svgElement.setAttribute("tabindex", "0"); // Enable focus on the SVG
+    } else {
+      console.error("SVG element not found for focus management.");
+    }
   }
 }
 

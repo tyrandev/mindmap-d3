@@ -1,7 +1,6 @@
 import MouseModeManager from "./state/MouseModeManager.js";
 import NodeContextMenu from "../../gui/contextmenu/NodeContextMenu.js";
 import CanvasMenuHandler from "../../gui/contextmenu/CanvasContextMenu.js";
-import svgManager from "../../view/SvgManager.js";
 import MousePosition from "./MousePosition.js";
 import ColorPicker from "../../gui/topmenu/ColorPicker.js";
 import * as MouseConstants from "../../constants/MouseConstants.js";

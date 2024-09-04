@@ -6,7 +6,7 @@ import * as MouseConstants from "../../constants/MouseConstants.js";
 export default class KeyboardHandler {
   constructor(systemCore) {
     this.systemCore = systemCore;
-    this.svg = svgManager.getSvg(); // SVG container
+    this.svg = svgManager.getSvg();
     this.nodeController = systemCore.nodeController;
     this.selectionController = this.nodeController.selectionController;
     this.mindmapLocalStorage = systemCore.mindmapLocalStorage;

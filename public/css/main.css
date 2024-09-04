@@ -40,3 +40,8 @@ body {
 canvas {
   display: block;
 }
+
+#mindMapSvg:focus {
+  outline: none;
+  border: none;
+}

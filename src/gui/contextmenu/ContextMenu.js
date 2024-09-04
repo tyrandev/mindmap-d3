@@ -1,5 +1,3 @@
-import SvgManager from "../../view/SvgManager.js";
-
 export default class ContextMenu {
   constructor(systemCore, contextMenuId) {
     this.systemCore = systemCore;
