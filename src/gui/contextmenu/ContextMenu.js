@@ -7,6 +7,7 @@ export default class ContextMenu {
     this.initContextMenu();
     this.preventBrowserContextMenu();
     document.addEventListener("click", this.handleDocumentClick.bind(this));
+    this.ensureSvgFocusable();
   }
 
   initContextMenu() {
@@ -28,7 +29,7 @@ export default class ContextMenu {
 
   hideContextMenu() {
     this.contextMenu.style.display = "none";
-    // TODO: regain focus on this.svg
+    this.svg.focus(); // Regain focus on the SVG element
   }
 
   handleDocumentClick(event) {
@@ -42,6 +43,14 @@ export default class ContextMenu {
       this.contextMenu.addEventListener("contextmenu", (event) => {
         event.preventDefault();
       });
+    } else {
+      console.error("Context menu element not found.");
+    }
+  }
+
+  ensureSvgFocusable() {
+    if (this.svg) {
+      this.svg.setAttribute("tabindex", "0"); // Make sure SVG is focusable
     } else {
       console.error("SVG element not found.");
     }
