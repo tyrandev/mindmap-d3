@@ -8,6 +8,8 @@ export default class RightClickHandler {
   constructor(systemCore) {
     this.systemCore = systemCore;
     this.modeManager = MouseModeManager;
+    this.nodeController = this.systemCore.nodeController;
+    this.selectionController = this.nodeController.selectionController;
     this.nodeContextMenu = new NodeContextMenu(systemCore);
     this.canvasContextMenu = new CanvasContextMenu(systemCore);
   }
@@ -17,10 +19,7 @@ export default class RightClickHandler {
     if (event.button !== 2) return;
 
     const { x, y } = this.getMouseCoordinates();
-    const rightClickedNode = this.systemCore.nodeController.getNodeAtPosition(
-      x,
-      y
-    );
+    const rightClickedNode = this.nodeController.getNodeAtPosition(x, y);
 
     if (rightClickedNode) {
       this.showNodeContextMenu(rightClickedNode, x, y);
@@ -32,13 +31,13 @@ export default class RightClickHandler {
   }
 
   showCanvasContextMenu(x, y) {
-    this.systemCore.nodeController.selectionController.unselectNode();
+    this.selectionController.unselectNode();
     this.canvasContextMenu.showContextMenu(x, y);
     this.nodeContextMenu.hideContextMenu();
   }
 
   showNodeContextMenu(node, x, y) {
-    this.systemCore.nodeController.selectionController.selectNode(node);
+    this.selectionController.selectNode(node);
     this.nodeContextMenu.showContextMenu(node, x, y);
     this.canvasContextMenu.hideContextMenu();
   }
