@@ -6,7 +6,7 @@ export default class ContextMenu {
     this.contextMenuNode = null;
     this.initContextMenu();
     this.preventBrowserContextMenu();
-    document.addEventListener("click", this.handleDocumentClick.bind(this));
+    document.addEventListener("mousedown", this.handleDocumentClick.bind(this));
     this.ensureSvgFocusable();
   }
 

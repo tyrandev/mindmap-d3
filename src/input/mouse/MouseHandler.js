@@ -30,9 +30,9 @@ export default class MouseHandler {
 
   initMouseListeners() {
     const svg = this.svg;
-    svg.addEventListener("mousedown", this.handleSvgMouseDown.bind(this));
-    svg.addEventListener("mousemove", this.handleSvgMouseMove.bind(this));
-    svg.addEventListener("mouseup", this.handleSvgMouseUp.bind(this));
+    // svg.addEventListener("mousedown", this.handleSvgMouseDown.bind(this));
+    // svg.addEventListener("mousemove", this.handleSvgMouseMove.bind(this));
+    // svg.addEventListener("mouseup", this.handleSvgMouseUp.bind(this));
     svg.addEventListener(
       "contextmenu",
       this.rightClickHandler.handleRightClick.bind(this.rightClickHandler)
@@ -43,6 +43,7 @@ export default class MouseHandler {
 
   handleSvgMouseDown(event) {
     if (event.button !== 0) return;
+    event.stopPropagation();
 
     this.mouseDown = true;
     const { node: draggedNode, x, y } = this.getNodeAtMousePosition();
@@ -81,6 +82,7 @@ export default class MouseHandler {
 
   handleSvgClick(event) {
     if (event.button !== 0) return;
+    event.stopPropagation();
 
     const { node: clickedNode, x, y } = this.getNodeAtMousePosition();
 

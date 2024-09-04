@@ -11,10 +11,12 @@ class SvgManager {
     this.svg = null;
     this.svgWidth = 0;
     this.svgHeight = 0;
+    this.zoomBehavior = null; // To store zoom behavior
     SvgManager.instance = this;
     this.initialize();
     this.preventDefaultContextMenu();
     this.enableFocus();
+    this.setupZoom(); // Initialize zoom behavior
   }
 
   initialize() {
@@ -32,6 +34,9 @@ class SvgManager {
       .select(SVG_MINDMAP_SELECTOR)
       .attr("width", this.svgWidth)
       .attr("height", this.svgHeight);
+
+    // Create a group element to handle transformations
+    this.svgGroup = this.svg.append("g");
 
     return this.svg;
   }
@@ -88,6 +93,23 @@ class SvgManager {
     } else {
       console.error("SVG element not found for focus management.");
     }
+  }
+
+  setupZoom() {
+    // Define zoom behavior
+    this.zoomBehavior = d3
+      .zoom()
+      .scaleExtent([0.1, 10]) // Set zoom scale limits
+      .on("zoom", (event) => this.handleZoom(event));
+
+    // Apply zoom behavior to the SVG container group
+    this.svg.call(this.zoomBehavior);
+  }
+
+  handleZoom(event) {
+    // Apply zoom and pan transformations to the SVG group
+    const { transform } = event;
+    this.svg.select("g").attr("transform", transform.toString());
   }
 }
 

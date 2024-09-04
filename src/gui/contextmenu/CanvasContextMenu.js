@@ -10,13 +10,13 @@ export default class CanvasContextMenu extends ContextMenu {
   initContextMenu() {
     document
       .getElementById("center-mindmap")
-      .addEventListener("click", this.centerMindmap.bind(this));
+      .addEventListener("mousedown", this.centerMindmap.bind(this));
     document
       .getElementById("show-local-storage")
-      .addEventListener("click", this.toggleLocalStorage.bind(this));
+      .addEventListener("mousedown", this.toggleLocalStorage.bind(this));
     document
       .getElementById("new-mindmap")
-      .addEventListener("click", this.newMindmap.bind(this));
+      .addEventListener("mousedown", this.newMindmap.bind(this));
   }
 
   centerMindmap() {

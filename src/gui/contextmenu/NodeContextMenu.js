@@ -20,34 +20,34 @@ export default class NodeContextMenu extends ContextMenu {
   initContextMenu() {
     document
       .getElementById("add-node")
-      .addEventListener("click", this.addCircle.bind(this));
+      .addEventListener("mousedown", this.addCircle.bind(this));
     document
       .getElementById("add-rectangle")
-      .addEventListener("click", this.addRectangle.bind(this));
+      .addEventListener("mousedown", this.addRectangle.bind(this));
     document
       .getElementById("add-borderless-rectangle")
-      .addEventListener("click", this.addBorderlessRectangle.bind(this));
+      .addEventListener("mousedown", this.addBorderlessRectangle.bind(this));
     document
       .getElementById("rename-node")
-      .addEventListener("click", this.renameNode.bind(this));
+      .addEventListener("mousedown", this.renameNode.bind(this));
     document
       .getElementById("delete-node")
-      .addEventListener("click", this.deleteNode.bind(this));
+      .addEventListener("mousedown", this.deleteNode.bind(this));
     document
       .getElementById("resize-node")
-      .addEventListener("click", this.resizeNode.bind(this));
+      .addEventListener("mousedown", this.resizeNode.bind(this));
     document
       .getElementById("collapse-node")
-      .addEventListener("click", this.collapseNode.bind(this));
+      .addEventListener("mousedown", this.collapseNode.bind(this));
     document
       .getElementById("select-color-node")
-      .addEventListener("click", this.selectColorNode.bind(this));
+      .addEventListener("mousedown", this.selectColorNode.bind(this));
     document
       .getElementById("random-color-node")
-      .addEventListener("click", this.randomColorNode.bind(this));
+      .addEventListener("mousedown", this.randomColorNode.bind(this));
     document
       .getElementById("select-border-color-node")
-      .addEventListener("click", this.selectBorderColorNode.bind(this));
+      .addEventListener("mousedown", this.selectBorderColorNode.bind(this));
   }
 
   showContextMenu(node, x, y) {

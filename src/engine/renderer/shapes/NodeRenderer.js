@@ -1,12 +1,17 @@
 import LineMath from "../../math/LineMath.js";
 import CollapseIndicator from "../../../model/indicators/CollapseIndicator.js";
 import CollapseIndicatorRenderer from "../indicators/CollapseIndicatorRenderer.js";
+import EventAttacher from "../../../services/event/EventAttacher.js";
 import * as d3 from "d3";
 
 export default class NodeRenderer {
   constructor(svg) {
+    if (!svg) {
+      throw new Error("SVG element is required");
+    }
     this.svg = svg;
     this.collapseIndicatorRenderer = new CollapseIndicatorRenderer();
+    this.eventAttacher = new EventAttacher();
   }
 
   drawShapeWithText(node) {
@@ -24,8 +29,7 @@ export default class NodeRenderer {
   }
 
   setTextStyle(node) {
-    // D3 handles text style differently, so this method can be simplified.
-    // We'll set styles directly in the D3 chain.
+    // No specific implementation; can be overridden or extended as needed.
   }
 
   computeTextLines(node) {
@@ -49,7 +53,7 @@ export default class NodeRenderer {
       .attr("y1", startY)
       .attr("x2", endX)
       .attr("y2", endY)
-      .attr("stroke", "black"); // Set color and other styles as needed
+      .attr("stroke", "black");
   }
 
   connectWithCurvedLine(startX, startY, endX, endY, lineColor) {

@@ -2,6 +2,7 @@ import svgManager from "../../view/SvgManager.js";
 import StorageUtil from "../../util/storage/StorageUtil.js";
 import MouseModeManager from "../mouse/state/MouseModeManager.js";
 import * as MouseConstants from "../../constants/MouseConstants.js";
+import * as d3 from "d3";
 
 export default class KeyboardHandler {
   constructor(systemCore) {
@@ -10,6 +11,7 @@ export default class KeyboardHandler {
     this.nodeController = systemCore.nodeController;
     this.selectionController = this.nodeController.selectionController;
     this.mindmapLocalStorage = systemCore.mindmapLocalStorage;
+    this.zoomScale = 1; // Initialize zoom scale
     this.initKeyListeners();
   }
 
@@ -42,6 +44,8 @@ export default class KeyboardHandler {
       r: this.handleResetMindmap.bind(this),
       "+": this.handleIncreaseNodeSize.bind(this),
       "-": this.handleDecreaseNodeSize.bind(this),
+      "&": this.handleZoomIn.bind(this), // Use "=" for zooming in
+      é: this.handleZoomOut.bind(this), // Use "_" for zooming out
     };
 
     if (handlers[key]) {
@@ -194,5 +198,23 @@ export default class KeyboardHandler {
 
   handleDecreaseNodeSize() {
     this.selectionController.updateSelectedNodeDimensions(-5);
+  }
+
+  handleZoomIn() {
+    this.zoomScale *= 1.1; // Increase scale
+    this.applyZoom();
+  }
+
+  handleZoomOut() {
+    this.zoomScale /= 1.1; // Decrease scale
+    this.applyZoom();
+  }
+
+  applyZoom() {
+    const svg = d3.select(this.svg.node());
+    svg
+      .transition()
+      .duration(500)
+      .attr("transform", `scale(${this.zoomScale})`);
   }
 }

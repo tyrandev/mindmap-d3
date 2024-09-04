@@ -53,3 +53,7 @@ canvas {
 #mindMapSvg text {
   pointer-events: none;
 }
+
+svg * {
+  pointer-events: auto;
+}
