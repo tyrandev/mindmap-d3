@@ -32,6 +32,7 @@ export default class MouseHandler {
       this.rightClickHandler.handleRightClick.bind(this.rightClickHandler)
     );
     svg.addEventListener("mouseleave", this.handleSvgMouseLeave.bind(this));
+    svg.addEventListener("click", this.handleSvgClick.bind(this));
   }
 
   handleSvgMouseDown(event) {
@@ -72,6 +73,11 @@ export default class MouseHandler {
     this.draggingNode = null;
     this.dragOffsetX = 0;
     this.dragOffsetY = 0;
+  }
+
+  handleSvgClick(event) {
+    console.log("Mouse clicked");
+    // Additional logic for click events can be added here if needed
   }
 
   handleSingleClick(clickedNode, x, y) {
