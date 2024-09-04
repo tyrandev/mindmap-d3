@@ -4,6 +4,7 @@ import ColorPicker from "../../gui/topmenu/ColorPicker.js";
 import * as MouseConstants from "../../constants/MouseConstants.js";
 import WheelHandler from "./WheelHandler.js";
 import RightClickHandler from "./RightClickHandler.js";
+import NodeSelectionHandler from "./NodeSelectionHandler.js";
 
 export default class MouseHandler {
   constructor(systemCore) {
@@ -19,6 +20,11 @@ export default class MouseHandler {
     this.modeManager = MouseModeManager;
     this.wheelHandler = new WheelHandler(this.selectionController);
     this.rightClickHandler = new RightClickHandler(systemCore);
+    this.nodeSelectionHandler = new NodeSelectionHandler(
+      this.selectionController,
+      this.nodeController
+    );
+
     this.initMouseListeners();
   }
 
@@ -91,7 +97,7 @@ export default class MouseHandler {
     if (clickedNode) {
       this.selectionController.selectNode(clickedNode);
       console.log("node clicked: ", clickedNode);
-      this.onNodeSelection(clickedNode);
+      this.nodeSelectionHandler.handleNodeSelection(clickedNode);
     } else {
       this.selectionController.unselectNode();
       this.modeManager.setMode(MouseConstants.MOUSE_MODES.NORMAL);
@@ -101,36 +107,6 @@ export default class MouseHandler {
   handleSvgMouseLeave(event) {
     this.mouseDown = false;
     this.draggingNode = null;
-  }
-
-  onNodeSelection(node) {
-    switch (this.modeManager.getMode()) {
-      case MouseConstants.MOUSE_MODES.CHANGE_COLOR:
-        const selectedColor = this.colorPicker.getColor();
-        this.selectionController.setSelectedNodeColor(selectedColor);
-        break;
-      case MouseConstants.MOUSE_MODES.RESIZE:
-        const newRadiusStr = document.getElementById(
-          "circle-radius-input"
-        ).value;
-        const newRadius = parseFloat(newRadiusStr);
-        this.selectionController.setSelectedCircleRadius(newRadius);
-        break;
-      case MouseConstants.MOUSE_MODES.RENAME:
-        this.selectionController.renameSelectedNodePrompt();
-        break;
-      case MouseConstants.MOUSE_MODES.DELETE:
-        this.nodeController.removeNode(node);
-        break;
-      case MouseConstants.MOUSE_MODES.COPY_COLOR:
-        this.colorPicker.setColor(node.getFillColor());
-        this.modeManager.setMode(MouseConstants.MOUSE_MODES.CHANGE_COLOR);
-        break;
-      case MouseConstants.MOUSE_MODES.NORMAL:
-      default:
-        console.log("Node selected:", node);
-        break;
-    }
   }
 
   getMouseCoordinates() {
