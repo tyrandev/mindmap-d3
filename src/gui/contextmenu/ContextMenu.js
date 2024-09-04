@@ -28,7 +28,7 @@ export default class ContextMenu {
 
   hideContextMenu() {
     this.contextMenu.style.display = "none";
-    // Consider whether you need to regain focus for SVG, or if any additional action is required
+    // TODO: regain focus on this.svg
   }
 
   handleDocumentClick(event) {
@@ -38,8 +38,8 @@ export default class ContextMenu {
   }
 
   preventBrowserContextMenu() {
-    if (this.svg) {
-      this.svg.addEventListener("contextmenu", (event) => {
+    if (this.contextMenu) {
+      this.contextMenu.addEventListener("contextmenu", (event) => {
         event.preventDefault();
       });
     } else {

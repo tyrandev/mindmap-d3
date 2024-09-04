@@ -26,7 +26,6 @@ export default class MouseHandler {
 
   initMouseListeners() {
     const svg = this.svg;
-    svg.addEventListener("click", this.handleSvgLeftClick.bind(this));
     svg.addEventListener("mousedown", this.handleSvgMouseDown.bind(this));
     svg.addEventListener("mousemove", this.handleSvgMouseMove.bind(this));
     svg.addEventListener("mouseup", this.handleSvgMouseUp.bind(this));
@@ -65,30 +64,6 @@ export default class MouseHandler {
     this.draggingNode = null;
     this.dragOffsetX = 0;
     this.dragOffsetY = 0;
-  }
-
-  handleSvgLeftClick(event) {
-    console.log("handleSvgLeftClick called");
-    if (event.button !== 0) return;
-    const { x, y } = this.getMouseCoordinates();
-    const isDoubleClick = this.doubleClickTimer.checkDoubleClick(x, y);
-    const clickedNode = this.nodeController.getNodeAtPosition(x, y);
-
-    if (isDoubleClick) {
-      this.handleDoubleClick(clickedNode, x, y);
-      this.doubleClickTimer.reset();
-      return;
-    }
-    this.handleSingleClick(clickedNode, x, y);
-  }
-
-  handleDoubleClick(clickedNode, x, y) {
-    if (
-      clickedNode &&
-      this.modeManager.getMode() === MouseConstants.MOUSE_MODES.NORMAL
-    ) {
-      this.nodeController.addConnectedRectangle(clickedNode, x, y);
-    }
   }
 
   handleSingleClick(clickedNode, x, y) {
