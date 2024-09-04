@@ -12,6 +12,7 @@ class SvgManager {
     this.svgWidth = 0;
     this.svgHeight = 0;
     SvgManager.instance = this;
+    this.initialize();
   }
 
   initialize() {
@@ -25,6 +26,10 @@ class SvgManager {
       .attr("height", this.svgHeight);
 
     return this.svg;
+  }
+
+  getSvgElement() {
+    return d3.select(SVG_MINDMAP_SELECTOR).node();
   }
 
   getSvg() {
@@ -56,8 +61,6 @@ class SvgManager {
       y: this.getCenterY(),
     };
   }
-
-  //TODO: I need method getCenterCoordinates() which returns both x and y
 }
 
 const svgManager = new SvgManager();

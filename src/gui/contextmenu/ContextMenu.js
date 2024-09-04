@@ -4,16 +4,11 @@ export default class ContextMenu {
   constructor(systemCore, contextMenuId) {
     this.systemCore = systemCore;
     this.contextMenu = document.getElementById(contextMenuId);
-    this.svg = this.getSvg();
+    this.svg = document.getElementById("mindMapSvg");
     this.contextMenuNode = null;
-
     this.initContextMenu();
     this.preventBrowserContextMenu();
     document.addEventListener("click", this.handleDocumentClick.bind(this));
-  }
-
-  getSvg() {
-    return SvgManager.getSvg(); // Retrieve the SVG container
   }
 
   initContextMenu() {
@@ -22,8 +17,8 @@ export default class ContextMenu {
 
   prepareContextMenu(x, y) {
     const rect = this.svg.getBoundingClientRect();
-    const adjustedX = x + rect.left; // Adjust x relative to SVG container
-    const adjustedY = y + rect.top; // Adjust y relative to SVG container
+    const adjustedX = x + rect.left;
+    const adjustedY = y + rect.top;
     this.contextMenu.style.left = `${adjustedX}px`;
     this.contextMenu.style.top = `${adjustedY}px`;
   }
@@ -45,8 +40,12 @@ export default class ContextMenu {
   }
 
   preventBrowserContextMenu() {
-    this.svg.addEventListener("contextmenu", (event) => {
-      event.preventDefault();
-    });
+    if (this.svg) {
+      this.svg.addEventListener("contextmenu", (event) => {
+        event.preventDefault();
+      });
+    } else {
+      console.error("SVG element not found.");
+    }
   }
 }

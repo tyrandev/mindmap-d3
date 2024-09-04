@@ -10,7 +10,7 @@ import DoubleClickTimer from "./DoubleClickTimer.js";
 export default class MouseHandler {
   constructor(systemCore) {
     this.systemCore = systemCore;
-    this.svg = svgManager.getSvg();
+    this.svg = document.getElementById("mindMapSvg");
     this.nodeController = systemCore.nodeController;
     this.selectionController = this.nodeController.selectionController;
     this.mouseDown = false;

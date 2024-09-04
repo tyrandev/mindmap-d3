@@ -1,5 +1,5 @@
 import NodeFactory from "../services/factory/NodeFactory.js";
-import Canvas from "../view/Canvas.js";
+import svgManager from "../view/SvgManager";
 
 export default class RootNodeController {
   constructor(controller) {
@@ -17,7 +17,7 @@ export default class RootNodeController {
 
   initRootCircle(initialText) {
     try {
-      const { x, y } = Canvas.getCenterCoordinates();
+      const { x, y } = svgManager.getCenterCoordinates();
       this.rootNode = NodeFactory.createCircle(x, y);
       this.rootNode.setText(initialText);
       this.controller.putNodeIntoContainer(this.rootNode);
