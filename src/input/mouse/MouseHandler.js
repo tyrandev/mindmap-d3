@@ -4,7 +4,7 @@ import CanvasMenuHandler from "../../gui/contextmenu/CanvasContextMenu.js";
 import MousePosition from "./MousePosition.js";
 import ColorPicker from "../../gui/topmenu/ColorPicker.js";
 import * as MouseConstants from "../../constants/MouseConstants.js";
-import DoubleClickTimer from "./DoubleClickTimer.js";
+import WheelHandler from "./WheelHandler.js";
 
 export default class MouseHandler {
   constructor(systemCore) {
@@ -16,11 +16,11 @@ export default class MouseHandler {
     this.draggingNode = null;
     this.dragOffsetX = 0;
     this.dragOffsetY = 0;
-    this.doubleClickTimer = new DoubleClickTimer();
     this.NodeContextMenu = new NodeContextMenu(systemCore);
     this.canvasMenuHandler = new CanvasMenuHandler(systemCore);
     this.modeManager = MouseModeManager;
     this.colorPicker = ColorPicker.getColorPicker();
+    this.wheelHandler = new WheelHandler(this.selectionController);
     this.initMouseListeners();
   }
 
@@ -31,7 +31,6 @@ export default class MouseHandler {
     svg.addEventListener("mouseup", this.handleSvgMouseUp.bind(this));
     svg.addEventListener("contextmenu", this.handleSvgRightClick.bind(this));
     svg.addEventListener("mouseleave", this.handleSvgMouseLeave.bind(this));
-    svg.addEventListener("wheel", this.handleSvgMouseWheel.bind(this));
   }
 
   handleSvgMouseDown(event) {
@@ -112,14 +111,6 @@ export default class MouseHandler {
   handleSvgMouseLeave(event) {
     this.mouseDown = false;
     this.draggingNode = null;
-  }
-
-  handleSvgMouseWheel(event) {
-    if (!this.selectionController.selectedNode) return;
-    event.preventDefault();
-    this.selectionController.updateSelectedNodeDimensions(
-      event.deltaY > 0 ? -5 : 5
-    );
   }
 
   onNodeSelection(node) {
