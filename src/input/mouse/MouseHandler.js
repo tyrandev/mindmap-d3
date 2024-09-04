@@ -25,12 +25,12 @@ export default class MouseHandler {
       this.nodeController,
       this.modeManager
     );
-    this.initMouseListeners();
+    // this.initMouseListeners();
   }
 
   initMouseListeners() {
     const svg = this.svg;
-    // svg.addEventListener("mousedown", this.handleSvgMouseDown.bind(this));
+    svg.addEventListener("mousedown", this.handleSvgMouseDown.bind(this));
     // svg.addEventListener("mousemove", this.handleSvgMouseMove.bind(this));
     // svg.addEventListener("mouseup", this.handleSvgMouseUp.bind(this));
     svg.addEventListener(

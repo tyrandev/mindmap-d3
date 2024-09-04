@@ -56,26 +56,6 @@ export default class KeyboardHandler {
     this.handleArrowKeys(event);
   }
 
-  handleArrowKeys(event) {
-    const svgContainer = this.svg.node();
-    const scrollStep = 8;
-
-    switch (event.key) {
-      case "ArrowUp":
-        svgContainer.scrollTop -= scrollStep;
-        break;
-      case "ArrowDown":
-        svgContainer.scrollTop += scrollStep;
-        break;
-      case "ArrowLeft":
-        svgContainer.scrollLeft -= scrollStep;
-        break;
-      case "ArrowRight":
-        svgContainer.scrollLeft += scrollStep;
-        break;
-    }
-  }
-
   handleResetMindmap(event) {
     if (event.ctrlKey) {
       this.nodeController.resetMindmap();
@@ -216,5 +196,37 @@ export default class KeyboardHandler {
       .transition()
       .duration(500)
       .attr("transform", `scale(${this.zoomScale})`);
+  }
+
+  handleArrowKeys(event) {
+    const step = 10;
+    const svgGroup = d3.select(this.svg.node());
+
+    let currentTransform = d3.zoomTransform(svgGroup.node());
+
+    switch (event.key) {
+      case "ArrowUp":
+        currentTransform.y += step;
+        break;
+      case "ArrowDown":
+        currentTransform.y -= step;
+        break;
+      case "ArrowLeft":
+        currentTransform.x += step;
+        break;
+      case "ArrowRight":
+        currentTransform.x -= step;
+        break;
+      default:
+        return; // exit the function for unhandled keys
+    }
+    console.log("panning");
+    svgGroup
+      .transition()
+      .duration(100) // Optional: for smooth panning
+      .attr(
+        "transform",
+        `translate(${currentTransform.x}, ${currentTransform.y})`
+      );
   }
 }

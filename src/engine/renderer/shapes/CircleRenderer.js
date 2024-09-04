@@ -82,6 +82,7 @@ export default class CircleRenderer extends NodeRenderer {
     }
   }
 
+  // TODO: this code should be in a separate class
   attachEventListeners(selection, circle) {
     if (!selection || selection.empty()) {
       console.error("Selection is undefined, null, or empty");
@@ -106,15 +107,15 @@ export default class CircleRenderer extends NodeRenderer {
   }
 
   handleCircleMouseOver(event, circle) {
-    d3.select(event.currentTarget)
-      .attr("stroke", "red")
-      .attr("stroke-width", circle.borderWidth * 2);
+    // d3.select(event.currentTarget)
+    //   .attr("stroke", "red")
+    //   .attr("stroke-width", circle.borderWidth * 2);
   }
 
   handleCircleMouseOut(event, circle) {
-    d3.select(event.currentTarget)
-      .attr("stroke", circle.borderColor)
-      .attr("stroke-width", circle.borderWidth);
+    // d3.select(event.currentTarget)
+    //   .attr("stroke", circle.borderColor)
+    //   .attr("stroke-width", circle.borderWidth);
   }
 
   handleDragStart(event, circle) {

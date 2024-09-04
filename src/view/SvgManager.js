@@ -109,7 +109,7 @@ class SvgManager {
   handleZoom(event) {
     // Apply zoom and pan transformations to the SVG group
     const { transform } = event;
-    this.svg.select("g").attr("transform", transform.toString());
+    this.svgGroup.attr("transform", transform.toString());
   }
 }
 
