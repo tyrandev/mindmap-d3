@@ -1,5 +1,7 @@
 import * as d3 from "d3";
 
+const SVG_MINDMAP_SELECTOR = "#mindMapSvg";
+
 class SvgManager {
   constructor() {
     if (SvgManager.instance) {
@@ -12,13 +14,13 @@ class SvgManager {
     SvgManager.instance = this;
   }
 
-  initialize(selector) {
-    const svgElement = d3.select(selector).node();
+  initialize() {
+    const svgElement = d3.select(SVG_MINDMAP_SELECTOR).node();
     this.svgWidth = svgElement.clientWidth;
     this.svgHeight = svgElement.clientHeight;
 
     this.svg = d3
-      .select(selector)
+      .select(SVG_MINDMAP_SELECTOR)
       .attr("width", this.svgWidth)
       .attr("height", this.svgHeight);
 
@@ -39,6 +41,23 @@ class SvgManager {
   getSvgHeight() {
     return this.svgHeight;
   }
+
+  getCenterX() {
+    return this.svgWidth / 2;
+  }
+
+  getCenterY() {
+    return this.svgHeight / 2;
+  }
+
+  getCenterCoordinates() {
+    return {
+      x: this.getCenterX(),
+      y: this.getCenterY(),
+    };
+  }
+
+  //TODO: I need method getCenterCoordinates() which returns both x and y
 }
 
 const svgManager = new SvgManager();
