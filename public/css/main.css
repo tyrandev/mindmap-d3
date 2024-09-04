@@ -45,3 +45,11 @@ canvas {
   outline: none;
   border: none;
 }
+
+#mindMapSvg {
+  user-select: none;
+}
+
+#mindMapSvg text {
+  pointer-events: none;
+}
