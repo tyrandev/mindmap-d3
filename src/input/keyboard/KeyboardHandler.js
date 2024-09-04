@@ -1,4 +1,4 @@
-import svgManager from "../../view/SvgManager.js"; // Ensure you have methods to manage SVG
+import svgManager from "../../view/SvgManager.js";
 import StorageUtil from "../../util/storage/StorageUtil.js";
 import MouseModeManager from "../mouse/state/MouseModeManager.js";
 import * as MouseConstants from "../../constants/MouseConstants.js";
