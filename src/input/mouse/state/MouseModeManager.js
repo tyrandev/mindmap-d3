@@ -1,4 +1,3 @@
-import svgManager from "../../../view/SvgManager.js";
 import * as MouseConstants from "../../../constants/MouseConstants.js";
 
 class MouseModeManager {
@@ -8,7 +7,7 @@ class MouseModeManager {
     }
     this.currentMode = MouseConstants.MOUSE_MODES.NORMAL;
     this.listeners = [];
-    this.svg = svgManager.getSvg(); // Get the SVG container
+    this.svg = document.getElementById("mindMapSvg");
     MouseModeManager.instance = this;
   }
 
