@@ -11,7 +11,9 @@ class SvgManager {
     this.svg = null;
     this.svgWidth = 0;
     this.svgHeight = 0;
-    this.zoomBehavior = null; // To store zoom behavior
+    this.zoomBehavior = null;
+    // TODO: this zoomScale should be used in our methods
+    this.zoomScale = 1;
     SvgManager.instance = this;
     this.initialize();
     this.preventDefaultContextMenu();
@@ -110,6 +112,24 @@ class SvgManager {
     // Apply zoom and pan transformations to the SVG group
     const { transform } = event;
     this.svgGroup.attr("transform", transform.toString());
+  }
+
+  applyZoom() {
+    const svg = d3.select(this.svg.node());
+    svg
+      .transition()
+      .duration(300)
+      .attr("transform", `scale(${svgManager.zoomScale})`);
+  }
+
+  zoomIn() {
+    this.zoomScale *= 1.1;
+    this.applyZoom();
+  }
+
+  zoomOut() {
+    this.zoomScale /= 1.1;
+    this.applyZoom();
   }
 }
 

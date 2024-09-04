@@ -11,7 +11,6 @@ export default class KeyboardHandler {
     this.nodeController = systemCore.nodeController;
     this.selectionController = this.nodeController.selectionController;
     this.mindmapLocalStorage = systemCore.mindmapLocalStorage;
-    this.zoomScale = 1; // Initialize zoom scale
     this.initKeyListeners();
   }
 
@@ -181,21 +180,11 @@ export default class KeyboardHandler {
   }
 
   handleZoomIn() {
-    this.zoomScale *= 1.1; // Increase scale
-    this.applyZoom();
+    svgManager.zoomIn();
   }
 
   handleZoomOut() {
-    this.zoomScale /= 1.1; // Decrease scale
-    this.applyZoom();
-  }
-
-  applyZoom() {
-    const svg = d3.select(this.svg.node());
-    svg
-      .transition()
-      .duration(500)
-      .attr("transform", `scale(${this.zoomScale})`);
+    svgManager.zoomOut();
   }
 
   handleArrowKeys(event) {
@@ -206,24 +195,24 @@ export default class KeyboardHandler {
 
     switch (event.key) {
       case "ArrowUp":
-        currentTransform.y += step;
-        break;
-      case "ArrowDown":
         currentTransform.y -= step;
         break;
-      case "ArrowLeft":
-        currentTransform.x += step;
+      case "ArrowDown":
+        currentTransform.y += step;
         break;
-      case "ArrowRight":
+      case "ArrowLeft":
         currentTransform.x -= step;
         break;
+      case "ArrowRight":
+        currentTransform.x += step;
+        break;
       default:
-        return; // exit the function for unhandled keys
+        return;
     }
-    console.log("panning");
+
     svgGroup
       .transition()
-      .duration(100) // Optional: for smooth panning
+      .duration(100)
       .attr(
         "transform",
         `translate(${currentTransform.x}, ${currentTransform.y})`
