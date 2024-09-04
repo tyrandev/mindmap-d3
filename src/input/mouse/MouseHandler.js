@@ -22,7 +22,8 @@ export default class MouseHandler {
     this.rightClickHandler = new RightClickHandler(systemCore);
     this.nodeSelectionHandler = new NodeSelectionHandler(
       this.selectionController,
-      this.nodeController
+      this.nodeController,
+      this.modeManager
     );
 
     this.initMouseListeners();
@@ -38,16 +39,13 @@ export default class MouseHandler {
       this.rightClickHandler.handleRightClick.bind(this.rightClickHandler)
     );
     svg.addEventListener("mouseleave", this.handleSvgMouseLeave.bind(this));
-    svg.addEventListener("click", this.handleSvgClick.bind(this));
   }
 
   handleSvgMouseDown(event) {
-    const { x, y } = this.getMouseCoordinates();
-
     if (event.button !== 0) return;
 
     this.mouseDown = true;
-    const draggedNode = this.nodeController.getNodeAtPosition(x, y);
+    const { node: draggedNode, x, y } = this.getNodeAtMousePosition();
 
     if (draggedNode) {
       this.draggingNode = draggedNode;
@@ -81,11 +79,6 @@ export default class MouseHandler {
     this.dragOffsetY = 0;
   }
 
-  handleSvgClick(event) {
-    console.log("Mouse clicked");
-    // Additional logic for click events can be added here if needed
-  }
-
   handleSingleClick(clickedNode, x, y) {
     console.log("left clicked on position: x: ", x, " y: ", y);
     if (
@@ -96,7 +89,6 @@ export default class MouseHandler {
     }
     if (clickedNode) {
       this.selectionController.selectNode(clickedNode);
-      console.log("node clicked: ", clickedNode);
       this.nodeSelectionHandler.handleNodeSelection(clickedNode);
     } else {
       this.selectionController.unselectNode();
@@ -111,5 +103,12 @@ export default class MouseHandler {
 
   getMouseCoordinates() {
     return MousePosition.getMouseCoordinates();
+  }
+
+  getNodeAtMousePosition() {
+    const { x, y } = this.getMouseCoordinates();
+    const node = this.nodeController.getNodeAtPosition(x, y);
+    console.log("Node at click position:", node);
+    return { node, x, y };
   }
 }
