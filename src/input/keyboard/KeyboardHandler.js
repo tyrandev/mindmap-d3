@@ -189,33 +189,22 @@ export default class KeyboardHandler {
 
   handleArrowKeys(event) {
     const step = 10;
-    const svgGroup = d3.select(this.svg.node());
-
-    let currentTransform = d3.zoomTransform(svgGroup.node());
 
     switch (event.key) {
       case "ArrowUp":
-        currentTransform.y -= step;
+        svgManager.pan(0, -step);
         break;
       case "ArrowDown":
-        currentTransform.y += step;
+        svgManager.pan(0, step);
         break;
       case "ArrowLeft":
-        currentTransform.x -= step;
+        svgManager.pan(-step, 0);
         break;
       case "ArrowRight":
-        currentTransform.x += step;
+        svgManager.pan(step, 0);
         break;
       default:
         return;
     }
-
-    svgGroup
-      .transition()
-      .duration(100)
-      .attr(
-        "transform",
-        `translate(${currentTransform.x}, ${currentTransform.y})`
-      );
   }
 }

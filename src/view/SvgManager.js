@@ -12,7 +12,6 @@ class SvgManager {
     this.svgWidth = 0;
     this.svgHeight = 0;
     this.zoomBehavior = null;
-    // TODO: this zoomScale should be used in our methods
     this.zoomScale = 1;
     SvgManager.instance = this;
     this.initialize();
@@ -115,11 +114,18 @@ class SvgManager {
   }
 
   applyZoom() {
+    const svgGroup = d3.select(this.svg.node());
+
+    let currentTransform = d3.zoomTransform(svgGroup.node());
+
     const svg = d3.select(this.svg.node());
     svg
       .transition()
-      .duration(300)
-      .attr("transform", `scale(${svgManager.zoomScale})`);
+      .duration(100)
+      .attr(
+        "transform",
+        `translate(${currentTransform.x}, ${currentTransform.y}) scale(${svgManager.zoomScale})`
+      );
   }
 
   zoomIn() {
@@ -130,6 +136,23 @@ class SvgManager {
   zoomOut() {
     this.zoomScale /= 1.1;
     this.applyZoom();
+  }
+
+  pan(addX, addY) {
+    const svgGroup = d3.select(this.svg.node());
+
+    let currentTransform = d3.zoomTransform(svgGroup.node());
+
+    currentTransform.x += addX;
+    currentTransform.y += addY;
+
+    svgGroup
+      .transition()
+      .duration(100)
+      .attr(
+        "transform",
+        `translate(${currentTransform.x}, ${currentTransform.y}) scale(${svgManager.zoomScale})`
+      );
   }
 }
 
