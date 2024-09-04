@@ -2,7 +2,7 @@ import OSUtil from "../util/os/OSUtil.js";
 import BrowserUtil from "../util/browser/BrowserUtil.js";
 import Circle from "../model/geometric/circle/Circle.js";
 import CircleTextHelper from "../model/geometric/circle/CircleTextHelper.js";
-import * as d3 from "d3";
+import svgManager from "../view/SvgManager.js";
 
 export default class SystemCore {
   startApplication() {
@@ -13,14 +13,12 @@ export default class SystemCore {
   }
 
   initializeD3() {
-    const svgMindmap = d3.select("#mindMapSvg").node();
-    const svgWidth = svgMindmap.clientWidth;
-    const svgHeight = svgMindmap.clientHeight;
+    // Initialize the SVG context through SvgManager
+    const svg = svgManager.initialize("#mindMapSvg");
 
-    const svg = d3
-      .select("#mindMapSvg")
-      .attr("width", svgWidth)
-      .attr("height", svgHeight);
+    // Retrieve dimensions directly from SvgManager
+    const svgWidth = svgManager.getSvgWidth();
+    const svgHeight = svgManager.getSvgHeight();
 
     const circle = new Circle(svgWidth / 2, svgHeight / 2);
     circle.setRadius(50);
