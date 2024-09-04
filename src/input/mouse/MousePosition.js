@@ -27,7 +27,6 @@ class MousePosition {
     const coordinates = this.getMouseCoordinatesFromEvent(event);
     this.mouseX = coordinates.x;
     this.mouseY = coordinates.y;
-    console.log("mouse x: ", this.mouseX, "mouse y: ", this.mouseY);
   }
 
   getMouseCoordinatesFromEvent(event) {

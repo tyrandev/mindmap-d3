@@ -26,16 +26,17 @@ export default class MouseHandler {
 
   initMouseListeners() {
     const svg = this.svg;
+    svg.addEventListener("click", this.handleSvgLeftClick.bind(this));
     svg.addEventListener("mousedown", this.handleSvgMouseDown.bind(this));
     svg.addEventListener("mousemove", this.handleSvgMouseMove.bind(this));
     svg.addEventListener("mouseup", this.handleSvgMouseUp.bind(this));
-    svg.addEventListener("click", this.handleSvgLeftClick.bind(this));
     svg.addEventListener("contextmenu", this.handleSvgRightClick.bind(this));
     svg.addEventListener("mouseleave", this.handleSvgMouseLeave.bind(this));
     svg.addEventListener("wheel", this.handleSvgMouseWheel.bind(this));
   }
 
-  handleSvgMouseDown() {
+  handleSvgMouseDown(event) {
+    if (event.button !== 0) return;
     this.mouseDown = true;
     const { x, y } = this.getMouseCoordinates();
     const draggedNode = this.nodeController.getNodeAtPosition(x, y);
@@ -45,6 +46,7 @@ export default class MouseHandler {
     this.dragOffsetY = draggedNode.y - y;
     if (this.selectionController.selectedNode !== draggedNode) {
       this.selectionController.selectNode(draggedNode);
+      this.handleSingleClick(draggedNode, x, y);
     }
   }
 
@@ -66,6 +68,7 @@ export default class MouseHandler {
   }
 
   handleSvgLeftClick(event) {
+    console.log("handleSvgLeftClick called");
     if (event.button !== 0) return;
     const { x, y } = this.getMouseCoordinates();
     const isDoubleClick = this.doubleClickTimer.checkDoubleClick(x, y);
@@ -98,6 +101,7 @@ export default class MouseHandler {
     }
     if (clickedNode) {
       this.selectionController.selectNode(clickedNode);
+      console.log("node clicked: ", clickedNode);
       this.onNodeSelection(clickedNode);
     } else {
       this.selectionController.unselectNode();
