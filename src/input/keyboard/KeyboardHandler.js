@@ -2,7 +2,6 @@ import svgManager from "../../view/SvgManager.js";
 import StorageUtil from "../../util/storage/StorageUtil.js";
 import MouseModeManager from "../mouse/state/MouseModeManager.js";
 import * as MouseConstants from "../../constants/MouseConstants.js";
-import * as d3 from "d3";
 
 export default class KeyboardHandler {
   constructor(systemCore) {
@@ -43,8 +42,8 @@ export default class KeyboardHandler {
       r: this.handleResetMindmap.bind(this),
       "+": this.handleIncreaseNodeSize.bind(this),
       "-": this.handleDecreaseNodeSize.bind(this),
-      "&": this.handleZoomIn.bind(this), // Use "=" for zooming in
-      é: this.handleZoomOut.bind(this), // Use "_" for zooming out
+      "&": this.handleZoomIn.bind(this),
+      é: this.handleZoomOut.bind(this),
     };
 
     if (handlers[key]) {
