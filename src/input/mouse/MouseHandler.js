@@ -1,10 +1,9 @@
 import MouseModeManager from "./state/MouseModeManager.js";
-import NodeContextMenu from "../../gui/contextmenu/NodeContextMenu.js";
-import CanvasMenuHandler from "../../gui/contextmenu/CanvasContextMenu.js";
 import MousePosition from "./MousePosition.js";
 import ColorPicker from "../../gui/topmenu/ColorPicker.js";
 import * as MouseConstants from "../../constants/MouseConstants.js";
 import WheelHandler from "./WheelHandler.js";
+import RightClickHandler from "./RightClickHandler.js"; // Import the new class
 
 export default class MouseHandler {
   constructor(systemCore) {
@@ -16,11 +15,10 @@ export default class MouseHandler {
     this.draggingNode = null;
     this.dragOffsetX = 0;
     this.dragOffsetY = 0;
-    this.NodeContextMenu = new NodeContextMenu(systemCore);
-    this.canvasMenuHandler = new CanvasMenuHandler(systemCore);
-    this.modeManager = MouseModeManager;
     this.colorPicker = ColorPicker.getColorPicker();
     this.wheelHandler = new WheelHandler(this.selectionController);
+    this.modeManager = MouseModeManager;
+    this.rightClickHandler = new RightClickHandler(systemCore);
     this.initMouseListeners();
   }
 
@@ -29,7 +27,10 @@ export default class MouseHandler {
     svg.addEventListener("mousedown", this.handleSvgMouseDown.bind(this));
     svg.addEventListener("mousemove", this.handleSvgMouseMove.bind(this));
     svg.addEventListener("mouseup", this.handleSvgMouseUp.bind(this));
-    svg.addEventListener("contextmenu", this.handleSvgRightClick.bind(this));
+    svg.addEventListener(
+      "contextmenu",
+      this.rightClickHandler.handleRightClick.bind(this.rightClickHandler)
+    );
     svg.addEventListener("mouseleave", this.handleSvgMouseLeave.bind(this));
   }
 
@@ -81,31 +82,6 @@ export default class MouseHandler {
       this.selectionController.unselectNode();
       this.modeManager.setMode(MouseConstants.MOUSE_MODES.NORMAL);
     }
-  }
-
-  handleSvgRightClick(event) {
-    event.preventDefault();
-    if (event.button !== 2) return;
-    const { x, y } = this.getMouseCoordinates();
-    const rightClickedNode = this.nodeController.getNodeAtPosition(x, y);
-    if (rightClickedNode) {
-      this.showNodeContextMenu(rightClickedNode, x, y);
-    } else {
-      this.showCanvasContextMenu(x, y);
-      this.canvasMenuHandler.showContextMenu(x, y);
-    }
-    this.modeManager.setMode(MouseConstants.MOUSE_MODES.NORMAL);
-  }
-
-  showCanvasContextMenu(x, y) {
-    this.selectionController.unselectNode();
-    this.canvasMenuHandler.showContextMenu(x, y);
-    this.NodeContextMenu.hideContextMenu();
-  }
-
-  showNodeContextMenu(node, x, y) {
-    this.NodeContextMenu.showContextMenu(node, x, y);
-    this.canvasMenuHandler.hideContextMenu();
   }
 
   handleSvgMouseLeave(event) {
