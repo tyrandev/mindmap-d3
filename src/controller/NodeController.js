@@ -5,7 +5,7 @@ import MousePosition from "../input/mouse/MousePosition.js";
 import RootNodeController from "./RootNodeController.js";
 import NodeFactory from "../services/factory/NodeFactory.js";
 import svgManager from "../view/SvgManager.js";
-import StackEventEmitter from "../services/event/StackEventEmitter.js";
+import StackEventEmitter from "../services/event/emitter/StackEventEmitter.js";
 import NodeSerializer from "../data/serialization/NodeSerializer.js";
 import MindmapMath from "../engine/math/MindmapMath.js";
 import SelectionController from "./SelectionController.js";

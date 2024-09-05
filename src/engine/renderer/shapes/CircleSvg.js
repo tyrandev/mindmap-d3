@@ -38,7 +38,6 @@ export default class CircleSvg extends NodeSvg {
       circle.radius,
       fontSize
     );
-
     return { fontSize, lines };
   }
 
