@@ -17,7 +17,7 @@ class SvgManager {
     this.initialize();
     this.preventDefaultContextMenu();
     this.enableFocus();
-    this.setupZoom(); // Initialize zoom behavior
+    this.setupZoom();
   }
 
   initialize() {
@@ -27,18 +27,13 @@ class SvgManager {
         `SVG element with selector ${SVG_MINDMAP_SELECTOR} not found.`
       );
     }
-
     this.svgWidth = svgElement.clientWidth;
     this.svgHeight = svgElement.clientHeight;
-
     this.svg = d3
       .select(SVG_MINDMAP_SELECTOR)
       .attr("width", this.svgWidth)
       .attr("height", this.svgHeight);
-
-    // Create a group element to handle transformations
     this.svgGroup = this.svg.append("g");
-
     return this.svg;
   }
 
@@ -129,12 +124,12 @@ class SvgManager {
   }
 
   zoomIn() {
-    this.zoomScale *= 1.1;
+    this.zoomScale += 0.05;
     this.applyZoom();
   }
 
   zoomOut() {
-    this.zoomScale /= 1.1;
+    this.zoomScale -= 0.05;
     this.applyZoom();
   }
 

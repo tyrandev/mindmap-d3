@@ -1,5 +1,5 @@
 import NodeContextMenu from "../../gui/contextmenu/NodeContextMenu.js";
-import CanvasContextMenu from "../../gui/contextmenu/CanvasContextMenu.js";
+import SvgContextMenu from "../../gui/contextmenu/SvgContextMenu.js";
 import * as MouseConstants from "../../constants/MouseConstants.js";
 import MousePosition from "./MousePosition.js";
 import MouseModeManager from "./state/MouseModeManager.js";
@@ -10,7 +10,7 @@ export default class RightClickHandler {
     this.nodeController = nodeController;
     this.selectionController = this.nodeController.selectionController;
     this.nodeContextMenu = new NodeContextMenu(nodeController);
-    this.canvasContextMenu = new CanvasContextMenu(nodeController);
+    this.canvasContextMenu = new SvgContextMenu(nodeController);
   }
 
   handleRightClick(event) {

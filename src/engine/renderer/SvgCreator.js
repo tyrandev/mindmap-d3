@@ -3,7 +3,7 @@ import RectangleSvg from "./shapes/RectangleSvg.js";
 import Rectangle from "../../model/geometric/rectangle/Rectangle.js";
 import Circle from "../../model/geometric/circle/Circle.js";
 import svgManager from "../../view/SvgManager.js";
-import EventAttacher from "../../services/event/EventAttacher.js";
+import NodeEventAttacher from "../../services/event/NodeEventAttacher.js";
 
 export default class SvgCreator {
   constructor(nodeContainer, nodeController) {
@@ -13,7 +13,7 @@ export default class SvgCreator {
     this.renderedNodes = new Set();
     this.CircleSvg = new CircleSvg(this.svg);
     this.RectangleSvg = new RectangleSvg(this.svg);
-    this.eventAttacher = new EventAttacher(
+    this.nodeEventAttacher = new NodeEventAttacher(
       svgManager.getSvg(),
       this.nodeController
     );
@@ -43,7 +43,7 @@ export default class SvgCreator {
   }
 
   addEventListeners(nodeSelection, node) {
-    this.eventAttacher.attachEventListeners(nodeSelection, node);
+    this.nodeEventAttacher.attachEventListeners(nodeSelection, node);
   }
 
   trackNodeAsRendered(node) {

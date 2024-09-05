@@ -9,6 +9,7 @@ import MindmapLocalStorage from "../data/persistence/MindmapLocalStorage.js";
 import KeyboardHandler from "../input/keyboard/KeyboardHandler.js";
 import TopMenuHandler from "../gui/topmenu/TopMenuHandler.js";
 import MouseHandler from "../input/mouse/MouseHandler.js";
+import SvgEventAttacher from "../services/event/SvgEventAttacher.js";
 
 export default class SystemCore {
   startApplication() {
@@ -18,6 +19,7 @@ export default class SystemCore {
     this.initializeControllers();
     this.initializeEngine();
     this.initializeHandlers();
+    this.initilizeEventAttachers();
   }
 
   initializeControllers() {
@@ -38,5 +40,12 @@ export default class SystemCore {
       this.nodeContainer,
       this.nodeController
     );
+  }
+
+  initilizeEventAttachers() {
+    const svg = svgManager.getSvg();
+    console.log("SVG found, attaching event listeners.");
+    this.svgEventAttacher = new SvgEventAttacher(svg, this.nodeController);
+    this.svgEventAttacher.attachEventListeners();
   }
 }

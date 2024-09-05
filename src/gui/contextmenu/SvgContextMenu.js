@@ -1,7 +1,7 @@
 import ContextMenu from "./ContextMenu.js";
 import StorageUtil from "../../util/storage/StorageUtil.js";
 
-export default class CanvasContextMenu extends ContextMenu {
+export default class SvgContextMenu extends ContextMenu {
   constructor(nodeController) {
     super(nodeController, "canvas-context-menu");
     this.nodeController = nodeController;
