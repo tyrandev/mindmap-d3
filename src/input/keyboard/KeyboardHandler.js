@@ -4,12 +4,11 @@ import MouseModeManager from "../mouse/state/MouseModeManager.js";
 import * as MouseConstants from "../../constants/MouseConstants.js";
 
 export default class KeyboardHandler {
-  constructor(systemCore) {
-    this.systemCore = systemCore;
+  constructor(nodeController, mindmapLocalStorage) {
     this.svg = svgManager.getSvg();
-    this.nodeController = systemCore.nodeController;
+    this.nodeController = nodeController;
     this.selectionController = this.nodeController.selectionController;
-    this.mindmapLocalStorage = systemCore.mindmapLocalStorage;
+    this.mindmapLocalStorage = mindmapLocalStorage;
     this.initKeyListeners();
   }
 

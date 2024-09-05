@@ -47,12 +47,6 @@ export default class NodeEventAttacher {
     }
   }
 
-  showNodeContextMenu(node) {
-    this.selectionController.selectNode(node);
-    const { x, y } = mousePositionInstance.getMouseCoordinates();
-    this.nodeContextMenu.showContextMenu(node, x, y);
-  }
-
   handleDragStart(event, node) {
     const svgElement = this.svg.node();
     const [x, y] = d3.pointer(event, svgElement);
@@ -74,15 +68,21 @@ export default class NodeEventAttacher {
     this.nodeController.moveDescendants(node, deltaX, deltaY);
   }
 
+  handleDragEnd(event, node) {
+    console.log("Ended dragging of: ", node);
+  }
+
+  showNodeContextMenu(node) {
+    this.selectionController.selectNode(node);
+    const { x, y } = mousePositionInstance.getMouseCoordinates();
+    this.nodeContextMenu.showContextMenu(node, x, y);
+  }
+
   handleMouseWheel(event) {
     event.preventDefault();
     if (!this.selectionController.selectedNode) return;
     this.selectionController.updateSelectedNodeDimensions(
       event.deltaY > 0 ? -5 : 5
     );
-  }
-
-  handleDragEnd(event, node) {
-    // Optional: handle drag end logic here
   }
 }

@@ -10,59 +10,78 @@ export default class SvgZoom {
   }
 
   setupZoom() {
-    // Define zoom behavior
-    this.zoomBehavior = d3
-      .zoom()
-      .scaleExtent([0.1, 10]) // Set zoom scale limits
-      .on("zoom", (event) => this.handleZoom(event));
-
-    // Apply zoom behavior to the SVG container group
-    this.svg.call(this.zoomBehavior);
+    try {
+      this.zoomBehavior = d3
+        .zoom()
+        .scaleExtent([0.1, 10])
+        .on("zoom", (event) => this.handleZoom(event));
+      this.svg.call(this.zoomBehavior);
+    } catch (error) {
+      console.error("Error setting up zoom:", error);
+    }
   }
 
   handleZoom(event) {
-    // Apply zoom and pan transformations to the SVG group
-    const { transform } = event;
-    this.svgGroup.attr("transform", transform.toString());
+    try {
+      const { transform } = event;
+      this.svgGroup.attr("transform", transform.toString());
+    } catch (error) {
+      console.error("Error handling zoom event:", error);
+    }
   }
 
   applyZoom() {
-    const svgGroup = d3.select(this.svg.node());
-    let currentTransform = d3.zoomTransform(svgGroup.node());
+    try {
+      const svgGroup = d3.select(this.svg.node());
+      let currentTransform = d3.zoomTransform(svgGroup.node());
 
-    const svg = d3.select(this.svg.node());
-    svg
-      .transition()
-      .duration(100)
-      .attr(
-        "transform",
-        `translate(${currentTransform.x}, ${currentTransform.y}) scale(${this.zoomScale})`
-      );
+      svgGroup
+        .transition()
+        .duration(100)
+        .attr(
+          "transform",
+          `translate(${currentTransform.x}, ${currentTransform.y}) scale(${this.zoomScale})`
+        );
+    } catch (error) {
+      console.error("Error applying zoom:", error);
+    }
   }
 
   zoomIn() {
-    this.zoomScale += 0.05;
-    this.applyZoom();
+    try {
+      this.zoomScale += 0.05;
+      this.applyZoom();
+    } catch (error) {
+      console.error("Error zooming in:", error);
+    }
   }
 
   zoomOut() {
-    this.zoomScale -= 0.05;
-    this.applyZoom();
+    try {
+      this.zoomScale -= 0.05;
+      this.applyZoom();
+    } catch (error) {
+      console.error("Error zooming out:", error);
+    }
   }
 
   pan(addX, addY) {
-    const svgGroup = d3.select(this.svg.node());
-    let currentTransform = d3.zoomTransform(svgGroup.node());
+    try {
+      const svgGroup = d3.select(this.svg.node());
+      let currentTransform = d3.zoomTransform(svgGroup.node());
 
-    currentTransform.x += addX;
-    currentTransform.y += addY;
+      currentTransform.x += addX;
+      currentTransform.y += addY;
 
-    svgGroup
-      .transition()
-      .duration(100)
-      .attr(
-        "transform",
-        `translate(${currentTransform.x}, ${currentTransform.y}) scale(${this.zoomScale})`
-      );
+      svgGroup
+        .transition()
+        .duration(100)
+        .attr(
+          "transform",
+          `translate(${currentTransform.x}, ${currentTransform.y}) scale(${this.zoomScale})`
+        );
+    } catch (error) {
+      console.error("Error during pan operation:", error);
+    }
   }
 }

@@ -43,7 +43,10 @@ export default class SystemCore {
 
   initializeHandlers() {
     this.dragAndDropHandler = new DragAndDropHandler();
-    this.keyboardHandler = new KeyboardHandler(this);
-    this.topMenuHandler = new TopMenuHandler(this);
+    this.keyboardHandler = new KeyboardHandler(
+      this.nodeController,
+      this.mindmapLocalStorage
+    );
+    this.topMenuHandler = new TopMenuHandler(this.nodeController);
   }
 }

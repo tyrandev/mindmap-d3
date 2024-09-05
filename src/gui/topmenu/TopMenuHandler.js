@@ -8,9 +8,8 @@ import JsonExporter from "../../data/serialization/JsonExporter.js";
 import JsonImporter from "../../data/serialization/JsonImporter.js";
 
 export default class TopMenuHandler {
-  constructor(systemCore) {
-    this.systemCore = systemCore;
-    this.nodeController = this.systemCore.nodeController;
+  constructor(nodeController) {
+    this.nodeController = nodeController;
     this.modeManager = MouseModeManager;
     this.jsonExporter = new JsonExporter(this.nodeController);
     this.JsonImporter = new JsonImporter(this.nodeController);
