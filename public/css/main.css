@@ -25,9 +25,10 @@ body {
 }
 
 #canvas-container {
-  transform: scale(1); /* Adjust this value as needed */
+  display: flex;
+  justify-content: center;
+  align-items: center;
   transform-origin: 0 0;
-  max-width: 100%;
   height: 92%;
   overflow: hidden;
   border: 1px solid #ccc;
@@ -41,13 +42,16 @@ canvas {
   display: block;
 }
 
+#mindMapSvg {
+  user-select: none;
+  pointer-events: all;
+  min-width: 10000px !important;
+  min-height: 6000px !important;
+}
+
 #mindMapSvg:focus {
   outline: none;
   border: none;
-}
-
-#mindMapSvg {
-  user-select: none;
 }
 
 #mindMapSvg text {
@@ -56,8 +60,4 @@ canvas {
 
 svg * {
   pointer-events: auto;
-}
-
-#mindMapSvg {
-  pointer-events: all;
 }

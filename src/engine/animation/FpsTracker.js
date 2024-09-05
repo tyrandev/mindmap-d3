@@ -3,6 +3,7 @@ export default class FpsTracker {
     this.frames = 0;
     this.startTime = performance.now();
     this.fps = 0;
+    this.fpsLogging = false;
   }
 
   calculateFps(elapsed) {
@@ -10,7 +11,8 @@ export default class FpsTracker {
   }
 
   logFps() {
-    // console.log(`Current FPS: ${Math.round(this.fps)}`);
+    if (!this.fpsLogging) return;
+    console.log(`Current FPS: ${Math.round(this.fps)}`);
   }
 
   resetCounters(now) {

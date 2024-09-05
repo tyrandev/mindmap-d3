@@ -40,10 +40,8 @@ export default class KeyboardHandler {
       d: this.handleDeleteMindMap.bind(this),
       o: this.handleCenterMindmap.bind(this),
       r: this.handleResetMindmap.bind(this),
-      "+": this.handleIncreaseNodeSize.bind(this),
-      "-": this.handleDecreaseNodeSize.bind(this),
-      "&": this.handleZoomIn.bind(this),
-      é: this.handleZoomOut.bind(this),
+      "+": this.handleZoomIn.bind(this),
+      "-": this.handleZoomOut.bind(this),
     };
 
     if (handlers[key]) {
