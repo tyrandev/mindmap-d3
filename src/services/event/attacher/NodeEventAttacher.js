@@ -1,9 +1,9 @@
 import * as d3 from "d3";
-import NodeContextMenu from "../../gui/contextmenu/NodeContextMenu.js";
-import mousePositionInstance from "../../input/mouse/MousePosition.js";
-import NodeSelectionHandler from "../../input/mouse/NodeSelectionHandler.js";
-import MouseModeManager from "../../input/mouse/state/MouseModeManager.js";
-import * as MouseConstants from "../../constants/MouseConstants.js";
+import NodeContextMenu from "../../../gui/contextmenu/NodeContextMenu.js";
+import mousePositionInstance from "../../../input/mouse/MousePosition.js";
+import NodeSelectionHandler from "../../../input/mouse/NodeSelectionHandler.js";
+import MouseModeManager from "../../../input/mouse/state/MouseModeManager.js";
+import * as MouseConstants from "../../../constants/MouseConstants.js";
 
 // TODO: create svgEventAttacher which would open svgContextMenu
 

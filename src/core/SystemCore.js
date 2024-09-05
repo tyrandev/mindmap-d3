@@ -8,8 +8,8 @@ import DragAndDropHandler from "../util/file/DragAndDropHandler.js";
 import MindmapLocalStorage from "../data/persistence/MindmapLocalStorage.js";
 import KeyboardHandler from "../input/keyboard/KeyboardHandler.js";
 import TopMenuHandler from "../gui/topmenu/TopMenuHandler.js";
-import SvgEventAttacher from "../services/event/SvgEventAttacher.js";
-import NodeEventAttacher from "../services/event/NodeEventAttacher.js";
+import SvgEventAttacher from "../services/event/attacher/SvgEventAttacher.js";
+import NodeEventAttacher from "../services/event/attacher/NodeEventAttacher.js";
 
 export default class SystemCore {
   startApplication() {
