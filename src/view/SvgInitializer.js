@@ -3,22 +3,28 @@ import * as d3 from "d3";
 const SVG_MINDMAP_SELECTOR = "#mindMapSvg";
 
 class SvgInitializer {
-  constructor(svgElement) {
-    this.svgElement = svgElement;
-    this.svg = d3.select(svgElement);
-  }
-
-  initialize() {
+  constructor(svgManager) {
+    this.svgManager = svgManager; // Reference to SvgManager instance
+    this.svgElement = d3.select(SVG_MINDMAP_SELECTOR).node();
     if (!this.svgElement) {
       throw new Error(
         `SVG element with selector ${SVG_MINDMAP_SELECTOR} not found.`
       );
     }
-    const svgWidth = this.svgElement.clientWidth;
-    const svgHeight = this.svgElement.clientHeight;
-    this.svg.attr("width", svgWidth).attr("height", svgHeight);
-    this.svgGroup = this.svg.append("g");
-    return { svgWidth, svgHeight, svgGroup: this.svgGroup };
+    this.svg = d3.select(this.svgElement);
+    this.initializeSvg();
+    this.preventDefaultContextMenu();
+    this.enableFocus();
+    this.svgManager.svg = this.svg;
+    this.svgManager.svgWidth = this.svgElement.clientWidth;
+    this.svgManager.svgHeight = this.svgElement.clientHeight;
+    this.svgManager.svgGroup = this.svg.append("g");
+  }
+
+  initializeSvg() {
+    this.svg
+      .attr("width", this.svgElement.clientWidth)
+      .attr("height", this.svgElement.clientHeight);
   }
 
   preventDefaultContextMenu() {

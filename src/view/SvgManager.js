@@ -1,37 +1,18 @@
-import * as d3 from "d3";
 import SvgInitializer from "./SvgInitializer.js";
 import SvgZoom from "./SvgZoom.js";
-
-const SVG_MINDMAP_SELECTOR = "#mindMapSvg";
 
 class SvgManager {
   constructor() {
     if (SvgManager.instance) {
       return SvgManager.instance;
     }
+    SvgManager.instance = this;
     this.svg = null;
     this.svgWidth = 0;
     this.svgHeight = 0;
-    SvgManager.instance = this;
-    this.initialize();
+    this.svgGroup = null;
+    this.SvgInitializer = new SvgInitializer(this);
     this.svgZoom = new SvgZoom(this.svg, this.svgGroup);
-  }
-
-  initialize() {
-    const svgElement = d3.select(SVG_MINDMAP_SELECTOR).node();
-    if (!svgElement) {
-      throw new Error(
-        `SVG element with selector ${SVG_MINDMAP_SELECTOR} not found.`
-      );
-    }
-    const svgInitializer = new SvgInitializer(svgElement);
-    const { svgWidth, svgHeight, svgGroup } = svgInitializer.initialize();
-    this.svgWidth = svgWidth;
-    this.svgHeight = svgHeight;
-    this.svgGroup = svgGroup;
-    this.svg = d3.select(SVG_MINDMAP_SELECTOR);
-    svgInitializer.preventDefaultContextMenu();
-    svgInitializer.enableFocus();
   }
 
   getSvg() {
