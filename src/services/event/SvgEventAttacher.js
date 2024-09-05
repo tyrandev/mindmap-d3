@@ -28,6 +28,7 @@ export default class SvgEventAttacher {
     if (event.button === 0) {
       MouseModeManager.setMode(MouseConstants.MOUSE_MODES.NORMAL);
       this.svgContextMenu.hideContextMenu();
+      this.selectionController.unselectNode();
     }
   }
 

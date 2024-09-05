@@ -29,7 +29,7 @@ export default class ContextMenu {
 
   hideContextMenu() {
     this.contextMenu.style.display = "none";
-    this.svg.focus(); // Regain focus on the SVG element
+    this.svg.focus();
   }
 
   handleDocumentClick(event) {
@@ -50,7 +50,7 @@ export default class ContextMenu {
 
   ensureSvgFocusable() {
     if (this.svg) {
-      this.svg.setAttribute("tabindex", "0"); // Make sure SVG is focusable
+      this.svg.setAttribute("tabindex", "0");
     } else {
       console.error("SVG element not found.");
     }
