@@ -19,7 +19,7 @@ export default class MouseHandler {
     this.colorPicker = ColorPicker.getColorPicker();
     this.modeManager = MouseModeManager;
     this.wheelHandler = new WheelHandler(this.selectionController);
-    this.rightClickHandler = new RightClickHandler(systemCore);
+    this.rightClickHandler = new RightClickHandler(this.nodeController);
     this.nodeSelectionHandler = new NodeSelectionHandler(
       this.selectionController,
       this.nodeController,

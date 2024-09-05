@@ -2,9 +2,9 @@ import ContextMenu from "./ContextMenu.js";
 import ColorPicker from "../topmenu/ColorPicker.js";
 
 export default class NodeContextMenu extends ContextMenu {
-  constructor(systemCore) {
-    super(systemCore, "node-context-menu");
-    this.nodeController = this.systemCore.nodeController;
+  constructor(nodeController) {
+    super(nodeController, "node-context-menu");
+    this.nodeController = nodeController;
     this.selectionController = this.nodeController.selectionController;
     this.colorPicker = ColorPicker.getColorPicker();
     this.handleBorderColorChange = this.handleBorderColorChange.bind(this);

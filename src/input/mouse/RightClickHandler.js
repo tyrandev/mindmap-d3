@@ -5,13 +5,12 @@ import MousePosition from "./MousePosition.js";
 import MouseModeManager from "./state/MouseModeManager.js";
 
 export default class RightClickHandler {
-  constructor(systemCore) {
-    this.systemCore = systemCore;
+  constructor(nodeController) {
     this.modeManager = MouseModeManager;
-    this.nodeController = this.systemCore.nodeController;
+    this.nodeController = nodeController;
     this.selectionController = this.nodeController.selectionController;
-    this.nodeContextMenu = new NodeContextMenu(systemCore);
-    this.canvasContextMenu = new CanvasContextMenu(systemCore);
+    this.nodeContextMenu = new NodeContextMenu(nodeController);
+    this.canvasContextMenu = new CanvasContextMenu(nodeController);
   }
 
   handleRightClick(event) {
