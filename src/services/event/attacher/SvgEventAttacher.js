@@ -2,6 +2,7 @@ import SvgContextMenu from "../../../gui/contextmenu/SvgContextMenu.js";
 import mousePositionInstance from "../../../input/mouse/MousePosition.js";
 import MouseModeManager from "../../../input/mouse/state/MouseModeManager.js";
 import * as MouseConstants from "../../../constants/MouseConstants.js";
+import ContextMenuEventEmitter from "../emitter/ContextMenuEventEmitter.js";
 
 export default class SvgEventAttacher {
   constructor(svg, nodeController) {
@@ -29,6 +30,7 @@ export default class SvgEventAttacher {
       MouseModeManager.setMode(MouseConstants.MOUSE_MODES.NORMAL);
       this.svgContextMenu.hideContextMenu();
       this.selectionController.unselectNode();
+      ContextMenuEventEmitter.emit("onHideContextMenu");
     }
   }
 

@@ -4,6 +4,7 @@ import mousePositionInstance from "../../../input/mouse/MousePosition.js";
 import NodeSelectionHandler from "../../../input/mouse/NodeSelectionHandler.js";
 import MouseModeManager from "../../../input/mouse/state/MouseModeManager.js";
 import * as MouseConstants from "../../../constants/MouseConstants.js";
+import ContextMenuEventEmitter from "../emitter/ContextMenuEventEmitter.js";
 
 export default class NodeEventAttacher {
   constructor(svg, nodeController) {
@@ -38,8 +39,8 @@ export default class NodeEventAttacher {
     if (event.button === 0) {
       console.log("Node clicked:", node);
       this.selectionController.selectNode(node);
-      this.nodeContextMenu.hideContextMenu();
       this.nodeSelectionHandler.handleNodeSelection(node);
+      ContextMenuEventEmitter.emit("onHideContextMenu");
     } else if (event.button === 2) {
       MouseModeManager.setMode(MouseConstants.MOUSE_MODES.NORMAL);
       this.showNodeContextMenu(node);
