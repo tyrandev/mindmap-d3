@@ -6,17 +6,13 @@ import svgManager from "../../view/SvgManager.js";
 import NodeEventAttacher from "../../services/event/NodeEventAttacher.js";
 
 export default class SvgCreator {
-  constructor(nodeContainer, nodeController) {
+  constructor(nodeContainer, nodeEventAttacher) {
     this.nodeContainer = nodeContainer;
-    this.nodeController = nodeController;
+    this.nodeEventAttacher = nodeEventAttacher;
     this.svg = svgManager.getSvg();
     this.renderedNodes = new Set();
     this.CircleSvg = new CircleSvg(this.svg);
     this.RectangleSvg = new RectangleSvg(this.svg);
-    this.nodeEventAttacher = new NodeEventAttacher(
-      svgManager.getSvg(),
-      this.nodeController
-    );
   }
 
   drawNodes() {

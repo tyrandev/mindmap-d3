@@ -8,7 +8,7 @@ export default class BorderlessRectangle extends Rectangle {
 
   makeInvisible() {
     this.fillColor = "white";
-    this.borderColor = "rgba(0, 0, 0, 0)"; // Transparent border
+    this.borderColor = "rgba(0, 0, 0, 0)";
     this.borderWidth = 0;
   }
 
@@ -28,7 +28,7 @@ export default class BorderlessRectangle extends Rectangle {
       const childClone = child.clone();
       clone.addChildNode(childClone);
     });
-    clone.makeInvisible(); // Ensure the clone also has the invisible properties
+    clone.makeInvisible();
     return clone;
   }
 

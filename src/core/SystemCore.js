@@ -8,8 +8,8 @@ import DragAndDropHandler from "../util/file/DragAndDropHandler.js";
 import MindmapLocalStorage from "../data/persistence/MindmapLocalStorage.js";
 import KeyboardHandler from "../input/keyboard/KeyboardHandler.js";
 import TopMenuHandler from "../gui/topmenu/TopMenuHandler.js";
-import MouseHandler from "../input/mouse/MouseHandler.js";
 import SvgEventAttacher from "../services/event/SvgEventAttacher.js";
+import NodeEventAttacher from "../services/event/NodeEventAttacher.js";
 
 export default class SystemCore {
   startApplication() {
@@ -17,9 +17,9 @@ export default class SystemCore {
     console.log(BrowserUtil.getBrowser());
     console.log(svgManager.getSvg());
     this.initializeControllers();
+    this.initilizeEventAttachers();
     this.initializeEngine();
     this.initializeHandlers();
-    this.initilizeEventAttachers();
   }
 
   initializeControllers() {
@@ -32,13 +32,12 @@ export default class SystemCore {
     this.dragAndDropHandler = new DragAndDropHandler();
     this.keyboardHandler = new KeyboardHandler(this);
     this.topMenuHandler = new TopMenuHandler(this);
-    this.mouseHandler = new MouseHandler(this);
   }
 
   initializeEngine() {
     this.graphicsEngine = new GraphicsEngine(
       this.nodeContainer,
-      this.nodeController
+      this.nodeEventAttacher
     );
   }
 
@@ -47,5 +46,6 @@ export default class SystemCore {
     console.log("SVG found, attaching event listeners.");
     this.svgEventAttacher = new SvgEventAttacher(svg, this.nodeController);
     this.svgEventAttacher.attachEventListeners();
+    this.nodeEventAttacher = new NodeEventAttacher(svg, this.nodeController);
   }
 }
