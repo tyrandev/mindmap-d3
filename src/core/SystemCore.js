@@ -15,7 +15,6 @@ export default class SystemCore {
   startApplication() {
     console.log(OSUtil.getOS());
     console.log(BrowserUtil.getBrowser());
-    console.log(svgManager.getSvg());
     this.initializeControllers();
     this.initilizeEventAttachers();
     this.initializeEngine();
@@ -28,10 +27,11 @@ export default class SystemCore {
     this.mindmapLocalStorage = new MindmapLocalStorage(this.nodeController);
   }
 
-  initializeHandlers() {
-    this.dragAndDropHandler = new DragAndDropHandler();
-    this.keyboardHandler = new KeyboardHandler(this);
-    this.topMenuHandler = new TopMenuHandler(this);
+  initilizeEventAttachers() {
+    const svg = svgManager.getSvg();
+    this.nodeEventAttacher = new NodeEventAttacher(svg, this.nodeController);
+    this.svgEventAttacher = new SvgEventAttacher(svg, this.nodeController);
+    this.svgEventAttacher.attachEventListeners();
   }
 
   initializeEngine() {
@@ -41,11 +41,9 @@ export default class SystemCore {
     );
   }
 
-  initilizeEventAttachers() {
-    const svg = svgManager.getSvg();
-    console.log("SVG found, attaching event listeners.");
-    this.svgEventAttacher = new SvgEventAttacher(svg, this.nodeController);
-    this.svgEventAttacher.attachEventListeners();
-    this.nodeEventAttacher = new NodeEventAttacher(svg, this.nodeController);
+  initializeHandlers() {
+    this.dragAndDropHandler = new DragAndDropHandler();
+    this.keyboardHandler = new KeyboardHandler(this);
+    this.topMenuHandler = new TopMenuHandler(this);
   }
 }
