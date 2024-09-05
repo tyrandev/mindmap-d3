@@ -22,19 +22,28 @@ export default class CircleSvg extends NodeSvg {
       .attr("stroke-width", circle.borderWidth);
   }
 
-  computeTextLines(circle) {
+  drawNodeText(circle) {
+    const textAttributes = this.calculateTextAttributes(circle);
+    this.drawTextLines(circle, textAttributes);
+  }
+
+  calculateTextAttributes(circle) {
     const limitedText = CircleTextHelper.limitTextCharacterNumber(circle.text);
-    const calculatedFontSize = CircleTextHelper.calculateFontSize(
+    const fontSize = CircleTextHelper.calculateFontSize(
       circle.text,
       circle.radius
     );
     const lines = CircleTextHelper.splitTextIntoLines(
       limitedText,
       circle.radius,
-      calculatedFontSize
+      fontSize
     );
 
-    const lineHeight = circle.fontSize + 4;
+    return { fontSize, lines };
+  }
+
+  drawTextLines(circle, { fontSize, lines }) {
+    const lineHeight = fontSize + 4;
 
     lines.forEach((line, index) => {
       this.svg
@@ -44,7 +53,7 @@ export default class CircleSvg extends NodeSvg {
         .attr("text-anchor", "middle")
         .attr("dominant-baseline", "middle")
         .style("fill", circle.textColor || "black")
-        .style("font-size", `${calculatedFontSize}px`)
+        .style("font-size", `${fontSize}px`)
         .style("font-family", "Arial")
         .text(line);
     });
