@@ -195,10 +195,10 @@ export default class KeyboardHandler {
         svgManager.pan(0, step);
         break;
       case "ArrowLeft":
-        svgManager.pan(step, 0);
+        svgManager.pan(-step, 0);
         break;
       case "ArrowRight":
-        svgManager.pan(-step, 0);
+        svgManager.pan(step, 0);
         break;
       default:
         return;
