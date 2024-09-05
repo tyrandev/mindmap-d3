@@ -1,10 +1,12 @@
 import * as d3 from "d3";
+import NodeContextMenu from "../../gui/contextmenu/NodeContextMenu";
 
 export default class EventAttacher {
   constructor(svg, nodeController) {
     this.svg = svg;
     this.nodeController = nodeController;
     this.selectionController = this.nodeController.selectionController;
+    this.nodeContextMenu = new NodeContextMenu(nodeController);
     this.dragOffset = { x: 0, y: 0 };
   }
 
@@ -21,31 +23,33 @@ export default class EventAttacher {
       .on("end", (event) => this.handleDragEnd(event, node));
 
     selection
-      .on("mouseover", (event) => this.handleCircleMouseOver(event, node))
-      .on("mouseout", (event) => this.handleCircleMouseOut(event, node))
-      .on("click", (event) => this.handleCircleClick(event, node))
+      .on("mousedown", (event) => this.handleNodeClick(event, node))
       .call(drag);
   }
 
-  handleCircleClick(event, node) {
-    console.log("Circle clicked:", node);
+  handleNodeClick(event, node) {
+    event.preventDefault();
+
+    if (event.button === 0) {
+      // Left click
+      console.log("Node clicked:", node);
+      this.selectionController.selectNode(node);
+      this.nodeContextMenu.hideContextMenu();
+    } else if (event.button === 2) {
+      // Right click
+      this.showNodeContextMenu(node);
+    }
   }
 
-  handleCircleMouseOver(event, node) {
-    // Handle mouse over, e.g., highlight the circle
-    // d3.select(event.currentTarget).attr("stroke", "red").attr("stroke-width", circle.borderWidth * 2);
-  }
-
-  handleCircleMouseOut(event, node) {
-    // Handle mouse out, e.g., revert highlight
-    // d3.select(event.currentTarget).attr("stroke", circle.borderColor).attr("stroke-width", circle.borderWidth);
+  showNodeContextMenu(node) {
+    this.selectionController.selectNode(node);
+    this.nodeContextMenu.showContextMenu(node, node.x, node.y);
   }
 
   handleDragStart(event, node) {
     const svgElement = this.svg.node();
     const [x, y] = d3.pointer(event, svgElement);
 
-    // Calculate the offset between the mouse pointer and the circle center
     this.dragOffset = {
       x: x - node.x,
       y: y - node.y,
@@ -56,11 +60,16 @@ export default class EventAttacher {
     const svgElement = this.svg.node();
     const [x, y] = d3.pointer(event, svgElement);
 
-    // Use the offset to update the circle's position
+    const deltaX = x - this.dragOffset.x - node.x;
+    const deltaY = y - this.dragOffset.y - node.y;
+
     node.x = x - this.dragOffset.x;
     node.y = y - this.dragOffset.y;
 
     d3.select(event.sourceEvent.target).attr("cx", node.x).attr("cy", node.y);
+
+    // Move the node's descendants
+    this.nodeController.moveDescendants(node, deltaX, deltaY);
   }
 
   handleDragEnd(event, node) {

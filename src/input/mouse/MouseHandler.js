@@ -33,10 +33,10 @@ export default class MouseHandler {
     svg.addEventListener("mousedown", this.handleSvgMouseDown.bind(this));
     // svg.addEventListener("mousemove", this.handleSvgMouseMove.bind(this));
     // svg.addEventListener("mouseup", this.handleSvgMouseUp.bind(this));
-    svg.addEventListener(
-      "contextmenu",
-      this.rightClickHandler.handleRightClick.bind(this.rightClickHandler)
-    );
+    // svg.addEventListener(
+    //   "contextmenu",
+    //   this.rightClickHandler.handleRightClick.bind(this.rightClickHandler)
+    // );
     svg.addEventListener("mouseleave", this.handleSvgMouseLeave.bind(this));
     svg.addEventListener("click", this.handleSvgClick.bind(this));
   }
