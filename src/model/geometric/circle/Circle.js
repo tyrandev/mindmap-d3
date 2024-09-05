@@ -1,4 +1,3 @@
-import CircleTextHelper from "./CircleTextHelper.js";
 import Node from "../node/Node.js";
 import * as CircleConstants from "../../../constants/CircleConstants.js";
 
@@ -62,12 +61,7 @@ export default class Circle extends Node {
   }
 
   setText(newText) {
-    this.text = CircleTextHelper.limitTextCharacterNumber(newText);
-    this.fontSize = CircleTextHelper.calculateFontSize(this.text, this.radius);
-    if (isNaN(this.fontSize) || this.fontSize <= 0) {
-      console.error(`Invalid fontSize calculated: ${this.fontSize}`);
-      this.fontSize = CircleConstants.BASE_FONT_SIZE;
-    }
+    this.text = newText;
   }
 
   toJSON() {

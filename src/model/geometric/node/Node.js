@@ -13,6 +13,7 @@ export default class Node {
     this.borderColor = "black";
     this.lineColor = "black";
     this.textColor = "black";
+    this.fontSize = 12;
     this.borderWidth = 1;
     this.collapsed = null;
     this.children = [];

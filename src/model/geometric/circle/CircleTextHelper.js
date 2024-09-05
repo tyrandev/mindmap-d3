@@ -62,4 +62,16 @@ export default class CircleTextHelper {
     const fontSize = this.calculateFontSize(text, radius);
     return this.splitTextIntoLines(text, radius, fontSize);
   }
+
+  static treatText(text, radius, fontSize) {
+    const limitedText = this.limitTextCharacterNumber(text);
+    const lines = this.splitTextIntoLines(limitedText, radius, fontSize);
+    const calculatedFontSize = this.calculateFontSize(limitedText, radius);
+
+    return {
+      text: limitedText,
+      radius,
+      fontSize: calculatedFontSize,
+    };
+  }
 }

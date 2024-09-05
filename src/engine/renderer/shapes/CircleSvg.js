@@ -6,9 +6,9 @@ import Rectangle from "../../../model/geometric/rectangle/Rectangle.js";
 
 export default class CircleSvg extends NodeSvg {
   drawShapeWithText(circle) {
-    const circleSelection = this.drawCircleShape(circle); // Draw circle
-    this.drawNodeText(circle); // Draw text inside the circle
-    return circleSelection; // Return the selection for event attachment
+    const circleSelection = this.drawCircleShape(circle);
+    this.drawNodeText(circle);
+    return circleSelection;
   }
 
   drawCircleShape(circle) {
@@ -23,10 +23,15 @@ export default class CircleSvg extends NodeSvg {
   }
 
   computeTextLines(circle) {
-    const lines = CircleTextHelper.splitTextIntoLines(
+    const limitedText = CircleTextHelper.limitTextCharacterNumber(circle.text);
+    const calculatedFontSize = CircleTextHelper.calculateFontSize(
       circle.text,
+      circle.radius
+    );
+    const lines = CircleTextHelper.splitTextIntoLines(
+      limitedText,
       circle.radius,
-      circle.fontSize
+      calculatedFontSize
     );
 
     const lineHeight = circle.fontSize + 4;
@@ -39,7 +44,7 @@ export default class CircleSvg extends NodeSvg {
         .attr("text-anchor", "middle")
         .attr("dominant-baseline", "middle")
         .style("fill", circle.textColor || "black")
-        .style("font-size", `${circle.fontSize}px`)
+        .style("font-size", `${calculatedFontSize}px`)
         .style("font-family", "Arial")
         .text(line);
     });
