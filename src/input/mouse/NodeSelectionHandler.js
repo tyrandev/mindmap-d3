@@ -3,9 +3,9 @@ import ColorPicker from "../../gui/topmenu/ColorPicker.js";
 import MouseModeManager from "./state/MouseModeManager.js";
 
 export default class NodeSelectionHandler {
-  constructor(selectionController, nodeController) {
-    this.selectionController = selectionController;
+  constructor(nodeController) {
     this.nodeController = nodeController;
+    this.selectionController = this.nodeController.selectionController;
     this.modeManager = MouseModeManager;
     this.colorPicker = ColorPicker.getColorPicker();
   }

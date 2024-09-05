@@ -1,5 +1,9 @@
 import * as d3 from "d3";
 import NodeContextMenu from "../../gui/contextmenu/NodeContextMenu";
+import mousePositionInstance from "../../input/mouse/MousePosition";
+import NodeSelectionHandler from "../../input/mouse/NodeSelectionHandler";
+import MouseModeManager from "../../input/mouse/state/MouseModeManager";
+import * as MouseConstants from "../../constants/MouseConstants.js";
 
 export default class EventAttacher {
   constructor(svg, nodeController) {
@@ -7,6 +11,7 @@ export default class EventAttacher {
     this.nodeController = nodeController;
     this.selectionController = this.nodeController.selectionController;
     this.nodeContextMenu = new NodeContextMenu(nodeController);
+    this.nodeSelectionHandler = new NodeSelectionHandler(this.nodeController);
     this.dragOffset = { x: 0, y: 0 };
   }
 
@@ -24,26 +29,27 @@ export default class EventAttacher {
 
     selection
       .on("mousedown", (event) => this.handleNodeClick(event, node))
+      .on("wheel", this.handleMouseWheel.bind(this))
       .call(drag);
   }
 
   handleNodeClick(event, node) {
     event.preventDefault();
-
     if (event.button === 0) {
-      // Left click
       console.log("Node clicked:", node);
       this.selectionController.selectNode(node);
       this.nodeContextMenu.hideContextMenu();
+      this.nodeSelectionHandler.handleNodeSelection(node);
     } else if (event.button === 2) {
-      // Right click
+      MouseModeManager.setMode(MouseConstants.MOUSE_MODES.NORMAL);
       this.showNodeContextMenu(node);
     }
   }
 
   showNodeContextMenu(node) {
     this.selectionController.selectNode(node);
-    this.nodeContextMenu.showContextMenu(node, node.x, node.y);
+    const { x, y } = mousePositionInstance.getMouseCoordinates();
+    this.nodeContextMenu.showContextMenu(node, x, y);
   }
 
   handleDragStart(event, node) {
@@ -59,17 +65,20 @@ export default class EventAttacher {
   handleDrag(event, node) {
     const svgElement = this.svg.node();
     const [x, y] = d3.pointer(event, svgElement);
-
     const deltaX = x - this.dragOffset.x - node.x;
     const deltaY = y - this.dragOffset.y - node.y;
-
     node.x = x - this.dragOffset.x;
     node.y = y - this.dragOffset.y;
-
     d3.select(event.sourceEvent.target).attr("cx", node.x).attr("cy", node.y);
-
-    // Move the node's descendants
     this.nodeController.moveDescendants(node, deltaX, deltaY);
+  }
+
+  handleMouseWheel(event) {
+    event.preventDefault();
+    if (!this.selectionController.selectedNode) return;
+    this.selectionController.updateSelectedNodeDimensions(
+      event.deltaY > 0 ? -5 : 5
+    );
   }
 
   handleDragEnd(event, node) {
