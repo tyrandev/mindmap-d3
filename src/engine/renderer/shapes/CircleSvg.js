@@ -1,10 +1,10 @@
-import NodeRenderer from "./NodeRenderer.js";
+import NodeSvg from "./NodeSvg.js";
 import CircleMath from "../../math/CircleMath.js";
 import CircleTextHelper from "../../../model/geometric/circle/CircleTextHelper.js";
 import Circle from "../../../model/geometric/circle/Circle.js";
 import Rectangle from "../../../model/geometric/rectangle/Rectangle.js";
 
-export default class CircleRenderer extends NodeRenderer {
+export default class CircleSvg extends NodeSvg {
   drawShapeWithText(circle) {
     const circleSelection = this.drawCircleShape(circle); // Draw circle
     this.drawNodeText(circle); // Draw text inside the circle

@@ -1,10 +1,10 @@
-import ContentRenderer from "./renderer/ContentRenderer.js";
+import SvgCreator from "./renderer/SvgCreator.js";
 import AnimationController from "./animation/AnimationController.js";
 import svgManager from "../view/SvgManager.js";
 
 export default class GraphicsEngine {
   constructor(nodeContainer) {
-    this.nodeRenderer = new ContentRenderer(nodeContainer);
+    this.svgCreator = new SvgCreator(nodeContainer);
     this.animationController = new AnimationController(
       this.onAnimate.bind(this)
     );
@@ -25,6 +25,6 @@ export default class GraphicsEngine {
 
   clearAndRenderSvg() {
     svgManager.getSvg().selectAll("*").remove();
-    this.nodeRenderer.drawNodes();
+    this.svgCreator.drawNodes();
   }
 }

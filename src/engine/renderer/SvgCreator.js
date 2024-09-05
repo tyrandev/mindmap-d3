@@ -1,16 +1,18 @@
-import CircleRenderer from "./shapes/CircleRenderer.js";
-import RectangleRenderer from "./shapes/RectangleRenderer.js";
+import CircleSvg from "./shapes/CircleSvg.js";
+import RectangleSvg from "./shapes/RectangleSvg.js";
 import Rectangle from "../../model/geometric/rectangle/Rectangle.js";
 import Circle from "../../model/geometric/circle/Circle.js";
 import svgManager from "../../view/SvgManager.js";
+import EventAttacher from "../../services/event/EventAttacher.js";
 
-export default class ContentRenderer {
+export default class SvgCreator {
   constructor(nodeContainer) {
     this.nodeContainer = nodeContainer;
     this.svg = svgManager.getSvg();
     this.renderedNodes = new Set();
-    this.circleRenderer = new CircleRenderer(this.svg);
-    this.rectangleRenderer = new RectangleRenderer(this.svg);
+    this.CircleSvg = new CircleSvg(this.svg);
+    this.RectangleSvg = new RectangleSvg(this.svg);
+    this.eventAttacher = new EventAttacher(svgManager.getSvg());
   }
 
   drawNodes() {
@@ -20,16 +22,17 @@ export default class ContentRenderer {
   }
 
   renderNode(node) {
-    this.renderNodeContent(node);
+    const nodeSelection = this.renderNodeContent(node);
+    this.eventAttacher.attachEventListeners(nodeSelection, node);
     this.trackNodeAsRendered(node);
     this.renderNodeChildren(node);
   }
 
   renderNodeContent(node) {
     if (node instanceof Rectangle) {
-      this.rectangleRenderer.render(node);
+      return this.RectangleSvg.render(node);
     } else if (node instanceof Circle) {
-      this.circleRenderer.render(node);
+      return this.CircleSvg.render(node);
     } else {
       throw new Error("Trying to render unsupported type of node");
     }

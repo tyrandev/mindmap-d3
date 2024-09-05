@@ -1,10 +1,10 @@
-import NodeRenderer from "./NodeRenderer.js";
+import NodeSvg from "./NodeSvg.js";
 import RectangleMath from "../../math/RectangleMath.js";
 import Circle from "../../../model/geometric/circle/Circle.js";
 import Rectangle from "../../../model/geometric/rectangle/Rectangle.js";
 import * as d3 from "d3";
 
-export default class RectangleRenderer extends NodeRenderer {
+export default class RectangleSvg extends NodeSvg {
   drawShapeWithText(rectangle) {
     const rectangleSelection = this.drawRectangleShape(rectangle);
     this.drawNodeText(rectangle);

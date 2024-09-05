@@ -1,7 +1,6 @@
 import LineMath from "../../math/LineMath.js";
 import CollapseIndicator from "../../../model/indicators/CollapseIndicator.js";
 import CollapseIndicatorRenderer from "../indicators/CollapseIndicatorRenderer.js";
-import EventAttacher from "../../../services/event/EventAttacher.js";
 import * as d3 from "d3";
 
 export default class NodeRenderer {
@@ -11,15 +10,12 @@ export default class NodeRenderer {
     }
     this.svg = svg;
     this.collapseIndicatorRenderer = new CollapseIndicatorRenderer();
-    this.eventAttacher = new EventAttacher(svg);
   }
 
   render(node) {
     if (node.hasCollapsedAncestor()) return;
 
     const nodeSelection = this.drawShapeWithText(node);
-
-    this.eventAttacher.attachEventListeners(nodeSelection, node);
 
     if (!node.collapsed) {
       node.children.forEach((child) => {
@@ -28,6 +24,7 @@ export default class NodeRenderer {
     } else {
       this.renderCollapseIndicator(node);
     }
+    return nodeSelection;
   }
 
   drawShapeWithText(node) {
