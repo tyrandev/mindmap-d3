@@ -3,8 +3,9 @@ import AnimationController from "./animation/AnimationController.js";
 import svgManager from "../view/SvgManager.js";
 
 export default class GraphicsEngine {
-  constructor(nodeContainer) {
-    this.svgCreator = new SvgCreator(nodeContainer);
+  constructor(nodeContainer, nodeController) {
+    this.nodeController = nodeController;
+    this.svgCreator = new SvgCreator(nodeContainer, nodeController);
     this.animationController = new AnimationController(
       this.onAnimate.bind(this)
     );

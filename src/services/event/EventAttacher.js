@@ -1,8 +1,10 @@
 import * as d3 from "d3";
 
 export default class EventAttacher {
-  constructor(svg) {
+  constructor(svg, nodeController) {
     this.svg = svg;
+    this.nodeController = nodeController;
+    this.selectionController = this.nodeController.selectionController;
     this.dragOffset = { x: 0, y: 0 };
   }
 
@@ -21,7 +23,7 @@ export default class EventAttacher {
     selection
       .on("mouseover", (event) => this.handleCircleMouseOver(event, node))
       .on("mouseout", (event) => this.handleCircleMouseOut(event, node))
-      .on("click", (event) => this.handleCircleClick(event, node)) // Add click event listener
+      .on("click", (event) => this.handleCircleClick(event, node))
       .call(drag);
   }
 

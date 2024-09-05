@@ -6,13 +6,17 @@ import svgManager from "../../view/SvgManager.js";
 import EventAttacher from "../../services/event/EventAttacher.js";
 
 export default class SvgCreator {
-  constructor(nodeContainer) {
+  constructor(nodeContainer, nodeController) {
     this.nodeContainer = nodeContainer;
+    this.nodeController = nodeController;
     this.svg = svgManager.getSvg();
     this.renderedNodes = new Set();
     this.CircleSvg = new CircleSvg(this.svg);
     this.RectangleSvg = new RectangleSvg(this.svg);
-    this.eventAttacher = new EventAttacher(svgManager.getSvg());
+    this.eventAttacher = new EventAttacher(
+      svgManager.getSvg(),
+      this.nodeController
+    );
   }
 
   drawNodes() {
@@ -23,7 +27,7 @@ export default class SvgCreator {
 
   renderNode(node) {
     const nodeSelection = this.renderNodeContent(node);
-    this.eventAttacher.attachEventListeners(nodeSelection, node);
+    this.addEventListeners(nodeSelection, node);
     this.trackNodeAsRendered(node);
     this.renderNodeChildren(node);
   }
@@ -36,6 +40,10 @@ export default class SvgCreator {
     } else {
       throw new Error("Trying to render unsupported type of node");
     }
+  }
+
+  addEventListeners(nodeSelection, node) {
+    this.eventAttacher.attachEventListeners(nodeSelection, node);
   }
 
   trackNodeAsRendered(node) {

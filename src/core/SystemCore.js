@@ -34,6 +34,9 @@ export default class SystemCore {
   }
 
   initializeEngine() {
-    this.graphicsEngine = new GraphicsEngine(this.nodeContainer);
+    this.graphicsEngine = new GraphicsEngine(
+      this.nodeContainer,
+      this.nodeController
+    );
   }
 }
