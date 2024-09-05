@@ -25,7 +25,7 @@ export default class MouseHandler {
       this.nodeController,
       this.modeManager
     );
-    // this.initMouseListeners();
+    this.initMouseListeners();
   }
 
   initMouseListeners() {

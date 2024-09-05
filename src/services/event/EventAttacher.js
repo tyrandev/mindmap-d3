@@ -1,32 +1,67 @@
+import * as d3 from "d3";
+
 export default class EventAttacher {
-  constructor() {
-    // Initialize with any shared state or configuration if needed
+  constructor(svg) {
+    this.svg = svg;
+    this.dragOffset = { x: 0, y: 0 };
   }
 
   attachEventListeners(selection, node) {
-    if (!selection) {
-      //   console.error("Selection is undefined or null");
+    if (!selection || selection.empty()) {
+      console.error("Selection is undefined, null, or empty");
       return;
     }
 
+    const drag = d3
+      .drag()
+      .on("start", (event) => this.handleDragStart(event, node))
+      .on("drag", (event) => this.handleDrag(event, node))
+      .on("end", (event) => this.handleDragEnd(event, node));
+
     selection
-      .on("click", (event) => this.handleNodeClick(event, node))
-      .on("mouseover", (event) => this.handleNodeMouseOver(event, node))
-      .on("mouseout", (event) => this.handleNodeMouseOut(event, node));
+      .on("mouseover", (event) => this.handleCircleMouseOver(event, node))
+      .on("mouseout", (event) => this.handleCircleMouseOut(event, node))
+      .on("click", (event) => this.handleCircleClick(event, node)) // Add click event listener
+      .call(drag);
   }
 
-  handleNodeClick(event, node) {
-    console.log("Node clicked:", node);
-    // Implement your click logic here
+  handleCircleClick(event, node) {
+    console.log("Circle clicked:", node);
   }
 
-  handleNodeMouseOver(event, node) {
-    console.log("Mouse over node:", node);
-    // Implement your mouse over logic here
+  handleCircleMouseOver(event, node) {
+    // Handle mouse over, e.g., highlight the circle
+    // d3.select(event.currentTarget).attr("stroke", "red").attr("stroke-width", circle.borderWidth * 2);
   }
 
-  handleNodeMouseOut(event, node) {
-    console.log("Mouse out of node:", node);
-    // Implement your mouse out logic here
+  handleCircleMouseOut(event, node) {
+    // Handle mouse out, e.g., revert highlight
+    // d3.select(event.currentTarget).attr("stroke", circle.borderColor).attr("stroke-width", circle.borderWidth);
+  }
+
+  handleDragStart(event, node) {
+    const svgElement = this.svg.node();
+    const [x, y] = d3.pointer(event, svgElement);
+
+    // Calculate the offset between the mouse pointer and the circle center
+    this.dragOffset = {
+      x: x - node.x,
+      y: y - node.y,
+    };
+  }
+
+  handleDrag(event, node) {
+    const svgElement = this.svg.node();
+    const [x, y] = d3.pointer(event, svgElement);
+
+    // Use the offset to update the circle's position
+    node.x = x - this.dragOffset.x;
+    node.y = y - this.dragOffset.y;
+
+    d3.select(event.sourceEvent.target).attr("cx", node.x).attr("cy", node.y);
+  }
+
+  handleDragEnd(event, node) {
+    // Optional: handle drag end logic here
   }
 }

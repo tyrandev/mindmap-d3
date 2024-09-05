@@ -6,9 +6,10 @@ import * as d3 from "d3";
 
 export default class RectangleRenderer extends NodeRenderer {
   drawShapeWithText(rectangle) {
-    this.drawRectangleShape(rectangle);
+    const rectangleSelection = this.drawRectangleShape(rectangle);
     this.drawNodeText(rectangle);
     this.renderCollapseIndicator(rectangle);
+    return rectangleSelection;
   }
 
   drawRectangleShape(rectangle) {
@@ -17,14 +18,14 @@ export default class RectangleRenderer extends NodeRenderer {
     );
 
     if (allRadiiPositive) {
-      this.drawRoundedRectangle(rectangle);
+      return this.drawRoundedRectangle(rectangle);
     } else {
-      this.drawStandardRectangle(rectangle);
+      return this.drawStandardRectangle(rectangle);
     }
   }
 
   drawStandardRectangle(rectangle) {
-    this.svg
+    return this.svg
       .append("rect")
       .attr("x", rectangle.x - rectangle.actualWidth / 2)
       .attr("y", rectangle.y - rectangle.height / 2)
@@ -43,7 +44,7 @@ export default class RectangleRenderer extends NodeRenderer {
         rectangle.cornerRadii
       );
 
-    this.svg
+    return this.svg
       .append("rect")
       .attr("x", rectangle.x - rectangle.actualWidth / 2)
       .attr("y", rectangle.y - rectangle.height / 2)

@@ -11,7 +11,23 @@ export default class NodeRenderer {
     }
     this.svg = svg;
     this.collapseIndicatorRenderer = new CollapseIndicatorRenderer();
-    this.eventAttacher = new EventAttacher();
+    this.eventAttacher = new EventAttacher(svg);
+  }
+
+  render(node) {
+    if (node.hasCollapsedAncestor()) return;
+
+    const nodeSelection = this.drawShapeWithText(node);
+
+    this.eventAttacher.attachEventListeners(nodeSelection, node);
+
+    if (!node.collapsed) {
+      node.children.forEach((child) => {
+        this.connectLineToChildNodes(node, child);
+      });
+    } else {
+      this.renderCollapseIndicator(node);
+    }
   }
 
   drawShapeWithText(node) {
@@ -29,7 +45,7 @@ export default class NodeRenderer {
   }
 
   setTextStyle(node) {
-    // No specific implementation; can be overridden or extended as needed.
+    // Can be customized in subclasses
   }
 
   computeTextLines(node) {
@@ -69,19 +85,5 @@ export default class NodeRenderer {
       .attr("d", path.toString())
       .attr("stroke", lineColor)
       .attr("fill", "none");
-  }
-
-  render(node) {
-    if (node.hasCollapsedAncestor()) return;
-
-    this.drawShapeWithText(node);
-
-    if (!node.collapsed) {
-      node.children.forEach((child) => {
-        this.connectLineToChildNodes(node, child);
-      });
-    } else {
-      this.renderCollapseIndicator(node);
-    }
   }
 }
