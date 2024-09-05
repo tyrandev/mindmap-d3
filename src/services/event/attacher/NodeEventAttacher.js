@@ -5,8 +5,6 @@ import NodeSelectionHandler from "../../../input/mouse/NodeSelectionHandler.js";
 import MouseModeManager from "../../../input/mouse/state/MouseModeManager.js";
 import * as MouseConstants from "../../../constants/MouseConstants.js";
 
-// TODO: create svgEventAttacher which would open svgContextMenu
-
 export default class NodeEventAttacher {
   constructor(svg, nodeController) {
     this.svg = svg;

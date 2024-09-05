@@ -1,3 +1,5 @@
+import ContextMenuEventEmitter from "../../services/event/emitter/ContextMenuEventEmitter.js";
+
 export default class ContextMenu {
   constructor(systemCore, contextMenuId) {
     this.systemCore = systemCore;
@@ -6,8 +8,12 @@ export default class ContextMenu {
     this.contextMenuNode = null;
     this.initContextMenu();
     this.preventBrowserContextMenu();
-    document.addEventListener("mousedown", this.handleDocumentClick.bind(this));
     this.ensureSvgFocusable();
+    document.addEventListener("mousedown", this.handleDocumentClick.bind(this));
+    ContextMenuEventEmitter.on(
+      "onHideContextMenu",
+      this.hideContextMenu.bind(this)
+    );
   }
 
   initContextMenu() {
