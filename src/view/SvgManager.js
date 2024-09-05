@@ -1,4 +1,5 @@
 import * as d3 from "d3";
+import SvgInitializer from "./SvgInitializer.js";
 import SvgZoom from "./SvgZoom.js";
 
 const SVG_MINDMAP_SELECTOR = "#mindMapSvg";
@@ -8,14 +9,11 @@ class SvgManager {
     if (SvgManager.instance) {
       return SvgManager.instance;
     }
-
     this.svg = null;
     this.svgWidth = 0;
     this.svgHeight = 0;
     SvgManager.instance = this;
     this.initialize();
-    this.preventDefaultContextMenu();
-    this.enableFocus();
     this.svgZoom = new SvgZoom(this.svg, this.svgGroup);
   }
 
@@ -26,18 +24,14 @@ class SvgManager {
         `SVG element with selector ${SVG_MINDMAP_SELECTOR} not found.`
       );
     }
-    this.svgWidth = svgElement.clientWidth;
-    this.svgHeight = svgElement.clientHeight;
-    this.svg = d3
-      .select(SVG_MINDMAP_SELECTOR)
-      .attr("width", this.svgWidth)
-      .attr("height", this.svgHeight);
-    this.svgGroup = this.svg.append("g");
-    return this.svg;
-  }
-
-  getSvgElement() {
-    return d3.select(SVG_MINDMAP_SELECTOR).node();
+    const svgInitializer = new SvgInitializer(svgElement);
+    const { svgWidth, svgHeight, svgGroup } = svgInitializer.initialize();
+    this.svgWidth = svgWidth;
+    this.svgHeight = svgHeight;
+    this.svgGroup = svgGroup;
+    this.svg = d3.select(SVG_MINDMAP_SELECTOR);
+    svgInitializer.preventDefaultContextMenu();
+    svgInitializer.enableFocus();
   }
 
   getSvg() {
@@ -68,25 +62,6 @@ class SvgManager {
       x: this.getCenterX(),
       y: this.getCenterY(),
     };
-  }
-
-  preventDefaultContextMenu() {
-    const svgElement = this.getSvgElement();
-    if (!svgElement) {
-      console.error("SVG element not found for context menu prevention.");
-    }
-    svgElement.addEventListener("contextmenu", (event) => {
-      event.preventDefault();
-    });
-  }
-
-  enableFocus() {
-    const svgElement = this.getSvgElement();
-    if (svgElement) {
-      svgElement.setAttribute("tabindex", "0"); // Enable focus on the SVG
-    } else {
-      console.error("SVG element not found for focus management.");
-    }
   }
 
   zoomIn() {
