@@ -3,7 +3,6 @@ import RectangleSvg from "./shapes/RectangleSvg.js";
 import Rectangle from "../../model/geometric/rectangle/Rectangle.js";
 import Circle from "../../model/geometric/circle/Circle.js";
 import svgManager from "../../view/SvgManager.js";
-import NodeEventAttacher from "../../services/event/NodeEventAttacher.js";
 
 export default class SvgCreator {
   constructor(nodeContainer, nodeEventAttacher) {
