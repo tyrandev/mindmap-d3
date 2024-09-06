@@ -1,6 +1,6 @@
 import NodeSvg from "./NodeSvg.js";
 import CircleMath from "../../math/CircleMath.js";
-import CircleTextHelper from "../../../util/text/CircleTextHelper.js";
+import CircleTextUtil from "../../../util/text/CircleTextUtil.js";
 import Circle from "../../../model/geometric/circle/Circle.js";
 import Rectangle from "../../../model/geometric/rectangle/Rectangle.js";
 
@@ -28,12 +28,12 @@ export default class CircleSvg extends NodeSvg {
   }
 
   calculateTextAttributes(circle) {
-    const limitedText = CircleTextHelper.limitTextCharacterNumber(circle.text);
-    const fontSize = CircleTextHelper.calculateFontSize(
+    const limitedText = CircleTextUtil.limitTextCharacterNumber(circle.text);
+    const fontSize = CircleTextUtil.calculateFontSize(
       circle.text,
       circle.radius
     );
-    const lines = CircleTextHelper.splitTextIntoLines(
+    const lines = CircleTextUtil.splitTextIntoLines(
       limitedText,
       circle.radius,
       fontSize
