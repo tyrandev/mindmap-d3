@@ -1,6 +1,5 @@
 import * as d3 from "d3";
 import NodeContextMenu from "../../../gui/contextmenu/NodeContextMenu.js";
-import mousePositionInstance from "../../../input/mouse/MousePosition.js";
 import NodeSelectionHandler from "../../../input/mouse/NodeSelectionHandler.js";
 import MouseModeManager from "../../../input/mouse/state/MouseModeManager.js";
 import * as MouseConstants from "../../../constants/MouseConstants.js";
@@ -74,8 +73,7 @@ export default class NodeEventAttacher {
 
   showNodeContextMenu(node) {
     this.selectionController.selectNode(node);
-    const { x, y } = mousePositionInstance.getMouseCoordinates();
-    this.nodeContextMenu.showContextMenu(node, x, y);
+    this.nodeContextMenu.showContextMenu(node);
   }
 
   handleMouseWheel(event) {

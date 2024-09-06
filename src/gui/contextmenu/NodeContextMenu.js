@@ -1,3 +1,4 @@
+import mousePositionInstance from "../../input/mouse/MousePosition.js";
 import ContextMenu from "./ContextMenu.js";
 import ColorPicker from "../topmenu/ColorPicker.js";
 
@@ -50,7 +51,8 @@ export default class NodeContextMenu extends ContextMenu {
       .addEventListener("mousedown", this.selectBorderColorNode.bind(this));
   }
 
-  showContextMenu(node, x, y) {
+  showContextMenu(node) {
+    const { x, y } = mousePositionInstance.getMouseCoordinates();
     this.prepareContextMenu(x, y);
     this.contextMenu.style.display = "block";
     this.contextMenuNode = node;

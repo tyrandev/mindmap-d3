@@ -1,4 +1,5 @@
 import ContextMenuEventEmitter from "../../services/event/emitter/ContextMenuEventEmitter.js";
+import mousePositionInstance from "../../input/mouse/MousePosition.js";
 
 export default class ContextMenu {
   constructor(systemCore, contextMenuId) {
@@ -28,7 +29,8 @@ export default class ContextMenu {
     this.contextMenu.style.top = `${adjustedY}px`;
   }
 
-  showContextMenu(x, y) {
+  showContextMenu() {
+    const { x, y } = mousePositionInstance.getMouseCoordinates();
     this.prepareContextMenu(x, y);
     this.contextMenu.style.display = "block";
   }

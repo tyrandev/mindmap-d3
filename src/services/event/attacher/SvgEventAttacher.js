@@ -1,5 +1,4 @@
 import SvgContextMenu from "../../../gui/contextmenu/SvgContextMenu.js";
-import mousePositionInstance from "../../../input/mouse/MousePosition.js";
 import MouseModeManager from "../../../input/mouse/state/MouseModeManager.js";
 import * as MouseConstants from "../../../constants/MouseConstants.js";
 import ContextMenuEventEmitter from "../emitter/ContextMenuEventEmitter.js";
@@ -28,7 +27,6 @@ export default class SvgEventAttacher {
     console.log("SVG background clicked");
     if (event.button === 0) {
       MouseModeManager.setMode(MouseConstants.MOUSE_MODES.NORMAL);
-      this.svgContextMenu.hideContextMenu();
       this.selectionController.unselectNode();
       ContextMenuEventEmitter.emit("onHideContextMenu");
     }
@@ -37,7 +35,6 @@ export default class SvgEventAttacher {
   handleContextMenu(event) {
     event.preventDefault();
     if (this.selectionController.selectedNode) return;
-    const { x, y } = mousePositionInstance.getMouseCoordinates();
-    this.svgContextMenu.showContextMenu(x, y);
+    this.svgContextMenu.showContextMenu();
   }
 }

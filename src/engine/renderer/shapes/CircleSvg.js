@@ -1,6 +1,6 @@
 import NodeSvg from "./NodeSvg.js";
 import CircleMath from "../../math/CircleMath.js";
-import CircleTextHelper from "../../../model/geometric/circle/CircleTextHelper.js";
+import CircleTextHelper from "../../../util/text/CircleTextHelper.js";
 import Circle from "../../../model/geometric/circle/Circle.js";
 import Rectangle from "../../../model/geometric/rectangle/Rectangle.js";
 
