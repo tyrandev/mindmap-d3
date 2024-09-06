@@ -47,6 +47,9 @@ export default class SystemCore {
       this.nodeController,
       this.mindmapLocalStorage
     );
-    this.topMenuHandler = new TopMenuHandler(this.nodeController);
+    this.topMenuHandler = new TopMenuHandler(
+      this.nodeController,
+      this.mindmapLocalStorage
+    );
   }
 }

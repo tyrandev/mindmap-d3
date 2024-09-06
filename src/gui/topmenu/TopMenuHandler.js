@@ -10,8 +10,9 @@ import svgManager from "../../view/SvgManager.js";
 import StorageUtil from "../../util/storage/StorageUtil.js";
 
 export default class TopMenuHandler {
-  constructor(nodeController) {
+  constructor(nodeController, mindmapLocalStorage) {
     this.nodeController = nodeController;
+    this.mindmapLocalStorage = mindmapLocalStorage;
     this.modeManager = MouseModeManager;
     this.jsonExporter = new JsonExporter(this.nodeController);
     this.JsonImporter = new JsonImporter(this.nodeController);

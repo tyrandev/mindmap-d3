@@ -29,8 +29,13 @@ export default class NodeEventAttacher {
 
     selection
       .on("mousedown", (event) => this.handleNodeClick(event, node))
-      .on("wheel", this.handleMouseWheel.bind(this))
       .call(drag);
+
+    selection
+      .node()
+      .addEventListener("wheel", this.handleMouseWheel.bind(this), {
+        passive: true,
+      });
   }
 
   handleNodeClick(event, node) {
@@ -77,7 +82,6 @@ export default class NodeEventAttacher {
   }
 
   handleMouseWheel(event) {
-    event.preventDefault();
     if (!this.selectionController.selectedNode) return;
     this.selectionController.updateSelectedNodeDimensions(
       event.deltaY > 0 ? -5 : 5
