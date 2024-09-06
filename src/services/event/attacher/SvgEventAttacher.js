@@ -27,6 +27,11 @@ export default class SvgEventAttacher {
       .addEventListener("wheel", this.handleMouseWheel.bind(this), {
         passive: false,
       });
+
+    // Add mousedown event listener
+    this.svg
+      .node()
+      .addEventListener("mousedown", this.handleMouseDown.bind(this));
   }
 
   handleSvgClick(event) {
@@ -47,6 +52,26 @@ export default class SvgEventAttacher {
 
   handleMouseWheel(event) {
     event.preventDefault();
-    console.log("svg mouse wheel working");
+    console.log("SVG mouse wheel working");
+  }
+
+  handleMouseDown(event) {
+    event.preventDefault();
+    console.log("Mouse down detected");
+
+    if (event.button === 0) {
+      // Left-click
+      // Handle node dragging or selection logic here
+      MouseModeManager.setMode(MouseConstants.MOUSE_MODES.DRAGGING);
+      console.log("Mouse mode set to DRAGGING");
+    } else if (event.button === 1) {
+      // Middle-click
+      // Handle any other functionality for middle click
+      console.log("Middle mouse button pressed");
+    } else if (event.button === 2) {
+      // Right-click
+      // The contextmenu event handles right-click, so no need for this.
+      console.log("Right-click ignored, handled by context menu.");
+    }
   }
 }
