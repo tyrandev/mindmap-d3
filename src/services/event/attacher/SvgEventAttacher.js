@@ -2,6 +2,7 @@ import SvgContextMenu from "../../../gui/contextmenu/SvgContextMenu.js";
 import MouseModeManager from "../../../input/mouse/state/MouseModeManager.js";
 import * as MouseConstants from "../../../constants/MouseConstants.js";
 import ContextMenuEventEmitter from "../emitter/ContextMenuEventEmitter.js";
+import svgManager from "../../../view/SvgManager.js";
 
 export default class SvgEventAttacher {
   constructor(svg, nodeController) {
@@ -20,6 +21,12 @@ export default class SvgEventAttacher {
     this.svg
       .on("click", (event) => this.handleSvgClick(event))
       .on("contextmenu", (event) => this.handleContextMenu(event));
+
+    this.svg
+      .node()
+      .addEventListener("wheel", this.handleMouseWheel.bind(this), {
+        passive: false,
+      });
   }
 
   handleSvgClick(event) {
@@ -36,5 +43,10 @@ export default class SvgEventAttacher {
     event.preventDefault();
     if (this.selectionController.selectedNode) return;
     this.svgContextMenu.showContextMenu();
+  }
+
+  handleMouseWheel(event) {
+    event.preventDefault();
+    console.log("svg mouse wheel working");
   }
 }

@@ -16,10 +16,7 @@ export default class NodeEventAttacher {
   }
 
   attachEventListeners(selection, node) {
-    if (!selection || selection.empty()) {
-      console.error("Selection is undefined, null, or empty");
-      return;
-    }
+    if (!selection || selection.empty()) return;
 
     const drag = d3
       .drag()
@@ -81,6 +78,7 @@ export default class NodeEventAttacher {
     this.nodeContextMenu.showContextMenu(node);
   }
 
+  // !! is not working
   handleMouseWheel(event) {
     if (!this.selectionController.selectedNode) return;
     this.selectionController.updateSelectedNodeDimensions(

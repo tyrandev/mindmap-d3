@@ -48,8 +48,6 @@ export default class Rectangle extends Node {
   }
 
   setDimensions(newWidth, newHeight) {
-    console.log(`Old Width: ${this.originalWidth}, New Width: ${newWidth}`);
-    console.log(`Old Height: ${this.height}, New Height: ${newHeight}`);
     this.originalWidth = newWidth;
     this.height = newHeight;
     this.addWidthBasedOnTextLength();

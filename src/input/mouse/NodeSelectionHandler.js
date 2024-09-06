@@ -17,11 +17,7 @@ export default class NodeSelectionHandler {
         this.selectionController.setSelectedNodeColor(selectedColor);
         break;
       case MouseConstants.MOUSE_MODES.RESIZE:
-        const newRadiusStr = document.getElementById(
-          "circle-radius-input"
-        ).value;
-        const newRadius = parseFloat(newRadiusStr);
-        this.selectionController.setSelectedCircleRadius(newRadius);
+        this.setSelectedNodeDimensions();
         break;
       case MouseConstants.MOUSE_MODES.RENAME:
         this.selectionController.renameSelectedNodePrompt();
@@ -38,5 +34,17 @@ export default class NodeSelectionHandler {
         console.log("Node selected:", node);
         break;
     }
+  }
+
+  setSelectedNodeDimensions() {
+    const newDemensionsString = document.getElementById(
+      "circle-radius-input"
+    ).value;
+    const newDimensions = parseFloat(newDemensionsString);
+    this.selectionController.setSelectedCircleRadius(newDimensions);
+    this.selectionController.setSelectedRectangleDimensions(
+      newDemensionsString * 2,
+      newDemensionsString
+    );
   }
 }
