@@ -1,8 +1,8 @@
 import MediaConverter from "./MediaConverter.js";
+import { jsPDF } from "jspdf";
 
 export default class PdfConverter extends MediaConverter {
   static async convertDivToPdf() {
-    const { jsPDF } = window.jspdf;
     const canvas = await this.captureContainer();
     if (!canvas) return;
     const imgData = canvas.toDataURL("image/png");

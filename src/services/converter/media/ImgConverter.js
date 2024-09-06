@@ -1,4 +1,5 @@
 import MediaConverter from "./MediaConverter.js";
+import { jsPDF } from "jspdf";
 
 export default class ImgConverter extends MediaConverter {
   static async convertDivToImage() {
