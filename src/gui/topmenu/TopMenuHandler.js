@@ -6,6 +6,7 @@ import MouseModeManager from "../../input/mouse/state/MouseModeManager.js";
 import * as MouseConstants from "../../constants/MouseConstants.js";
 import JsonExporter from "../../data/serialization/JsonExporter.js";
 import JsonImporter from "../../data/serialization/JsonImporter.js";
+import svgManager from "../../view/SvgManager.js";
 
 export default class TopMenuHandler {
   constructor(nodeController) {
@@ -59,6 +60,12 @@ export default class TopMenuHandler {
     document
       .getElementById("copy-color-button")
       .addEventListener("click", this.handleCopyColorMode.bind(this));
+    document
+      .getElementById("zoom-in-button")
+      .addEventListener("click", this.handleZoomIn.bind(this));
+    document
+      .getElementById("zoom-out-button")
+      .addEventListener("click", this.handleZoomOut.bind(this));
   }
 
   handleUndo() {
@@ -130,5 +137,13 @@ export default class TopMenuHandler {
 
   handleCopyColorMode() {
     this.modeManager.setMode(MouseConstants.MOUSE_MODES.COPY_COLOR);
+  }
+
+  handleZoomIn() {
+    svgManager.zoomIn();
+  }
+
+  handleZoomOut() {
+    svgManager.zoomOut();
   }
 }
