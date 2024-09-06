@@ -7,6 +7,7 @@ import * as MouseConstants from "../../constants/MouseConstants.js";
 import JsonExporter from "../../data/serialization/JsonExporter.js";
 import JsonImporter from "../../data/serialization/JsonImporter.js";
 import svgManager from "../../view/SvgManager.js";
+import StorageUtil from "../../util/storage/StorageUtil.js";
 
 export default class TopMenuHandler {
   constructor(nodeController) {
@@ -66,6 +67,9 @@ export default class TopMenuHandler {
     document
       .getElementById("zoom-out-button")
       .addEventListener("click", this.handleZoomOut.bind(this));
+    document
+      .getElementById("local-storage-button")
+      .addEventListener("click", this.toggleLocalStorage.bind(this));
   }
 
   handleUndo() {
@@ -145,5 +149,9 @@ export default class TopMenuHandler {
 
   handleZoomOut() {
     svgManager.zoomOut();
+  }
+
+  toggleLocalStorage() {
+    StorageUtil.toggleStorageContainerDisplay();
   }
 }
