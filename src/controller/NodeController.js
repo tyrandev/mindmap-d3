@@ -183,7 +183,6 @@ export default class NodeController {
   }
 
   serializeRootNode() {
-    const rootNode = this.getRootNode();
-    return NodeSerializer.serialize(rootNode);
+    return this.rootNodeController.serializeRootNode();
   }
 }

@@ -1,5 +1,6 @@
 import NodeFactory from "../services/factory/NodeFactory.js";
 import svgManager from "../view/SvgManager";
+import NodeSerializer from "../data/serialization/NodeSerializer.js";
 
 export default class RootNodeController {
   constructor(controller) {
@@ -46,5 +47,14 @@ export default class RootNodeController {
   setRootNode(newRootNode) {
     this.rootNode = newRootNode;
     console.log("Root node has been set to:", this.rootNode);
+  }
+
+  serializeRootNode() {
+    const rootNode = this.getRootNode();
+    if (!rootNode) {
+      console.error("No root node to serialize.");
+      return null;
+    }
+    return NodeSerializer.serialize(rootNode);
   }
 }
