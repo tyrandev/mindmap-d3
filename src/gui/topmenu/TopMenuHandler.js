@@ -71,6 +71,9 @@ export default class TopMenuHandler {
     document
       .getElementById("local-storage-button")
       .addEventListener("click", this.toggleLocalStorage.bind(this));
+    document
+      .getElementById("recenter-button")
+      .addEventListener("click", this.handleRecenter.bind(this));
   }
 
   handleUndo() {
@@ -154,5 +157,9 @@ export default class TopMenuHandler {
 
   toggleLocalStorage() {
     StorageUtil.toggleStorageContainerDisplay();
+  }
+
+  handleRecenter() {
+    this.nodeController.moveRootNodeToCenter();
   }
 }
