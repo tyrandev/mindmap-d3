@@ -118,12 +118,4 @@ export default class NodeController {
   serializeRootNode() {
     return this.rootNodeController.serializeRootNode();
   }
-
-  resetMindmap() {
-    this.rootNodeController.resetMindmap();
-  }
-
-  loadMindMap(rootNode) {
-    this.rootNodeController.loadMindMap(rootNode);
-  }
 }

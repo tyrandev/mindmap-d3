@@ -69,6 +69,6 @@ export default class MindmapLocalStorage {
 
   _loadMindMapFromJson(json) {
     const rootNode = NodeSerializer.deserialize(json);
-    this.nodeController.loadMindMap(rootNode);
+    this.nodeController.rootNodeController.loadMindMap(rootNode);
   }
 }

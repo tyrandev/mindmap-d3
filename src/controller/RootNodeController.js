@@ -62,7 +62,7 @@ export default class RootNodeController {
 
   resetMindmap() {
     this.nodeContainer.clearNodes();
-    this.initRootNode();
+    this.reinitializeRootNode();
     StackEventEmitter.emit("clearAllStacks");
   }
 
