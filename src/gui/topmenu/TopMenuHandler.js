@@ -8,6 +8,7 @@ import JsonExporter from "../../data/serialization/JsonExporter.js";
 import JsonImporter from "../../data/serialization/JsonImporter.js";
 import svgManager from "../../view/SvgManager.js";
 import GuiDisplayUtil from "../../util/display/GuiDisplayUtil.js";
+import StackEventEmitter from "../../services/event/emitter/StackEventEmitter.js";
 
 export default class TopMenuHandler {
   constructor(nodeController, mindmapLocalStorage) {
@@ -77,11 +78,11 @@ export default class TopMenuHandler {
   }
 
   handleUndo() {
-    this.nodeController.undo();
+    StackEventEmitter.emit("undo");
   }
 
   handleRedo() {
-    this.nodeController.redo();
+    StackEventEmitter.emit("redo");
   }
 
   handleSave() {

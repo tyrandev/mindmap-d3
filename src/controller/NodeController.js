@@ -130,12 +130,4 @@ export default class NodeController {
   loadMindMap(rootNode) {
     this.rootNodeController.loadMindMap(rootNode);
   }
-
-  undo() {
-    StackEventEmitter.emit("undo");
-  }
-
-  redo() {
-    StackEventEmitter.emit("redo");
-  }
 }

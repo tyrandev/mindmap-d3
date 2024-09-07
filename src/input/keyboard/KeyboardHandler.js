@@ -2,6 +2,7 @@ import svgManager from "../../view/SvgManager.js";
 import GuiDisplayUtil from "../../util/display/GuiDisplayUtil.js";
 import MouseModeManager from "../mouse/state/MouseModeManager.js";
 import * as MouseConstants from "../../constants/MouseConstants.js";
+import StackEventEmitter from "../../services/event/emitter/StackEventEmitter.js";
 
 export default class KeyboardHandler {
   constructor(nodeController, mindmapLocalStorage) {
@@ -87,13 +88,13 @@ export default class KeyboardHandler {
 
   handleUndo(event) {
     if (event.ctrlKey) {
-      this.nodeController.undo();
+      StackEventEmitter.emit("undo");
     }
   }
 
   handleRedo(event) {
     if (event.ctrlKey) {
-      this.nodeController.redo();
+      StackEventEmitter.emit("redo");
     }
   }
 
