@@ -1,9 +1,6 @@
 export default class MillisecondTimer {
   constructor() {
-    this.startTime = 0;
-    this.lastTime = 0;
-    this.currentTime = 0;
-    this.elapsedTime = 0;
+    this.reset();
   }
 
   start() {

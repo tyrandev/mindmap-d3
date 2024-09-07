@@ -14,8 +14,8 @@ export default class NodeController {
     this.nodeContainer = nodeContainer;
     this.selectionController = new SelectionController();
     this.rootNodeController = new RootNodeController(this, this.nodeContainer);
-    this.stackManager = new NodeStackManager(this.rootNodeController);
     this.rootNodeController.initRootNode();
+    this.stackManager = new NodeStackManager(this.rootNodeController);
   }
 
   putNodeIntoContainer(node) {
