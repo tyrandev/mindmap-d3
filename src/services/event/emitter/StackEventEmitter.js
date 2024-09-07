@@ -9,7 +9,7 @@ class StackEventEmitter extends EventEmitter {
     return StackEventEmitter.instance;
   }
 
-  emitSaveState() {
+  emitSaveStateForUndo() {
     this.emit("saveStateForUndo");
     console.log("save state event emitted.");
   }

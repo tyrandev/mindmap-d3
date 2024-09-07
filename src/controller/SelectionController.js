@@ -36,7 +36,7 @@ export default class SelectionController {
 
   renameSelectedNode(newText) {
     if (!this.selectedNode) return;
-    StackEventEmitter.emitSaveState();
+    StackEventEmitter.emitSaveStateForUndo();
     this.selectedNode.setText(newText);
   }
 
@@ -56,14 +56,14 @@ export default class SelectionController {
 
   setSelectedNodeColor(color) {
     if (!this.selectedNode) return;
-    StackEventEmitter.emitSaveState();
+    StackEventEmitter.emitSaveStateForUndo();
     this.selectedNode.setFillColor(color);
     this.originalNodeColor = color;
   }
 
   setSelectedNodeBorderColor(color) {
     if (!this.selectedNode) return;
-    StackEventEmitter.emitSaveState();
+    StackEventEmitter.emitSaveStateForUndo();
     console.log("set selected node border color called");
     this.selectedNode.setBorderColor(color);
   }
@@ -102,7 +102,7 @@ export default class SelectionController {
       console.error("Invalid dimensions");
       return;
     }
-    StackEventEmitter.emitSaveState();
+    StackEventEmitter.emitSaveStateForUndo();
     this.selectedNode.actualiseText();
     this.selectedNode.addWidthBasedOnTextLength();
     this.selectedNode.setDimensions(validWidth, validHeight);
@@ -114,13 +114,13 @@ export default class SelectionController {
       console.error("invalid radius");
       return;
     }
-    StackEventEmitter.emitSaveState();
+    StackEventEmitter.emitSaveStateForUndo();
     this.selectedNode.setRadius(newRadius);
     this.selectedNode.actualiseText();
   }
 
   toggleSelectedNodeCollapse() {
-    StackEventEmitter.emitSaveState();
+    StackEventEmitter.emitSaveStateForUndo();
     if (!this.selectedNode) return;
     if (!this.selectedNode.hasChildren()) return;
     this.selectedNode.toggleCollapse();

@@ -13,8 +13,8 @@ export default class NodeController {
   constructor(nodeContainer) {
     this.nodeContainer = nodeContainer;
     this.selectionController = new SelectionController();
-    this.stackManager = new NodeStackManager();
     this.rootNodeController = new RootNodeController(this);
+    this.stackManager = new NodeStackManager(this.rootNodeController);
     this.rootNodeController.initRootNode();
     this.setupEventListeners();
   }
@@ -32,7 +32,7 @@ export default class NodeController {
   }
 
   removeNode(node) {
-    this.saveStateForUndo();
+    StackEventEmitter.emitSaveStateForUndo();
     this.nodeContainer.removeNodeAndChildren(node);
   }
 
@@ -43,7 +43,7 @@ export default class NodeController {
       Math.sqrt(deltaX ** 2 + deltaY ** 2) >=
       CircleConstants.DISTANCE_MOVED_TO_SAVE_STATE
     ) {
-      this.saveStateForUndo();
+      StackEventEmitter.emitSaveStateForUndo();
       console.log("enough distance travelled for save state");
     }
     node.x = newX;
@@ -61,7 +61,7 @@ export default class NodeController {
 
   addConnectedNode(parentNode, nodeFactoryMethod) {
     if (parentNode.collapsed) return;
-    this.saveStateForUndo();
+    StackEventEmitter.emitSaveStateForUndo();
     const distanceFromParentNode =
       this.calculateDistanceFromParentNode(parentNode);
     const { x, y } = this.calculatePositionOfNewNode(
@@ -85,28 +85,6 @@ export default class NodeController {
 
   addConnectedBorderlessRectangle(parentNode) {
     this.addConnectedNode(parentNode, NodeFactory.createBorderlessRectangle);
-  }
-
-  resetAllNodes() {
-    this.nodeContainer.clearNodes();
-  }
-
-  resetMindmap() {
-    this.nodeContainer.clearNodes();
-    this.rootNodeController.reinitializeRootNode();
-    StackEventEmitter.emit("clearAllStacks");
-  }
-
-  loadRootNode(rootNode) {
-    this.resetAllNodes();
-    this.nodeContainer.putNodeAndChildrenIntoContainer(rootNode);
-    this.rootNodeController.setRootNode(rootNode);
-  }
-
-  loadMindMap(rootNode) {
-    this.loadRootNode(rootNode);
-    this.moveRootNodeToCenter();
-    StackEventEmitter.emit("clearAllStacks");
   }
 
   moveRootNodeToCenter() {
@@ -142,8 +120,26 @@ export default class NodeController {
     return this.rootNodeController.serializeRootNode();
   }
 
-  saveStateForUndo() {
-    this.stackManager.saveStateForUndo(this.rootNodeController.getRootNode());
+  resetAllNodes() {
+    this.nodeContainer.clearNodes();
+  }
+
+  resetMindmap() {
+    this.nodeContainer.clearNodes();
+    this.rootNodeController.reinitializeRootNode();
+    StackEventEmitter.emit("clearAllStacks");
+  }
+
+  loadRootNode(rootNode) {
+    this.resetAllNodes();
+    this.nodeContainer.putNodeAndChildrenIntoContainer(rootNode);
+    this.rootNodeController.setRootNode(rootNode);
+  }
+
+  loadMindMap(rootNode) {
+    this.loadRootNode(rootNode);
+    this.moveRootNodeToCenter();
+    StackEventEmitter.emit("clearAllStacks");
   }
 
   undo() {
@@ -165,10 +161,6 @@ export default class NodeController {
   }
 
   setupEventListeners() {
-    StackEventEmitter.on("saveStateForUndo", () => {
-      this.saveStateForUndo();
-    });
-
     StackEventEmitter.on("undo", () => {
       this.undo();
     });

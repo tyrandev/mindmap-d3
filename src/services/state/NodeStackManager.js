@@ -1,15 +1,15 @@
 import StackEventEmitter from "../event/emitter/StackEventEmitter";
 
 export default class NodeStackManager {
-  constructor() {
+  constructor(rootNodeController) {
+    this.rootNodeController = rootNodeController;
     this.undoStack = [];
     this.redoStack = [];
-    StackEventEmitter.on("clearAllStacks", () => {
-      this.clearAllStacks();
-    });
+    this.setupEventListeners();
   }
 
-  saveStateForUndo(rootNode) {
+  saveStateForUndo() {
+    const rootNode = this.rootNodeController.getRootNode();
     if (rootNode) {
       this.undoStack.push(rootNode.clone());
       this.redoStack = [];
@@ -36,5 +36,14 @@ export default class NodeStackManager {
     this.undoStack = [];
     this.redoStack = [];
     console.log("All stacks cleared.");
+  }
+
+  setupEventListeners() {
+    StackEventEmitter.on("clearAllStacks", () => {
+      this.clearAllStacks();
+    });
+    StackEventEmitter.on("saveStateForUndo", () => {
+      this.saveStateForUndo();
+    });
   }
 }
