@@ -31,6 +31,7 @@ export default class RootNodeController {
   getRootNode() {
     if (!this.rootNode) {
       console.error("Root node has not been initialized yet.");
+      return null;
     }
     return this.rootNode;
   }
@@ -52,8 +53,7 @@ export default class RootNodeController {
   serializeRootNode() {
     const rootNode = this.getRootNode();
     if (!rootNode) {
-      console.error("No root node to serialize.");
-      return null;
+      throw new Error("No root node to serialize.");
     }
     return NodeSerializer.serialize(rootNode);
   }
