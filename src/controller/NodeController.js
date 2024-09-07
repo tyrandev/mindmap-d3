@@ -6,7 +6,6 @@ import RootNodeController from "./RootNodeController.js";
 import NodeFactory from "../services/factory/NodeFactory.js";
 import svgManager from "../view/SvgManager.js";
 import StackEventEmitter from "../services/event/emitter/StackEventEmitter.js";
-import NodeSerializer from "../data/serialization/NodeSerializer.js";
 import MindmapMath from "../engine/math/MindmapMath.js";
 import SelectionController from "./SelectionController.js";
 
@@ -94,7 +93,7 @@ export default class NodeController {
 
   resetMindmap() {
     this.nodeContainer.clearNodes();
-    this.stackManager.clearAllStacks();
+    this.clearAllStacks();
     this.rootNodeController.reinitializeRootNode();
     console.log("mindmap was reset");
   }
@@ -108,7 +107,7 @@ export default class NodeController {
   loadMindMap(rootNode) {
     this.loadRootNode(rootNode);
     this.moveRootNodeToCenter();
-    this.stackManager.clearAllStacks();
+    this.clearAllStacks();
   }
 
   moveRootNodeToCenter() {
@@ -167,7 +166,7 @@ export default class NodeController {
   }
 
   clearAllStacks() {
-    this.stackManager.clearAllStacks();
+    StackEventEmitter.emit("clearAllStacks");
   }
 
   setupEventListeners() {
@@ -181,10 +180,6 @@ export default class NodeController {
 
     StackEventEmitter.on("redo", () => {
       this.redo();
-    });
-
-    StackEventEmitter.on("clearAllStacks", () => {
-      this.clearAllStacks();
     });
   }
 }
