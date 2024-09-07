@@ -120,7 +120,9 @@ export default class TopMenuHandler {
   }
 
   handleTextConversion() {
-    NodeOutlineText.downloadTextOutline(this.nodeController.getRootNode());
+    NodeOutlineText.downloadTextOutline(
+      this.nodeController.rootNodeController.getRootNode()
+    );
   }
 
   handleColorMode() {

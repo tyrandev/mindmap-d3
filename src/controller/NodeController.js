@@ -111,10 +111,6 @@ export default class NodeController {
     this.stackManager.clearAllStacks();
   }
 
-  getRootNode() {
-    return this.rootNodeController.getRootNode();
-  }
-
   moveRootNodeToCenter() {
     const rootNode = this.rootNodeController.getRootNode();
     if (!rootNode) {
@@ -125,26 +121,6 @@ export default class NodeController {
     const offsetX = svgCenter.x - rootNode.x;
     const offsetY = svgCenter.y - rootNode.y;
     this.moveNode(rootNode, rootNode.x + offsetX, rootNode.y + offsetY);
-  }
-
-  saveStateForUndo() {
-    this.stackManager.saveStateForUndo(this.getRootNode());
-  }
-
-  undo() {
-    this.stackManager.undo(this.getRootNode(), (newState) => {
-      this.loadRootNode(newState);
-    });
-  }
-
-  redo() {
-    this.stackManager.redo(this.getRootNode(), (newState) => {
-      this.loadRootNode(newState);
-    });
-  }
-
-  clearAllStacks() {
-    this.stackManager.clearAllStacks();
   }
 
   calculateDistanceFromParentNode(parentNode) {
@@ -164,6 +140,36 @@ export default class NodeController {
     );
   }
 
+  serializeRootNode() {
+    return this.rootNodeController.serializeRootNode();
+  }
+
+  saveStateForUndo() {
+    this.stackManager.saveStateForUndo(this.rootNodeController.getRootNode());
+  }
+
+  undo() {
+    this.stackManager.undo(
+      this.rootNodeController.getRootNode(),
+      (newState) => {
+        this.loadRootNode(newState);
+      }
+    );
+  }
+
+  redo() {
+    this.stackManager.redo(
+      this.rootNodeController.getRootNode(),
+      (newState) => {
+        this.loadRootNode(newState);
+      }
+    );
+  }
+
+  clearAllStacks() {
+    this.stackManager.clearAllStacks();
+  }
+
   setupEventListeners() {
     StackEventEmitter.on("saveStateForUndo", () => {
       this.saveStateForUndo();
@@ -180,9 +186,5 @@ export default class NodeController {
     StackEventEmitter.on("clearAllStacks", () => {
       this.clearAllStacks();
     });
-  }
-
-  serializeRootNode() {
-    return this.rootNodeController.serializeRootNode();
   }
 }

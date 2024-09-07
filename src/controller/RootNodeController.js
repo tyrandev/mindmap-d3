@@ -2,6 +2,9 @@ import NodeFactory from "../services/factory/NodeFactory.js";
 import svgManager from "../view/SvgManager";
 import NodeSerializer from "../data/serialization/NodeSerializer.js";
 
+// TODO: should handle stack management
+// TODO: should handle serialization
+
 export default class RootNodeController {
   constructor(controller) {
     this.controller = controller;
