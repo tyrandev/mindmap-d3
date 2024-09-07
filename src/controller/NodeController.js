@@ -93,9 +93,8 @@ export default class NodeController {
 
   resetMindmap() {
     this.nodeContainer.clearNodes();
-    this.clearAllStacks();
     this.rootNodeController.reinitializeRootNode();
-    console.log("mindmap was reset");
+    StackEventEmitter.emit("clearAllStacks");
   }
 
   loadRootNode(rootNode) {
@@ -107,7 +106,7 @@ export default class NodeController {
   loadMindMap(rootNode) {
     this.loadRootNode(rootNode);
     this.moveRootNodeToCenter();
-    this.clearAllStacks();
+    StackEventEmitter.emit("clearAllStacks");
   }
 
   moveRootNodeToCenter() {
@@ -163,10 +162,6 @@ export default class NodeController {
         this.loadRootNode(newState);
       }
     );
-  }
-
-  clearAllStacks() {
-    StackEventEmitter.emit("clearAllStacks");
   }
 
   setupEventListeners() {
