@@ -1,12 +1,12 @@
 import NodeFactory from "../services/factory/NodeFactory.js";
 import svgManager from "../view/SvgManager";
 import NodeSerializer from "../data/serialization/NodeSerializer.js";
-
-// TODO: should handle stack management
+import StackEventEmitter from "../services/event/emitter/StackEventEmitter.js";
 
 export default class RootNodeController {
-  constructor(controller) {
+  constructor(controller, nodeContainer) {
     this.controller = controller;
+    this.nodeContainer = nodeContainer;
     this.rootNode = null;
   }
 
@@ -58,5 +58,24 @@ export default class RootNodeController {
       throw new Error("No root node to serialize.");
     }
     return NodeSerializer.serialize(rootNode);
+  }
+
+  resetMindmap() {
+    this.nodeContainer.clearNodes();
+    this.initRootNode();
+    StackEventEmitter.emit("clearAllStacks");
+  }
+
+  loadRootNode(rootNode) {
+    this.nodeContainer.clearNodes();
+    this.nodeContainer.putNodeAndChildrenIntoContainer(rootNode);
+    this.rootNode = rootNode;
+    console.log("Root node has been loaded:", this.rootNode);
+  }
+
+  loadMindMap(rootNode) {
+    this.loadRootNode(rootNode);
+    this.moveRootNodeToCenter();
+    StackEventEmitter.emit("clearAllStacks");
   }
 }

@@ -13,7 +13,7 @@ export default class NodeController {
   constructor(nodeContainer) {
     this.nodeContainer = nodeContainer;
     this.selectionController = new SelectionController();
-    this.rootNodeController = new RootNodeController(this);
+    this.rootNodeController = new RootNodeController(this, this.nodeContainer);
     this.stackManager = new NodeStackManager(this.rootNodeController);
     this.rootNodeController.initRootNode();
     this.setupEventListeners();
@@ -120,26 +120,16 @@ export default class NodeController {
     return this.rootNodeController.serializeRootNode();
   }
 
-  resetAllNodes() {
-    this.nodeContainer.clearNodes();
-  }
-
   resetMindmap() {
-    this.nodeContainer.clearNodes();
-    this.rootNodeController.reinitializeRootNode();
-    StackEventEmitter.emit("clearAllStacks");
+    this.rootNodeController.resetMindmap();
   }
 
   loadRootNode(rootNode) {
-    this.resetAllNodes();
-    this.nodeContainer.putNodeAndChildrenIntoContainer(rootNode);
-    this.rootNodeController.setRootNode(rootNode);
+    this.rootNodeController.loadRootNode(rootNode);
   }
 
   loadMindMap(rootNode) {
-    this.loadRootNode(rootNode);
-    this.moveRootNodeToCenter();
-    StackEventEmitter.emit("clearAllStacks");
+    this.loadMindMap(rootNode);
   }
 
   undo() {
