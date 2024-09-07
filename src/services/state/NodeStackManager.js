@@ -8,6 +8,12 @@ export default class NodeStackManager {
     this.setupEventListeners();
   }
 
+  clearAllStacks() {
+    this.undoStack = [];
+    this.redoStack = [];
+    console.log("All stacks cleared.");
+  }
+
   saveStateForUndo() {
     const rootNode = this.rootNodeController.getRootNode();
     if (rootNode) {
@@ -32,10 +38,16 @@ export default class NodeStackManager {
     }
   }
 
-  clearAllStacks() {
-    this.undoStack = [];
-    this.redoStack = [];
-    console.log("All stacks cleared.");
+  undoAction() {
+    this.undo(this.rootNodeController.getRootNode(), (newState) => {
+      this.rootNodeController.loadRootNode(newState);
+    });
+  }
+
+  redoAction() {
+    this.redo(this.rootNodeController.getRootNode(), (newState) => {
+      this.rootNodeController.loadRootNode(newState);
+    });
   }
 
   setupEventListeners() {
@@ -44,6 +56,12 @@ export default class NodeStackManager {
     });
     StackEventEmitter.on("saveStateForUndo", () => {
       this.saveStateForUndo();
+    });
+    StackEventEmitter.on("undo", () => {
+      this.undoAction();
+    });
+    StackEventEmitter.on("redo", () => {
+      this.redoAction();
     });
   }
 }

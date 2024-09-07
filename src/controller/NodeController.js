@@ -16,7 +16,6 @@ export default class NodeController {
     this.rootNodeController = new RootNodeController(this, this.nodeContainer);
     this.stackManager = new NodeStackManager(this.rootNodeController);
     this.rootNodeController.initRootNode();
-    this.setupEventListeners();
   }
 
   putNodeIntoContainer(node) {
@@ -129,34 +128,14 @@ export default class NodeController {
   }
 
   loadMindMap(rootNode) {
-    this.loadMindMap(rootNode);
+    this.rootNodeController.loadMindMap(rootNode);
   }
 
   undo() {
-    this.stackManager.undo(
-      this.rootNodeController.getRootNode(),
-      (newState) => {
-        this.loadRootNode(newState);
-      }
-    );
+    StackEventEmitter.emit("undo");
   }
 
   redo() {
-    this.stackManager.redo(
-      this.rootNodeController.getRootNode(),
-      (newState) => {
-        this.loadRootNode(newState);
-      }
-    );
-  }
-
-  setupEventListeners() {
-    StackEventEmitter.on("undo", () => {
-      this.undo();
-    });
-
-    StackEventEmitter.on("redo", () => {
-      this.redo();
-    });
+    StackEventEmitter.emit("redo");
   }
 }
