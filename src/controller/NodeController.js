@@ -123,10 +123,6 @@ export default class NodeController {
     this.rootNodeController.resetMindmap();
   }
 
-  loadRootNode(rootNode) {
-    this.rootNodeController.loadRootNode(rootNode);
-  }
-
   loadMindMap(rootNode) {
     this.rootNodeController.loadMindMap(rootNode);
   }

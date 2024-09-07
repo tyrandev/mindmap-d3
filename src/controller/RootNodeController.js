@@ -4,8 +4,8 @@ import NodeSerializer from "../data/serialization/NodeSerializer.js";
 import StackEventEmitter from "../services/event/emitter/StackEventEmitter.js";
 
 export default class RootNodeController {
-  constructor(controller, nodeContainer) {
-    this.controller = controller;
+  constructor(nodeController, nodeContainer) {
+    this.nodeController = nodeController;
     this.nodeContainer = nodeContainer;
     this.rootNode = null;
   }
@@ -23,7 +23,7 @@ export default class RootNodeController {
       const { x, y } = svgManager.getCenterCoordinates();
       this.rootNode = NodeFactory.createCircle(x, y);
       this.rootNode.setText(initialText);
-      this.controller.putNodeIntoContainer(this.rootNode);
+      this.nodeController.putNodeIntoContainer(this.rootNode);
       console.log("Root node is successfully initialized:", this.rootNode);
     } catch (error) {
       console.error("Error initializing root node:", error);
@@ -40,7 +40,7 @@ export default class RootNodeController {
 
   reinitializeRootNode(initialText = "Mindmap") {
     if (this.rootNode) {
-      this.controller.removeNode(this.rootNode);
+      this.nodeController.removeNode(this.rootNode);
       this.rootNode = null;
     }
     this.initRootNode(initialText);
@@ -75,7 +75,7 @@ export default class RootNodeController {
 
   loadMindMap(rootNode) {
     this.loadRootNode(rootNode);
-    this.moveRootNodeToCenter();
+    this.nodeController.moveRootNodeToCenter();
     StackEventEmitter.emit("clearAllStacks");
   }
 }
