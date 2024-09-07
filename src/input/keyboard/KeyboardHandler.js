@@ -1,5 +1,5 @@
 import svgManager from "../../view/SvgManager.js";
-import StorageUtil from "../../util/storage/StorageUtil.js";
+import GuiDisplayUtil from "../../util/display/GuiDisplayUtil.js";
 import MouseModeManager from "../mouse/state/MouseModeManager.js";
 import * as MouseConstants from "../../constants/MouseConstants.js";
 
@@ -41,6 +41,7 @@ export default class KeyboardHandler {
       r: this.handleResetMindmap.bind(this),
       "+": this.handleZoomIn.bind(this),
       "-": this.handleZoomOut.bind(this),
+      u: this.handleToggleTopMenu.bind(this),
     };
 
     if (handlers[key]) {
@@ -49,6 +50,12 @@ export default class KeyboardHandler {
     }
 
     this.handleArrowKeys(event);
+  }
+
+  handleToggleTopMenu(event) {
+    if (event.ctrlKey || event.metaKey) {
+      GuiDisplayUtil.toggleTopMenuDisplay();
+    }
   }
 
   handleResetMindmap(event) {
@@ -106,7 +113,7 @@ export default class KeyboardHandler {
 
   handleToggleLocalStorage(event) {
     if (event.ctrlKey || event.metaKey) {
-      StorageUtil.toggleStorageContainerDisplay();
+      GuiDisplayUtil.toggleStorageContainerDisplay();
     }
   }
 

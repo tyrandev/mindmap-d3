@@ -7,7 +7,7 @@ import * as MouseConstants from "../../constants/MouseConstants.js";
 import JsonExporter from "../../data/serialization/JsonExporter.js";
 import JsonImporter from "../../data/serialization/JsonImporter.js";
 import svgManager from "../../view/SvgManager.js";
-import StorageUtil from "../../util/storage/StorageUtil.js";
+import GuiDisplayUtil from "../../util/display/GuiDisplayUtil.js";
 
 export default class TopMenuHandler {
   constructor(nodeController, mindmapLocalStorage) {
@@ -156,7 +156,7 @@ export default class TopMenuHandler {
   }
 
   toggleLocalStorage() {
-    StorageUtil.toggleStorageContainerDisplay();
+    GuiDisplayUtil.toggleStorageContainerDisplay();
   }
 
   handleRecenter() {

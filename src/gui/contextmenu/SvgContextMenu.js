@@ -1,5 +1,5 @@
 import ContextMenu from "./ContextMenu.js";
-import StorageUtil from "../../util/storage/StorageUtil.js";
+import GuiDisplayUtil from "../../util/display/GuiDisplayUtil.js";
 
 export default class SvgContextMenu extends ContextMenu {
   constructor(nodeController) {
@@ -24,7 +24,7 @@ export default class SvgContextMenu extends ContextMenu {
   }
 
   toggleLocalStorage() {
-    StorageUtil.toggleStorageContainerDisplay();
+    GuiDisplayUtil.toggleStorageContainerDisplay();
   }
 
   newMindmap() {
