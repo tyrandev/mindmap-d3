@@ -23,15 +23,16 @@ export default class MindmapLocalStorage {
 
   loadFromLocalStorage(name) {
     const json = this.localStorage.getItem(name);
-    if (!json) return;
+    if (!json) {
+      throw new Error("Mindmap does not exist!");
+    }
     this._loadMindMapFromJson(json);
     MindmapState.setCurrentMindmap(name, json);
   }
 
   deleteFromLocalStorage(name) {
     if (!this.localStorage.getItem(name)) {
-      alert(`No mindmap found with the name "${name}".`);
-      return;
+      throw new Error("Mindmap does not exist!");
     }
     this.localStorage.deleteItem(name);
     MindmapState.clearCurrentMindmap();

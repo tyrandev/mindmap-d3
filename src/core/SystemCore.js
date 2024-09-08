@@ -15,8 +15,8 @@ export default class SystemCore {
     this.initializeControllers();
     this.initializeEventAttachers();
     this.initializeEngine();
-    this.initializeHandlers();
     Session.initialize();
+    this.initializeHandlers();
   }
 
   initializeControllers() {
