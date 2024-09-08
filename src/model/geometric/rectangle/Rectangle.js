@@ -1,12 +1,12 @@
 import Node from "../node/Node.js";
-import * as RectangleConstants from "../../../constants/RectangleConstants.js";
+import * as rc from "../../../constants/RectangleConstants.js";
 
 export default class Rectangle extends Node {
   constructor(x = 0, y = 0) {
     super(x, y);
     this.additionalWidth = 0;
-    this.width = RectangleConstants.BASE_RECTANGLE_WIDTH;
-    this.height = RectangleConstants.BASE_RECTANGLE_HEIGHT;
+    this.width = rc.BASE_RECTANGLE_WIDTH;
+    this.height = rc.BASE_RECTANGLE_HEIGHT;
     this.originalWidth = this.width;
     this.cornerRadii = [2, 2, 2, 2]; // [top-left, top-right, bottom-right, bottom-left]
     this.setText(this.text);
@@ -62,7 +62,7 @@ export default class Rectangle extends Node {
     if (countLettersAndNumbers > 12) {
       this.additionalWidth = Math.max(
         0,
-        (countLettersAndNumbers - 12) * RectangleConstants.PIXELS_PER_CHARACTER
+        (countLettersAndNumbers - 12) * rc.PIXELS_PER_CHARACTER
       );
       console.log("additional width: ", this.additionalWidth);
     } else {
@@ -87,11 +87,8 @@ export default class Rectangle extends Node {
   }
 
   setText(newText) {
-    if (newText.length > RectangleConstants.RECTANGLE_MAX_CHARACTERS) {
-      newText = newText.substring(
-        0,
-        RectangleConstants.RECTANGLE_MAX_CHARACTERS
-      );
+    if (newText.length > rc.RECTANGLE_MAX_CHARACTERS) {
+      newText = newText.substring(0, rc.RECTANGLE_MAX_CHARACTERS);
     }
     this.text = newText;
     this.addWidthBasedOnTextLength();

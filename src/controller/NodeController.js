@@ -1,5 +1,5 @@
 import Circle from "../model/geometric/circle/Circle.js";
-import * as CircleConstants from "../constants/CircleConstants.js";
+import * as nc from "../constants/NodeConstants.js";
 import NodeStackManager from "../services/state/NodeStackManager.js";
 import MousePosition from "../input/mouse/MousePosition.js";
 import RootNodeController from "./RootNodeController.js";
@@ -39,8 +39,7 @@ export default class NodeController {
     const deltaX = newX - node.x;
     const deltaY = newY - node.y;
     if (
-      Math.sqrt(deltaX ** 2 + deltaY ** 2) >=
-      CircleConstants.DISTANCE_MOVED_TO_SAVE_STATE
+      Math.sqrt(deltaX ** 2 + deltaY ** 2) >= nc.DISTANCE_MOVED_TO_SAVE_STATE
     ) {
       StackEventEmitter.emitSaveStateForUndo();
       console.log("enough distance travelled for save state");

@@ -1,6 +1,7 @@
 import ColorHandler from "../util/color/ColorHandler.js";
-import * as CircleConstants from "../constants/CircleConstants.js";
-import * as RectangleConstants from "../constants/RectangleConstants.js";
+import * as cc from "../constants/CircleConstants.js";
+import * as rc from "../constants/RectangleConstants.js";
+import * as nc from "../constants/NodeConstants.js";
 import Circle from "../model/geometric/circle/Circle.js";
 import Rectangle from "../model/geometric/rectangle/Rectangle.js";
 import StackEventEmitter from "../services/event/emitter/StackEventEmitter.js";
@@ -15,20 +16,20 @@ export default class SelectionController {
     if (this.selectedNode === node) return;
     if (this.selectedNode && this.originalNodeColor) {
       this.selectedNode.setFillColor(this.originalNodeColor);
-      this.selectedNode.borderWidth = CircleConstants.BASE_NODE_BORDER_WITH;
+      this.selectedNode.borderWidth = nc.BASE_NODE_BORDER_WITH;
     }
     this.selectedNode = node;
     this.originalNodeColor = node.fillColor;
     this.selectedNode.setFillColor(
       ColorHandler.lightenColor(this.selectedNode.fillColor, 1.5)
     );
-    this.selectedNode.borderWidth = CircleConstants.SELECTED_NODE_BORDER_WIDTH;
+    this.selectedNode.borderWidth = nc.SELECTED_NODE_BORDER_WIDTH;
   }
 
   unselectNode() {
     if (!this.selectedNode) return;
     this.selectedNode.setFillColor(this.originalNodeColor);
-    this.selectedNode.borderWidth = CircleConstants.BASE_NODE_BORDER_WITH;
+    this.selectedNode.borderWidth = nc.BASE_NODE_BORDER_WITH;
     this.selectedNode = null;
     this.originalNodeColor = null;
     console.log("Node was unselected. Now it is:", this.selectedNode);
@@ -77,12 +78,11 @@ export default class SelectionController {
   updateSelectedNodeDimensions(deltaY) {
     if (this.selectedNode instanceof Circle) {
       const delta = Math.sign(deltaY);
-      const increment = delta * CircleConstants.DEFAULT_RADIUS_INCREMENT;
+      const increment = delta * cc.DEFAULT_RADIUS_INCREMENT;
       const newRadius = this.selectedNode.radius + increment;
       this.setSelectedCircleRadius(newRadius);
     } else if (this.selectedNode instanceof Rectangle) {
-      const percentageIncrement =
-        deltaY * RectangleConstants.PERCENTAGE_INCREMENT;
+      const percentageIncrement = deltaY * rc.PERCENTAGE_INCREMENT;
       const newWidth = this.selectedNode.width * (1 + percentageIncrement);
       const newHeight = this.selectedNode.height * (1 + percentageIncrement);
       this.setSelectedRectangleDimensions(newWidth, newHeight);
@@ -91,14 +91,8 @@ export default class SelectionController {
 
   setSelectedRectangleDimensions(newWidth, newHeight) {
     if (!(this.selectedNode instanceof Rectangle)) return;
-    const validWidth = Math.max(
-      newWidth,
-      RectangleConstants.MIN_RECTANGLE_WIDTH
-    );
-    const validHeight = Math.max(
-      newHeight,
-      RectangleConstants.MIN_RECTANGLE_HEIGHT
-    );
+    const validWidth = Math.max(newWidth, rc.MIN_RECTANGLE_WIDTH);
+    const validHeight = Math.max(newHeight, rc.MIN_RECTANGLE_HEIGHT);
     if (
       isNaN(validWidth) ||
       validWidth <= 0 ||
