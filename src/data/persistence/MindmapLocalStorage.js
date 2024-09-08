@@ -41,8 +41,7 @@ export default class MindmapLocalStorage {
 
   renameInLocalStorage(oldName, newName) {
     if (!this.localStorage.getItem(oldName)) {
-      alert(`No mindmap found with the name "${oldName}".`);
-      return;
+      throw new Error("Mindmap does not exist!");
     }
     if (this.localStorage.getItem(newName)) {
       alert(`A mindmap with the name "${newName}" already exists.`);
