@@ -1,12 +1,12 @@
-import Circle from "../model/geometric/circle/Circle.js";
-import * as nc from "../constants/NodeConstants.js";
-import NodeStackManager from "../services/state/NodeStackManager.js";
-import MousePosition from "../input/mouse/MousePosition.js";
+import Circle from "../../model/geometric/circle/Circle.js";
+import * as nc from "../../constants/NodeConstants.js";
+import StackController from "../state/StackController.js";
+import MousePosition from "../../input/mouse/MousePosition.js";
 import RootNodeController from "./RootNodeController.js";
-import NodeFactory from "../services/factory/NodeFactory.js";
-import svgManager from "../view/SvgManager.js";
-import StackEventEmitter from "../services/event/emitter/StackEventEmitter.js";
-import MindmapMath from "../engine/math/MindmapMath.js";
+import NodeFactory from "../../services/factory/NodeFactory.js";
+import svgManager from "../../view/SvgManager.js";
+import StackEventEmitter from "../../services/event/emitter/StackEventEmitter.js";
+import MindmapMath from "../../engine/math/MindmapMath.js";
 import SelectionController from "./SelectionController.js";
 
 export default class NodeController {
@@ -15,7 +15,7 @@ export default class NodeController {
     this.selectionController = new SelectionController(this.nodeContainer);
     this.rootNodeController = new RootNodeController(this, this.nodeContainer);
     this.rootNodeController.initRootNode();
-    this.stackManager = new NodeStackManager(this.rootNodeController);
+    this.stackManager = new StackController(this.rootNodeController);
   }
 
   addConnectedNode(parentNode, nodeFactoryMethod) {
@@ -27,10 +27,9 @@ export default class NodeController {
       parentNode,
       distanceFromParentNode
     );
-    const newNode = nodeFactoryMethod(x, y, parentNode.getFillColor());
-    console.log(newNode);
-    parentNode.addChildNode(newNode);
+    const newNode = nodeFactoryMethod(x, y);
     newNode.setFillColor(parentNode.getFillColor());
+    parentNode.addChildNode(newNode);
     this.putNodeIntoContainer(newNode);
   }
 
@@ -66,7 +65,6 @@ export default class NodeController {
       Math.sqrt(deltaX ** 2 + deltaY ** 2) >= nc.DISTANCE_MOVED_TO_SAVE_STATE
     ) {
       StackEventEmitter.emitSaveStateForUndo();
-      console.log("enough distance travelled for save state");
     }
     node.x = newX;
     node.y = newY;

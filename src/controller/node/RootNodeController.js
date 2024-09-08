@@ -1,7 +1,7 @@
-import NodeFactory from "../services/factory/NodeFactory.js";
-import svgManager from "../view/SvgManager";
-import NodeSerializer from "../data/serialization/NodeSerializer.js";
-import StackEventEmitter from "../services/event/emitter/StackEventEmitter.js";
+import NodeFactory from "../../services/factory/NodeFactory.js";
+import svgManager from "../../view/SvgManager.js";
+import NodeSerializer from "../../data/serialization/NodeSerializer.js";
+import StackEventEmitter from "../../services/event/emitter/StackEventEmitter.js";
 
 export default class RootNodeController {
   constructor(nodeController, nodeContainer) {

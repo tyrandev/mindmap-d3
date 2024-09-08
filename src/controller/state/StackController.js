@@ -1,6 +1,6 @@
-import StackEventEmitter from "../event/emitter/StackEventEmitter";
+import StackEventEmitter from "../../services/event/emitter/StackEventEmitter";
 
-export default class NodeStackManager {
+export default class StackController {
   constructor(rootNodeController) {
     this.rootNodeController = rootNodeController;
     this.undoStack = [];

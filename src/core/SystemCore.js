@@ -3,7 +3,7 @@ import OSUtil from "../util/os/OSUtil.js";
 import BrowserUtil from "../util/browser/BrowserUtil.js";
 import NodeContainer from "../model/geometric/node/NodeContainer.js";
 import GraphicsEngine from "../engine/GraphicsEngine.js";
-import NodeController from "../controller/NodeController.js";
+import NodeController from "../controller/node/NodeController.js";
 import DragAndDropHandler from "../util/file/DragAndDropHandler.js";
 import MindmapLocalStorage from "../data/persistence/MindmapLocalStorage.js";
 import KeyboardHandler from "../input/keyboard/KeyboardHandler.js";

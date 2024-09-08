@@ -1,10 +1,10 @@
-import ColorHandler from "../util/color/ColorHandler.js";
-import * as cc from "../constants/CircleConstants.js";
-import * as rc from "../constants/RectangleConstants.js";
-import * as nc from "../constants/NodeConstants.js";
-import Circle from "../model/geometric/circle/Circle.js";
-import Rectangle from "../model/geometric/rectangle/Rectangle.js";
-import StackEventEmitter from "../services/event/emitter/StackEventEmitter.js";
+import ColorHandler from "../../util/color/ColorHandler.js";
+import * as cc from "../../constants/CircleConstants.js";
+import * as rc from "../../constants/RectangleConstants.js";
+import * as nc from "../../constants/NodeConstants.js";
+import Circle from "../../model/geometric/circle/Circle.js";
+import Rectangle from "../../model/geometric/rectangle/Rectangle.js";
+import StackEventEmitter from "../../services/event/emitter/StackEventEmitter.js";
 
 export default class SelectionController {
   constructor(nodeContainer) {

@@ -68,7 +68,6 @@ export default class NodeFactory {
       node.height = data.height;
       node.cornerRadii = data.cornerRadii;
     }
-
     return node;
   }
 }

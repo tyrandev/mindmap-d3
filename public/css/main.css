@@ -21,6 +21,7 @@ body {
   flex-grow: 20;
   height: 100%;
   min-width: 86.5vw;
+  width: 0;
 }
 
 #canvas-container {
