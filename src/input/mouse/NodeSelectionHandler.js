@@ -1,4 +1,4 @@
-import * as MouseConstants from "../../constants/MouseConstants.js";
+import * as mc from "../../constants/MouseConstants.js";
 import ColorPicker from "../../gui/topmenu/ColorPicker.js";
 import MouseModeManager from "./state/MouseModeManager.js";
 
@@ -11,24 +11,25 @@ export default class NodeSelectionHandler {
 
   handleNodeSelection(node) {
     switch (this.modeManager.getMode()) {
-      case MouseConstants.MOUSE_MODES.CHANGE_COLOR:
-        const selectedColor = this.colorPicker.getColor();
-        this.selectionController.setSelectedNodeColor(selectedColor);
+      case mc.MOUSE_MODES.CHANGE_COLOR:
+        this.selectionController.setSelectedNodeColor(
+          this.colorPicker.getColor()
+        );
         break;
-      case MouseConstants.MOUSE_MODES.RESIZE:
+      case mc.MOUSE_MODES.RESIZE:
         this.setSelectedNodeDimensions();
         break;
-      case MouseConstants.MOUSE_MODES.RENAME:
+      case mc.MOUSE_MODES.RENAME:
         this.selectionController.renameSelectedNodePrompt();
         break;
-      case MouseConstants.MOUSE_MODES.DELETE:
+      case mc.MOUSE_MODES.DELETE:
         this.selectionController.removeSelectedNode();
         break;
-      case MouseConstants.MOUSE_MODES.COPY_COLOR:
+      case mc.MOUSE_MODES.COPY_COLOR:
         this.colorPicker.setColor(node.getFillColor());
-        this.modeManager.setMode(MouseConstants.MOUSE_MODES.CHANGE_COLOR);
+        this.modeManager.setMode(mc.MOUSE_MODES.CHANGE_COLOR);
         break;
-      case MouseConstants.MOUSE_MODES.NORMAL:
+      case mc.MOUSE_MODES.NORMAL:
       default:
         console.log("Node selected:", node);
         break;

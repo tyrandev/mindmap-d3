@@ -109,7 +109,6 @@ export default class SelectionController {
       return;
     }
     StackEventEmitter.emitSaveStateForUndo();
-    this.selectedNode.actualiseText();
     this.selectedNode.addWidthBasedOnTextLength();
     this.selectedNode.setDimensions(validWidth, validHeight);
   }
@@ -122,7 +121,6 @@ export default class SelectionController {
     }
     StackEventEmitter.emitSaveStateForUndo();
     this.selectedNode.setRadius(newRadius);
-    this.selectedNode.actualiseText();
   }
 
   toggleSelectedNodeCollapse() {
