@@ -11,7 +11,9 @@ export default class NodeEventAttacher {
     this.nodeController = nodeController;
     this.selectionController = this.nodeController.selectionController;
     this.nodeContextMenu = new NodeContextMenu(nodeController);
-    this.nodeSelectionHandler = new NodeSelectionHandler(this.nodeController);
+    this.nodeSelectionHandler = new NodeSelectionHandler(
+      this.selectionController
+    );
     this.dragOffset = { x: 0, y: 0 };
   }
 

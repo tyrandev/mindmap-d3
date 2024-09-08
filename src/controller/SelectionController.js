@@ -34,6 +34,12 @@ export default class SelectionController {
     console.log("Node was unselected. Now it is:", this.selectedNode);
   }
 
+  removeSelectedNode() {
+    if (!this.selectedNode) return;
+    StackEventEmitter.emitSaveStateForUndo();
+    this.nodeContainer.removeNodeAndChildren(this.selectedNode);
+  }
+
   renameSelectedNode(newText) {
     if (!this.selectedNode) return;
     StackEventEmitter.emitSaveStateForUndo();

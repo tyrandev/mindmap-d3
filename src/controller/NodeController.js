@@ -12,7 +12,7 @@ import SelectionController from "./SelectionController.js";
 export default class NodeController {
   constructor(nodeContainer) {
     this.nodeContainer = nodeContainer;
-    this.selectionController = new SelectionController();
+    this.selectionController = new SelectionController(this.nodeContainer);
     this.rootNodeController = new RootNodeController(this, this.nodeContainer);
     this.rootNodeController.initRootNode();
     this.stackManager = new NodeStackManager(this.rootNodeController);

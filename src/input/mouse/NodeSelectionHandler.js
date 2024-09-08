@@ -3,9 +3,8 @@ import ColorPicker from "../../gui/topmenu/ColorPicker.js";
 import MouseModeManager from "./state/MouseModeManager.js";
 
 export default class NodeSelectionHandler {
-  constructor(nodeController) {
-    this.nodeController = nodeController;
-    this.selectionController = this.nodeController.selectionController;
+  constructor(selectionController) {
+    this.selectionController = selectionController;
     this.modeManager = MouseModeManager;
     this.colorPicker = ColorPicker.getColorPicker();
   }
@@ -23,7 +22,7 @@ export default class NodeSelectionHandler {
         this.selectionController.renameSelectedNodePrompt();
         break;
       case MouseConstants.MOUSE_MODES.DELETE:
-        this.nodeController.removeNode(node);
+        this.selectionController.removeSelectedNode();
         break;
       case MouseConstants.MOUSE_MODES.COPY_COLOR:
         this.colorPicker.setColor(node.getFillColor());
