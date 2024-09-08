@@ -1,0 +1,1 @@
+export const DISTANCE_MOVED_TO_SAVE_STATE = 60;
