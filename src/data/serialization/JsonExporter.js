@@ -1,8 +1,8 @@
 import MindmapState from "../../model/mindmap/MindmapState.js";
 
 export default class JsonExporter {
-  constructor(nodeController) {
-    this.nodeController = nodeController;
+  constructor(rootNodeController) {
+    this.rootNodeController = rootNodeController;
   }
 
   exportToJson() {
@@ -19,7 +19,7 @@ export default class JsonExporter {
   }
 
   _getSerializedJson() {
-    return this.nodeController.serializeRootNode();
+    return this.rootNodeController.serializeRootNode();
   }
 
   _downloadFile(filename, content) {

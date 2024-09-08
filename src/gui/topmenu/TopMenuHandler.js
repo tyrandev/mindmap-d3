@@ -13,10 +13,11 @@ import StackEventEmitter from "../../services/event/emitter/StackEventEmitter.js
 export default class TopMenuHandler {
   constructor(nodeController, mindmapLocalStorage) {
     this.nodeController = nodeController;
+    this.rootNodeController = this.nodeController.rootNodeController;
     this.mindmapLocalStorage = mindmapLocalStorage;
     this.modeManager = MouseModeManager;
-    this.jsonExporter = new JsonExporter(this.nodeController);
-    this.JsonImporter = new JsonImporter(this.nodeController);
+    this.jsonExporter = new JsonExporter(this.rootNodeController);
+    this.JsonImporter = new JsonImporter(this.rootNodeController);
     this.initEventListeners();
   }
 

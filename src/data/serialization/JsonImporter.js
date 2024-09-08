@@ -3,8 +3,8 @@ import fileInputManager from "../../util/file/FileInputManager.js";
 import MindmapState from "../../model/mindmap/MindmapState.js";
 
 export default class JsonImporter {
-  constructor(nodeController) {
-    this.nodeController = nodeController;
+  constructor(rootNodeController) {
+    this.rootNodeController = rootNodeController;
     this.setupFileInput();
     this._initializeEventListeners();
   }
@@ -52,7 +52,7 @@ export default class JsonImporter {
 
   _loadFromJson(json, filename) {
     const rootNode = NodeSerializer.deserialize(json);
-    this.nodeController.rootNodeController.loadMindMap(rootNode);
+    this.rootNodeController.loadMindMap(rootNode);
     MindmapState.setCurrentMindmap(filename, json);
   }
 

@@ -10,8 +10,7 @@ export default class Rectangle extends Node {
     this.originalWidth = this.width;
     this.cornerRadii = [2, 2, 2, 2]; // [top-left, top-right, bottom-right, bottom-left]
     this.setText(this.text);
-    this.addWidthBasedOnTextLength();
-    this.calculateFontSize();
+    this.setDimensions(this.width, this.height);
   }
 
   clone() {
@@ -26,6 +25,7 @@ export default class Rectangle extends Node {
     clone.cornerRadii = this.cornerRadii;
     clone.id = this.id;
     clone.collapsed = this.collapsed;
+    clone.setDimensions(this.width, this.height);
     this.children.forEach((child) => {
       const childClone = child.clone();
       clone.addChildNode(childClone);
@@ -72,8 +72,9 @@ export default class Rectangle extends Node {
 
   calculateFontSize() {
     let baseFontSize = this.height / 2.45;
-    let k = 0.004;
+    const k = 0.004;
     this.fontSize = baseFontSize / (1 + k * this.width);
+    return this.fontSize;
   }
 
   isPointInsideOfNode(x, y) {
