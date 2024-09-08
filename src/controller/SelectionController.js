@@ -7,7 +7,8 @@ import Rectangle from "../model/geometric/rectangle/Rectangle.js";
 import StackEventEmitter from "../services/event/emitter/StackEventEmitter.js";
 
 export default class SelectionController {
-  constructor() {
+  constructor(nodeContainer) {
+    this.nodeContainer = nodeContainer;
     this.selectedNode = null;
     this.originalNodeColor = null;
   }
