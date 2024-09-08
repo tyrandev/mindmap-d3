@@ -1,6 +1,6 @@
 import NodeSerializer from "./NodeSerializer.js";
 import fileInputManager from "../../util/file/FileInputManager.js";
-import MindmapState from "../../model/mindmap/MindmapState.js";
+import MindmapState from "../../state/MindmapState.js";
 
 export default class JsonImporter {
   constructor(rootNodeController) {

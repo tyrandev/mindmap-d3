@@ -1,5 +1,5 @@
 import SvgContextMenu from "../../../gui/contextmenu/SvgContextMenu.js";
-import MouseModeManager from "../../../input/mouse/state/MouseModeManager.js";
+import MouseModeManager from "../../../state/MouseModeManager.js";
 import * as MouseConstants from "../../../constants/MouseConstants.js";
 import ContextMenuEventEmitter from "../emitter/ContextMenuEventEmitter.js";
 import svgManager from "../../../view/SvgManager.js";

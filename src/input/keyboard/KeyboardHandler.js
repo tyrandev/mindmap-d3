@@ -1,6 +1,6 @@
 import svgManager from "../../view/SvgManager.js";
 import GuiDisplayUtil from "../../util/display/GuiDisplayUtil.js";
-import MouseModeManager from "../mouse/state/MouseModeManager.js";
+import MouseModeManager from "../../state/MouseModeManager.js";
 import * as MouseConstants from "../../constants/MouseConstants.js";
 import StackEventEmitter from "../../services/event/emitter/StackEventEmitter.js";
 

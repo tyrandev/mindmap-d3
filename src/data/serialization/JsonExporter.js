@@ -1,4 +1,4 @@
-import MindmapState from "../../model/mindmap/MindmapState.js";
+import MindmapState from "../../state/MindmapState.js";
 
 export default class JsonExporter {
   constructor(rootNodeController) {

@@ -72,7 +72,6 @@ export default class SelectionController {
   setSelectedNodeBorderColor(color) {
     if (!this.selectedNode) return;
     StackEventEmitter.emitSaveStateForUndo();
-    console.log("set selected node border color called");
     this.selectedNode.setBorderColor(color);
   }
 

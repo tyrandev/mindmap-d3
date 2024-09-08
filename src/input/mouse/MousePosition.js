@@ -16,7 +16,7 @@ class MousePosition {
         "Use MousePosition.getInstance() to get the single instance of this class."
       );
     }
-    this.svg = svgManager.getSvg(); // Get the SVG container
+    this.svg = svgManager.getSvg();
     this.mouseX = 0;
     this.mouseY = 0;
     this.handleMouseMove = this.handleMouseMove.bind(this);

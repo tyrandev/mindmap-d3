@@ -1,7 +1,7 @@
 import * as d3 from "d3";
 import NodeContextMenu from "../../../gui/contextmenu/NodeContextMenu.js";
 import NodeSelectionHandler from "../../../input/mouse/NodeSelectionHandler.js";
-import MouseModeManager from "../../../input/mouse/state/MouseModeManager.js";
+import MouseModeManager from "../../../state/MouseModeManager.js";
 import * as MouseConstants from "../../../constants/MouseConstants.js";
 import ContextMenuEventEmitter from "../emitter/ContextMenuEventEmitter.js";
 import StackEventEmitter from "../emitter/StackEventEmitter.js";

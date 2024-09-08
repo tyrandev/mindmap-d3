@@ -1,4 +1,4 @@
-import StackEventEmitter from "../../services/event/emitter/StackEventEmitter";
+import StackEventEmitter from "../services/event/emitter/StackEventEmitter";
 
 export default class StackController {
   constructor(rootNodeController) {
