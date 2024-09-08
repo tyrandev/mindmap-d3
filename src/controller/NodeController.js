@@ -18,16 +18,40 @@ export default class NodeController {
     this.stackManager = new NodeStackManager(this.rootNodeController);
   }
 
+  addConnectedNode(parentNode, nodeFactoryMethod) {
+    if (parentNode.collapsed) return;
+    StackEventEmitter.emitSaveStateForUndo();
+    const distanceFromParentNode =
+      this.calculateDistanceFromParentNode(parentNode);
+    const { x, y } = this.calculatePositionOfNewNode(
+      parentNode,
+      distanceFromParentNode
+    );
+    const newNode = nodeFactoryMethod(x, y, parentNode.getFillColor());
+    console.log(newNode);
+    parentNode.addChildNode(newNode);
+    newNode.setFillColor(parentNode.getFillColor());
+    this.putNodeIntoContainer(newNode);
+  }
+
+  addConnectedCircle(parentNode) {
+    this.addConnectedNode(parentNode, NodeFactory.createCircle);
+  }
+
+  addConnectedRectangle(parentNode) {
+    this.addConnectedNode(parentNode, NodeFactory.createRectangle);
+  }
+
+  addConnectedBorderlessRectangle(parentNode) {
+    this.addConnectedNode(parentNode, NodeFactory.createBorderlessRectangle);
+  }
+
   putNodeIntoContainer(node) {
     this.nodeContainer.putNodeIntoContainer(node);
   }
 
   putNodeAndChildrenIntoContainer(node) {
     this.nodeContainer.putNodeAndChildrenIntoContainer(node);
-  }
-
-  getNodeAtPosition(x, y) {
-    return this.nodeContainer.getNodeAtPosition(x, y);
   }
 
   removeNode(node) {
@@ -57,34 +81,6 @@ export default class NodeController {
     });
   }
 
-  addConnectedNode(parentNode, nodeFactoryMethod) {
-    if (parentNode.collapsed) return;
-    StackEventEmitter.emitSaveStateForUndo();
-    const distanceFromParentNode =
-      this.calculateDistanceFromParentNode(parentNode);
-    const { x, y } = this.calculatePositionOfNewNode(
-      parentNode,
-      distanceFromParentNode
-    );
-    const newNode = nodeFactoryMethod(x, y, parentNode.getFillColor());
-    console.log(newNode);
-    parentNode.addChildNode(newNode);
-    newNode.setFillColor(parentNode.getFillColor());
-    this.putNodeIntoContainer(newNode);
-  }
-
-  addConnectedCircle(parentNode) {
-    this.addConnectedNode(parentNode, NodeFactory.createCircle);
-  }
-
-  addConnectedRectangle(parentNode) {
-    this.addConnectedNode(parentNode, NodeFactory.createRectangle);
-  }
-
-  addConnectedBorderlessRectangle(parentNode) {
-    this.addConnectedNode(parentNode, NodeFactory.createBorderlessRectangle);
-  }
-
   moveRootNodeToCenter() {
     const rootNode = this.rootNodeController.getRootNode();
     if (!rootNode) {
@@ -95,6 +91,10 @@ export default class NodeController {
     const offsetX = svgCenter.x - rootNode.x;
     const offsetY = svgCenter.y - rootNode.y;
     this.moveNode(rootNode, rootNode.x + offsetX, rootNode.y + offsetY);
+  }
+
+  getNodeAtPosition(x, y) {
+    return this.nodeContainer.getNodeAtPosition(x, y);
   }
 
   calculateDistanceFromParentNode(parentNode) {
@@ -112,9 +112,5 @@ export default class NodeController {
       mouseX,
       mouseY
     );
-  }
-
-  serializeRootNode() {
-    return this.rootNodeController.serializeRootNode();
   }
 }
