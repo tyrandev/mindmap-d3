@@ -1,6 +1,4 @@
 import svgManager from "../view/SvgManager.js";
-import OSUtil from "../util/os/OSUtil.js";
-import BrowserUtil from "../util/browser/BrowserUtil.js";
 import NodeContainer from "../model/geometric/node/NodeContainer.js";
 import GraphicsEngine from "../engine/GraphicsEngine.js";
 import NodeController from "../controller/node/NodeController.js";
@@ -10,15 +8,15 @@ import KeyboardHandler from "../input/keyboard/KeyboardHandler.js";
 import TopMenuHandler from "../gui/topmenu/TopMenuHandler.js";
 import SvgEventAttacher from "../services/event/attacher/SvgEventAttacher.js";
 import NodeEventAttacher from "../services/event/attacher/NodeEventAttacher.js";
+import Session from "../state/Session.js";
 
 export default class SystemCore {
   startApplication() {
-    console.log(OSUtil.getOS());
-    console.log(BrowserUtil.getBrowser());
     this.initializeControllers();
-    this.initilizeEventAttachers();
+    this.initializeEventAttachers();
     this.initializeEngine();
     this.initializeHandlers();
+    Session.initialize();
   }
 
   initializeControllers() {
@@ -27,7 +25,7 @@ export default class SystemCore {
     this.mindmapLocalStorage = new MindmapLocalStorage(this.nodeController);
   }
 
-  initilizeEventAttachers() {
+  initializeEventAttachers() {
     const svg = svgManager.getSvg();
     this.nodeEventAttacher = new NodeEventAttacher(svg, this.nodeController);
     this.svgEventAttacher = new SvgEventAttacher(svg, this.nodeController);
