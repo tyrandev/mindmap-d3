@@ -1,21 +1,21 @@
 import * as MouseConstants from "../constants/MouseConstants.js";
 
-class MouseModeManager {
+class MouseModeState {
   constructor() {
-    if (MouseModeManager.instance) {
-      return MouseModeManager.instance;
+    if (MouseModeState.instance) {
+      return MouseModeState.instance;
     }
     this.currentMode = MouseConstants.MOUSE_MODES.NORMAL;
     this.listeners = [];
     this.svg = document.getElementById("mindMapSvg");
-    MouseModeManager.instance = this;
+    MouseModeState.instance = this;
   }
 
   static getInstance() {
-    if (!MouseModeManager.instance) {
-      MouseModeManager.instance = new MouseModeManager();
+    if (!MouseModeState.instance) {
+      MouseModeState.instance = new MouseModeState();
     }
-    return MouseModeManager.instance;
+    return MouseModeState.instance;
   }
 
   getMode() {
@@ -41,4 +41,4 @@ class MouseModeManager {
   }
 }
 
-export default MouseModeManager.getInstance();
+export default MouseModeState.getInstance();

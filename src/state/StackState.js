@@ -1,6 +1,6 @@
 import StackEventEmitter from "../services/event/emitter/StackEventEmitter";
 
-export default class StackController {
+export default class StackState {
   constructor(rootNodeController) {
     this.rootNodeController = rootNodeController;
     this.undoStack = [];

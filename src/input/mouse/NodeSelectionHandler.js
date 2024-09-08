@@ -1,11 +1,11 @@
 import * as mc from "../../constants/MouseConstants.js";
 import ColorPicker from "../../gui/topmenu/ColorPicker.js";
-import MouseModeManager from "../../state/MouseModeManager.js";
+import MouseModeState from "../../state/MouseModeState.js";
 
 export default class NodeSelectionHandler {
   constructor(selectionController) {
     this.selectionController = selectionController;
-    this.modeManager = MouseModeManager;
+    this.modeManager = MouseModeState;
     this.colorPicker = ColorPicker.getColorPicker();
   }
 

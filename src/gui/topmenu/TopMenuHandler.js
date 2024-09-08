@@ -2,7 +2,7 @@ import PdfConverter from "../../services/converter/media/PdfConverter.js";
 import ImgConverter from "../../services/converter/media/ImgConverter.js";
 import NodeOutlineText from "../../services/converter/text/NodeOutlineText.js";
 import FileInputManager from "../../util/file/FileInputManager.js";
-import MouseModeManager from "../../state/MouseModeManager.js";
+import MouseModeState from "../../state/MouseModeState.js";
 import * as MouseConstants from "../../constants/MouseConstants.js";
 import JsonExporter from "../../data/serialization/JsonExporter.js";
 import JsonImporter from "../../data/serialization/JsonImporter.js";
@@ -15,7 +15,7 @@ export default class TopMenuHandler {
     this.nodeController = nodeController;
     this.rootNodeController = this.nodeController.rootNodeController;
     this.mindmapLocalStorage = mindmapLocalStorage;
-    this.modeManager = MouseModeManager;
+    this.modeManager = MouseModeState;
     this.jsonExporter = new JsonExporter(this.rootNodeController);
     this.JsonImporter = new JsonImporter(this.rootNodeController);
     this.initEventListeners();

@@ -1,6 +1,6 @@
 import Circle from "../../model/geometric/circle/Circle.js";
 import * as nc from "../../constants/NodeConstants.js";
-import StackController from "../../state/StackController.js";
+import StackState from "../../state/StackState.js";
 import MousePosition from "../../input/mouse/MousePosition.js";
 import RootNodeController from "./RootNodeController.js";
 import NodeFactory from "../../services/factory/NodeFactory.js";
@@ -15,7 +15,7 @@ export default class NodeController {
     this.selectionController = new SelectionController(this.nodeContainer);
     this.rootNodeController = new RootNodeController(this, this.nodeContainer);
     this.rootNodeController.initRootNode();
-    this.stackManager = new StackController(this.rootNodeController);
+    this.stackManager = new StackState(this.rootNodeController);
   }
 
   addConnectedNode(parentNode, nodeFactoryMethod) {

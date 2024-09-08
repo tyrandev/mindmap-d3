@@ -1,7 +1,7 @@
 import * as d3 from "d3";
 import NodeContextMenu from "../../../gui/contextmenu/NodeContextMenu.js";
 import NodeSelectionHandler from "../../../input/mouse/NodeSelectionHandler.js";
-import MouseModeManager from "../../../state/MouseModeManager.js";
+import MouseModeState from "../../../state/MouseModeState.js";
 import * as MouseConstants from "../../../constants/MouseConstants.js";
 import ContextMenuEventEmitter from "../emitter/ContextMenuEventEmitter.js";
 import StackEventEmitter from "../emitter/StackEventEmitter.js";
@@ -46,7 +46,7 @@ export default class NodeEventAttacher {
       this.nodeSelectionHandler.handleNodeSelection(node);
       ContextMenuEventEmitter.emit("onHideContextMenu");
     } else if (event.button === 2) {
-      MouseModeManager.setMode(MouseConstants.MOUSE_MODES.NORMAL);
+      MouseModeState.setMode(MouseConstants.MOUSE_MODES.NORMAL);
       this.showNodeContextMenu(node);
     }
   }

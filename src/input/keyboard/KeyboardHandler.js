@@ -1,6 +1,6 @@
 import svgManager from "../../view/SvgManager.js";
 import GuiDisplayUtil from "../../util/display/GuiDisplayUtil.js";
-import MouseModeManager from "../../state/MouseModeManager.js";
+import MouseModeState from "../../state/MouseModeState.js";
 import * as MouseConstants from "../../constants/MouseConstants.js";
 import StackEventEmitter from "../../services/event/emitter/StackEventEmitter.js";
 
@@ -73,16 +73,16 @@ export default class KeyboardHandler {
 
   handleShiftKeyUp(event) {
     if (event.key === "Shift") {
-      MouseModeManager.setMode(MouseConstants.MOUSE_MODES.NORMAL);
+      MouseModeState.setMode(MouseConstants.MOUSE_MODES.NORMAL);
     }
   }
 
   handleShiftKeyDown(event) {
     if (event.type === "keydown") {
-      MouseModeManager.setMode(MouseConstants.MOUSE_MODES.GRABBING_MINDMAP);
+      MouseModeState.setMode(MouseConstants.MOUSE_MODES.GRABBING_MINDMAP);
       console.log("Dragging is on");
     } else if (event.type === "keyup") {
-      MouseModeManager.setMode(MouseConstants.MOUSE_MODES.NORMAL);
+      MouseModeState.setMode(MouseConstants.MOUSE_MODES.NORMAL);
     }
   }
 

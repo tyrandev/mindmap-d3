@@ -1,5 +1,5 @@
 import SvgContextMenu from "../../../gui/contextmenu/SvgContextMenu.js";
-import MouseModeManager from "../../../state/MouseModeManager.js";
+import MouseModeState from "../../../state/MouseModeState.js";
 import * as MouseConstants from "../../../constants/MouseConstants.js";
 import ContextMenuEventEmitter from "../emitter/ContextMenuEventEmitter.js";
 import svgManager from "../../../view/SvgManager.js";
@@ -38,7 +38,7 @@ export default class SvgEventAttacher {
     event.preventDefault();
     console.log("SVG background clicked");
     if (event.button === 0) {
-      MouseModeManager.setMode(MouseConstants.MOUSE_MODES.NORMAL);
+      MouseModeState.setMode(MouseConstants.MOUSE_MODES.NORMAL);
       this.selectionController.unselectNode();
       ContextMenuEventEmitter.emit("onHideContextMenu");
     }
@@ -62,7 +62,7 @@ export default class SvgEventAttacher {
     if (event.button === 0) {
       // Left-click
       // Handle node dragging or selection logic here
-      MouseModeManager.setMode(MouseConstants.MOUSE_MODES.DRAGGING);
+      MouseModeState.setMode(MouseConstants.MOUSE_MODES.DRAGGING);
       console.log("Mouse mode set to DRAGGING");
     } else if (event.button === 1) {
       // Middle-click
