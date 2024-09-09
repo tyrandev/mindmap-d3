@@ -5,11 +5,11 @@ import ContextMenuEventEmitter from "../emitter/ContextMenuEventEmitter.js";
 import svgManager from "../../../view/SvgManager.js";
 
 export default class SvgEventAttacher {
-  constructor(svg, nodeController) {
+  constructor(svg, controllerCore) {
     this.svg = svg;
-    this.nodeController = nodeController;
-    this.selectionController = this.nodeController.selectionController;
-    this.svgContextMenu = new SvgContextMenu(nodeController);
+    this.controllerCore = controllerCore;
+    this.selectionController = this.controllerCore.selectionController;
+    this.svgContextMenu = new SvgContextMenu(controllerCore);
   }
 
   attachEventListeners() {

@@ -76,7 +76,7 @@ export default class RootNodeController {
 
   loadMindMap(rootNode) {
     this.loadRootNode(rootNode);
-    this.nodeController.moveRootNodeToCenter();
+    this.moveRootNodeToCenter();
     StackEventEmitter.emit("clearAllStacks");
   }
 

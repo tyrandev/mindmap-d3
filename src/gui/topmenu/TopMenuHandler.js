@@ -11,9 +11,9 @@ import GuiDisplayUtil from "../../util/display/GuiDisplayUtil.js";
 import StackEventEmitter from "../../services/event/emitter/StackEventEmitter.js";
 
 export default class TopMenuHandler {
-  constructor(nodeController, mindmapLocalStorage) {
-    this.nodeController = nodeController;
-    this.rootNodeController = this.nodeController.rootNodeController;
+  constructor(controllerCore, mindmapLocalStorage) {
+    this.controllerCore = controllerCore;
+    this.rootNodeController = this.controllerCore.rootNodeController;
     this.mindmapLocalStorage = mindmapLocalStorage;
     this.modeManager = MouseModeState;
     this.jsonExporter = new JsonExporter(this.rootNodeController);
@@ -123,7 +123,7 @@ export default class TopMenuHandler {
 
   handleTextConversion() {
     NodeOutlineText.downloadTextOutline(
-      this.nodeController.rootNodeController.getRootNode()
+      this.controllerCore.rootNodeController.getRootNode()
     );
   }
 
@@ -164,6 +164,6 @@ export default class TopMenuHandler {
   }
 
   handleRecenter() {
-    this.nodeController.moveRootNodeToCenter();
+    this.controllerCore.moveRootNodeToCenter();
   }
 }

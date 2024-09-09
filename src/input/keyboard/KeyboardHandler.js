@@ -5,11 +5,11 @@ import * as MouseConstants from "../../constants/MouseConstants.js";
 import StackEventEmitter from "../../services/event/emitter/StackEventEmitter.js";
 
 export default class KeyboardHandler {
-  constructor(nodeController, mindmapLocalStorage) {
+  constructor(controllerCore, mindmapLocalStorage) {
     this.svg = svgManager.getSvg();
-    this.nodeController = nodeController;
-    this.selectionController = this.nodeController.selectionController;
-    this.nodeDeletionController = this.nodeController.nodeDeletionController;
+    this.controllerCore = controllerCore;
+    this.selectionController = this.controllerCore.selectionController;
+    this.nodeDeletionController = this.controllerCore.nodeDeletionController;
     this.mindmapLocalStorage = mindmapLocalStorage;
     this.initKeyListeners();
   }
@@ -62,13 +62,13 @@ export default class KeyboardHandler {
 
   handleResetMindmap(event) {
     if (event.ctrlKey) {
-      this.nodeController.resetMindmap();
+      this.controllerCore.resetMindmap();
     }
   }
 
   handleCenterMindmap(event) {
     if (event.ctrlKey) {
-      this.nodeController.moveRootNodeToCenter();
+      this.controllerCore.moveRootNodeToCenter();
     }
   }
 

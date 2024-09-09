@@ -1,13 +1,17 @@
 import StackState from "../../state/StackState.js";
-import RootNodeController from "./RootNodeController.js";
-import SelectionController from "./SelectionController.js";
-import NodeCreationController from "./NodeCreationController";
-import NodeDeletionController from "./NodeDeletionController.js";
-import NodeMovementController from "./NodeMovementController.js";
+import RootNodeController from "../../controller/node/RootNodeController.js";
+import SelectionController from "../../controller/node/SelectionController.js";
+import NodeCreationController from "../../controller/node/NodeCreationController.js";
+import NodeDeletionController from "../../controller/node/NodeDeletionController.js";
+import NodeMovementController from "../../controller/node/NodeMovementController.js";
 
-export default class NodeController {
+export default class ControllerCore {
   constructor(nodeContainer) {
     this.nodeContainer = nodeContainer;
+    this.initializeControllers();
+  }
+
+  initializeControllers() {
     this.selectionController = new SelectionController(this.nodeContainer);
     this.nodeMovementController = new NodeMovementController(
       this.nodeContainer
@@ -21,9 +25,13 @@ export default class NodeController {
       this.nodeDeletionController
     );
     this.rootNodeController.initRootNode();
-    this.stackManager = new StackState(this.rootNodeController);
+    this.stackState = new StackState(this.rootNodeController);
     this.nodeCreationController = new NodeCreationController(
       this.nodeContainer
     );
+  }
+
+  getRootNodeController() {
+    return this.rootNodeController;
   }
 }

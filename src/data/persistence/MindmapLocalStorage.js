@@ -6,8 +6,8 @@ import MindmapState from "../../state/MindmapState.js";
 const LOCAL_STORAGE_KEY = "mindmaps";
 
 export default class MindmapLocalStorage {
-  constructor(nodeController) {
-    this.nodeController = nodeController;
+  constructor(rootNodeController) {
+    this.rootNodeController = rootNodeController;
     this.localStorage = new LocalStorage(LOCAL_STORAGE_KEY);
     this.uiHandler = new LocalStorageUIHandler(this);
   }
@@ -59,7 +59,7 @@ export default class MindmapLocalStorage {
   }
 
   _getSerializedJson() {
-    return this.nodeController.rootNodeController.serializeRootNode();
+    return this.rootNodeController.serializeRootNode();
   }
 
   _getFilenameForSave() {
@@ -69,6 +69,6 @@ export default class MindmapLocalStorage {
 
   _loadMindMapFromJson(json) {
     const rootNode = NodeSerializer.deserialize(json);
-    this.nodeController.rootNodeController.loadMindMap(rootNode);
+    this.rootNodeController.loadMindMap(rootNode);
   }
 }

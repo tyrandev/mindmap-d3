@@ -2,10 +2,10 @@ import ContextMenu from "./ContextMenu.js";
 import GuiDisplayUtil from "../../util/display/GuiDisplayUtil.js";
 
 export default class SvgContextMenu extends ContextMenu {
-  constructor(nodeController) {
-    super(nodeController, "canvas-context-menu");
-    this.nodeController = nodeController;
-    this.rootNodeController = this.nodeController.rootNodeController;
+  constructor(controllerCore) {
+    super(controllerCore, "canvas-context-menu");
+    this.controllerCore = controllerCore;
+    this.rootNodeController = this.controllerCore.rootNodeController;
   }
 
   initContextMenu() {

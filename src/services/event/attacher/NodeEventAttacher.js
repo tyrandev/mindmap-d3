@@ -6,15 +6,15 @@ import * as MouseConstants from "../../../constants/MouseConstants.js";
 import ContextMenuEventEmitter from "../emitter/ContextMenuEventEmitter.js";
 
 export default class NodeEventAttacher {
-  constructor(svg, nodeController) {
+  constructor(svg, controllerCore) {
     this.svg = svg;
-    this.nodeController = nodeController;
-    this.selectionController = this.nodeController.selectionController;
-    this.nodeContextMenu = new NodeContextMenu(nodeController);
+    this.controllerCore = controllerCore;
+    this.selectionController = this.controllerCore.selectionController;
+    this.nodeContextMenu = new NodeContextMenu(controllerCore);
     this.nodeSelectionHandler = new NodeSelectionHandler(
       this.selectionController
     );
-    this.nodeMovementController = this.nodeController.nodeMovementController;
+    this.nodeMovementController = this.controllerCore.nodeMovementController;
     this.dragOffset = { x: 0, y: 0 };
   }
 
