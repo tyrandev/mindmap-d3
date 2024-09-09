@@ -50,11 +50,11 @@ export default class RectangleSvg extends NodeSvg {
       .attr("y", rectangle.y - rectangle.height / 2)
       .attr("width", rectangle.actualWidth)
       .attr("height", rectangle.height)
-      .attr("rx", topLeftRadius)
-      .attr("ry", topLeftRadius)
       .attr("fill", rectangle.fillColor)
       .attr("stroke", rectangle.borderColor)
-      .attr("stroke-width", rectangle.borderWidth);
+      .attr("stroke-width", rectangle.borderWidth)
+      .attr("rx", topLeftRadius)
+      .attr("ry", topLeftRadius);
   }
 
   computeTextLines(rectangle) {
