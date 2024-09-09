@@ -37,9 +37,8 @@ export default class NodeSelectionHandler {
   }
 
   setSelectedNodeDimensions() {
-    const newDemensionsString = document.getElementById(
-      "circle-radius-input"
-    ).value;
+    const newDemensionsString =
+      document.getElementById("node-size-input").value;
     const newDimensions = parseFloat(newDemensionsString);
     this.selectionController.setSelectedCircleRadius(newDimensions);
     this.selectionController.setSelectedRectangleDimensions(

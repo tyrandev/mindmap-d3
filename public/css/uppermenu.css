@@ -39,7 +39,7 @@ svg {
   fill: rgb(41, 41, 41);
 }
 
-#circle-radius-input {
+#node-size-input {
   width: 48px;
   height: 20px;
   font-size: 14px;
