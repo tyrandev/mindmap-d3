@@ -32,7 +32,7 @@ export default class NodeCreationController {
     this.createConnectedNode(parentNode, NodeFactory.createRectangle);
   }
 
-  createConnectedBorderlessRectangle(parentNode) {
+  createBorderlessRectangle(parentNode) {
     this.createConnectedNode(parentNode, NodeFactory.createBorderlessRectangle);
   }
 

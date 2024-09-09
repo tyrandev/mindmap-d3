@@ -3,7 +3,7 @@ import ImgConverter from "../../services/converter/media/ImgConverter.js";
 import NodeOutlineText from "../../services/converter/text/NodeOutlineText.js";
 import FileInputManager from "../../util/file/FileInputManager.js";
 import MouseModeState from "../../state/MouseModeState.js";
-import * as MouseConstants from "../../constants/MouseConstants.js";
+import * as mc from "../../constants/MouseConstants.js";
 import JsonExporter from "../../data/serialization/JsonExporter.js";
 import JsonImporter from "../../data/serialization/JsonImporter.js";
 import svgManager from "../../view/SvgManager.js";
@@ -128,27 +128,27 @@ export default class TopMenuHandler {
   }
 
   handleColorMode() {
-    this.modeManager.setMode(MouseConstants.MOUSE_MODES.CHANGE_COLOR);
+    this.modeManager.setMode(mc.MOUSE_MODES.CHANGE_COLOR);
   }
 
   handleResizeMode() {
-    this.modeManager.setMode(MouseConstants.MOUSE_MODES.RESIZE);
+    this.modeManager.setMode(mc.MOUSE_MODES.RESIZE);
   }
 
   handleRenameMode() {
-    this.modeManager.setMode(MouseConstants.MOUSE_MODES.RENAME);
+    this.modeManager.setMode(mc.MOUSE_MODES.RENAME);
   }
 
   handleDeleteMode() {
-    this.modeManager.setMode(MouseConstants.MOUSE_MODES.DELETE);
+    this.modeManager.setMode(mc.MOUSE_MODES.DELETE);
   }
 
   handleNormalMode() {
-    this.modeManager.setMode(MouseConstants.MOUSE_MODES.NORMAL);
+    this.modeManager.setMode(mc.MOUSE_MODES.NORMAL);
   }
 
   handleCopyColorMode() {
-    this.modeManager.setMode(MouseConstants.MOUSE_MODES.COPY_COLOR);
+    this.modeManager.setMode(mc.MOUSE_MODES.COPY_COLOR);
   }
 
   handleZoomIn() {
@@ -164,6 +164,6 @@ export default class TopMenuHandler {
   }
 
   handleRecenter() {
-    this.controllerCore.moveRootNodeToCenter();
+    this.rootNodeController.moveRootNodeToCenter();
   }
 }

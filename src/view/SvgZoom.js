@@ -54,6 +54,7 @@ export default class SvgZoom {
     } catch (error) {
       console.error("Error zooming in:", error);
     }
+    console.log("zoomed in to: ", this.zoomScale);
   }
 
   zoomOut() {
@@ -63,6 +64,7 @@ export default class SvgZoom {
     } catch (error) {
       console.error("Error zooming out:", error);
     }
+    console.log("zoomed out to: ", this.zoomScale);
   }
 
   pan(addX, addY) {
