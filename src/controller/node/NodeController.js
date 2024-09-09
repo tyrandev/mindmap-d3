@@ -5,6 +5,7 @@ import svgManager from "../../view/SvgManager.js";
 import StackEventEmitter from "../../services/event/emitter/StackEventEmitter.js";
 import SelectionController from "./SelectionController.js";
 import NodeCreationController from "./NodeCreationController";
+import NodeDeletionController from "./NodeDeletionController.js";
 
 export default class NodeController {
   constructor(nodeContainer) {
@@ -14,6 +15,9 @@ export default class NodeController {
     this.rootNodeController.initRootNode();
     this.stackManager = new StackState(this.rootNodeController);
     this.nodeCreationController = new NodeCreationController(
+      this.nodeContainer
+    );
+    this.nodeDeletionController = new NodeDeletionController(
       this.nodeContainer
     );
   }
@@ -27,8 +31,7 @@ export default class NodeController {
   }
 
   deleteNode(node) {
-    StackEventEmitter.emitSaveStateForUndo();
-    this.nodeContainer.removeNodeAndChildren(node);
+    this.nodeDeletionController.deleteNode(node);
   }
 
   moveNode(node, newX, newY) {
