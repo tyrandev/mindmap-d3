@@ -51,7 +51,7 @@ export default class RectangleSvg extends NodeSvg {
       .attr("width", rectangle.actualWidth)
       .attr("height", rectangle.height)
       .attr("rx", topLeftRadius)
-      .attr("ry", topLeftRadius) // Use only one radius for simplicity; adjust if needed
+      .attr("ry", topLeftRadius)
       .attr("fill", rectangle.fillColor)
       .attr("stroke", rectangle.borderColor)
       .attr("stroke-width", rectangle.borderWidth);
@@ -104,18 +104,5 @@ export default class RectangleSvg extends NodeSvg {
     } else {
       throw new Error("Unknown or unsupported type of node child");
     }
-  }
-
-  connectWithCurvedLine(startX, startY, endX, endY, lineColor) {
-    const pathData = `M${startX},${startY} C${(startX + endX) / 2},${startY} ${
-      (startX + endX) / 2
-    },${endY} ${endX},${endY}`;
-
-    this.svg
-      .append("path")
-      .attr("d", pathData)
-      .attr("stroke", lineColor)
-      .attr("stroke-width", 1)
-      .attr("fill", "none");
   }
 }
