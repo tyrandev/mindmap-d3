@@ -13,24 +13,31 @@ export default class SelectionController {
     this.originalNodeColor = null;
   }
 
-  selectNode(node) {
-    if (this.selectedNode === node) return;
-    if (this.selectedNode && this.originalNodeColor) {
-      this.selectedNode.setFillColor(this.originalNodeColor);
-      this.selectedNode.borderWidth = nc.BASE_NODE_BORDER_WITH;
-    }
-    this.selectedNode = node;
-    this.originalNodeColor = node.fillColor;
+  setUnselectedNodeStyle() {
+    this.selectedNode.setFillColor(this.originalNodeColor);
+    this.selectedNode.borderWidth = nc.BASE_NODE_BORDER_WITH;
+  }
+
+  setSelectedNodeStyle() {
     this.selectedNode.setFillColor(
       ColorHandler.lightenColor(this.selectedNode.fillColor, 1.5)
     );
     this.selectedNode.borderWidth = nc.SELECTED_NODE_BORDER_WIDTH;
   }
 
+  selectNode(node) {
+    if (this.selectedNode === node) return;
+    if (this.selectedNode && this.originalNodeColor) {
+      this.setUnselectedNodeStyle();
+    }
+    this.selectedNode = node;
+    this.originalNodeColor = node.fillColor;
+    this.setSelectedNodeStyle();
+  }
+
   unselectNode() {
     if (!this.selectedNode) return;
-    this.selectedNode.setFillColor(this.originalNodeColor);
-    this.selectedNode.borderWidth = nc.BASE_NODE_BORDER_WITH;
+    this.setUnselectedNodeStyle();
     this.selectedNode = null;
     this.originalNodeColor = null;
     console.log("Node was unselected. Now it is:", this.selectedNode);
