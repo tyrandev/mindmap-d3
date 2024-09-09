@@ -23,7 +23,7 @@ export default class NodeSelectionHandler {
         this.selectionController.renameSelectedNodePrompt();
         break;
       case mc.MOUSE_MODES.DELETE:
-        this.selectionController.removeSelectedNode();
+        this.selectionController.deleteSelectedNode();
         break;
       case mc.MOUSE_MODES.COPY_COLOR:
         this.colorPicker.setColor(node.getFillColor());

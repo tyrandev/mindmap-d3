@@ -9,6 +9,7 @@ export default class KeyboardHandler {
     this.svg = svgManager.getSvg();
     this.nodeController = nodeController;
     this.selectionController = this.nodeController.selectionController;
+    this.nodeDeletionController = this.nodeController.nodeDeletionController;
     this.mindmapLocalStorage = mindmapLocalStorage;
     this.initKeyListeners();
   }
@@ -120,9 +121,7 @@ export default class KeyboardHandler {
 
   handleDeleteNode(event) {
     if (this.selectionController.getSelectedNode()) {
-      this.nodeController.deleteNode(
-        this.selectionController.getSelectedNode()
-      );
+      this.selectionController.deleteSelectedNode();
     }
   }
 

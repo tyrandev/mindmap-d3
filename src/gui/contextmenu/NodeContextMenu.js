@@ -7,6 +7,8 @@ export default class NodeContextMenu extends ContextMenu {
     super(nodeController, "node-context-menu");
     this.nodeController = nodeController;
     this.selectionController = this.nodeController.selectionController;
+    this.nodeCreationController = nodeController.nodeCreationController;
+    this.nodeDeletionController = nodeController.nodeDeletionController;
     this.colorPicker = ColorPicker.getColorPicker();
     this.handleBorderColorChange = this.handleBorderColorChange.bind(this);
     this.handleFillColorChange = this.handleFillColorChange.bind(this);
@@ -60,19 +62,19 @@ export default class NodeContextMenu extends ContextMenu {
 
   addCircle() {
     if (!this.contextMenuNode) return;
-    this.nodeController.createCircle(this.contextMenuNode);
+    this.nodeCreationController.createCircle(this.contextMenuNode);
     this.hideContextMenu();
   }
 
   addRectangle() {
     if (!this.contextMenuNode) return;
-    this.nodeController.createRectangle(this.contextMenuNode);
+    this.nodeCreationController.createRectangle(this.contextMenuNode);
     this.hideContextMenu();
   }
 
   addBorderlessRectangle() {
     if (!this.contextMenuNode) return;
-    this.nodeController.addConnectedBorderlessRectangle(this.contextMenuNode);
+    this.nodeCreationController.createBorderlessRectangle(this.contextMenuNode);
     this.hideContextMenu();
   }
 
@@ -90,7 +92,7 @@ export default class NodeContextMenu extends ContextMenu {
 
   deleteNode() {
     if (!this.contextMenuNode) return;
-    this.nodeController.deleteNode(this.contextMenuNode);
+    this.nodeDeletionController.deleteNode(this.contextMenuNode);
     this.hideContextMenu();
   }
 

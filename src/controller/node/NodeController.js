@@ -26,20 +26,4 @@ export default class NodeController {
       this.nodeContainer
     );
   }
-
-  createCircle(parentNode) {
-    this.nodeCreationController.createCircle(parentNode);
-  }
-
-  createRectangle(parentNode) {
-    this.nodeCreationController.createRectangle(parentNode);
-  }
-
-  deleteNode(node) {
-    this.nodeDeletionController.deleteNode(node);
-  }
-
-  moveNode(node, newX, newY) {
-    this.nodeMovementController.moveNode(node, newX, newY);
-  }
 }
