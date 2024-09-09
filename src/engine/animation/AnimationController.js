@@ -1,6 +1,6 @@
 import FpsTracker from "./FpsTracker.js";
 
-const TARGET_FPS = 60;
+const TARGET_FPS = 40;
 
 export default class AnimationController {
   constructor(onAnimateCallback) {
@@ -28,10 +28,10 @@ export default class AnimationController {
     const now = performance.now();
     if (this.shouldUpdate(now)) {
       this.updateLastFrameTime(now);
-      this.fpsTracker.incrementFrames(); // Increment frame count
+      this.fpsTracker.incrementFrames();
       this.onAnimateCallback();
     }
-    this.fpsTracker.update(now); // Update FPS
+    this.fpsTracker.update(now);
     this.scheduleNextFrame();
   }
 
