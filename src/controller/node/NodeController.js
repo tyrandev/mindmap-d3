@@ -1,13 +1,10 @@
-import Circle from "../../model/geometric/circle/Circle.js";
 import * as nc from "../../constants/NodeConstants.js";
 import StackState from "../../state/StackState.js";
-import MousePosition from "../../input/mouse/MousePosition.js";
 import RootNodeController from "./RootNodeController.js";
-import NodeFactory from "../../services/factory/NodeFactory.js";
 import svgManager from "../../view/SvgManager.js";
 import StackEventEmitter from "../../services/event/emitter/StackEventEmitter.js";
-import MindmapMath from "../../engine/math/MindmapMath.js";
 import SelectionController from "./SelectionController.js";
+import NodeCreationController from "./NodeCreationController";
 
 export default class NodeController {
   constructor(nodeContainer) {
@@ -16,50 +13,17 @@ export default class NodeController {
     this.rootNodeController = new RootNodeController(this, this.nodeContainer);
     this.rootNodeController.initRootNode();
     this.stackManager = new StackState(this.rootNodeController);
-  }
-
-  addConnectedNode(parentNode, nodeFactoryMethod) {
-    if (parentNode.collapsed) return;
-    StackEventEmitter.emitSaveStateForUndo();
-    const distanceFromParentNode =
-      this.calculateDistanceFromParentNode(parentNode);
-    const { x, y } = this.calculatePositionOfNewNode(
-      parentNode,
-      distanceFromParentNode
+    this.nodeCreationController = new NodeCreationController(
+      this.nodeContainer
     );
-    const newNode = nodeFactoryMethod(x, y);
-    newNode.setFillColor(parentNode.getFillColor());
-    parentNode.addChildNode(newNode);
-    this.nodeContainer.putNodeIntoContainer(newNode);
   }
 
-  addConnectedCircle(parentNode) {
-    this.addConnectedNode(parentNode, NodeFactory.createCircle);
+  createCircle(parentNode) {
+    this.nodeCreationController.createCircle(parentNode);
   }
 
-  addConnectedRectangle(parentNode) {
-    this.addConnectedNode(parentNode, NodeFactory.createRectangle);
-  }
-
-  addConnectedBorderlessRectangle(parentNode) {
-    this.addConnectedNode(parentNode, NodeFactory.createBorderlessRectangle);
-  }
-
-  calculateDistanceFromParentNode(parentNode) {
-    return parentNode instanceof Circle
-      ? parentNode.radius * 2.2
-      : parentNode.width * 1.25;
-  }
-
-  calculatePositionOfNewNode(parentNode, distanceFromParentNode) {
-    const mouseX = MousePosition.getX();
-    const mouseY = MousePosition.getY();
-    return MindmapMath.calculatePositionOfNewNode(
-      parentNode,
-      distanceFromParentNode,
-      mouseX,
-      mouseY
-    );
+  createRectangle(parentNode) {
+    this.nodeCreationController.createRectangle(parentNode);
   }
 
   deleteNode(node) {

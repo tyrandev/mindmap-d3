@@ -60,13 +60,13 @@ export default class NodeContextMenu extends ContextMenu {
 
   addCircle() {
     if (!this.contextMenuNode) return;
-    this.nodeController.addConnectedCircle(this.contextMenuNode);
+    this.nodeController.createCircle(this.contextMenuNode);
     this.hideContextMenu();
   }
 
   addRectangle() {
     if (!this.contextMenuNode) return;
-    this.nodeController.addConnectedRectangle(this.contextMenuNode);
+    this.nodeController.createRectangle(this.contextMenuNode);
     this.hideContextMenu();
   }
 
