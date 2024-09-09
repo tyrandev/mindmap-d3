@@ -23,7 +23,7 @@ export default class RootNodeController {
       const { x, y } = svgManager.getCenterCoordinates();
       this.rootNode = NodeFactory.createCircle(x, y);
       this.rootNode.setText(initialText);
-      this.nodeController.putNodeIntoContainer(this.rootNode);
+      this.nodeContainer.putNodeIntoContainer(this.rootNode);
       console.log("Root node is successfully initialized:", this.rootNode);
     } catch (error) {
       console.error("Error initializing root node:", error);

@@ -30,7 +30,7 @@ export default class NodeController {
     const newNode = nodeFactoryMethod(x, y);
     newNode.setFillColor(parentNode.getFillColor());
     parentNode.addChildNode(newNode);
-    this.putNodeIntoContainer(newNode);
+    this.nodeContainer.putNodeIntoContainer(newNode);
   }
 
   addConnectedCircle(parentNode) {
@@ -45,12 +45,21 @@ export default class NodeController {
     this.addConnectedNode(parentNode, NodeFactory.createBorderlessRectangle);
   }
 
-  putNodeIntoContainer(node) {
-    this.nodeContainer.putNodeIntoContainer(node);
+  calculateDistanceFromParentNode(parentNode) {
+    return parentNode instanceof Circle
+      ? parentNode.radius * 2.2
+      : parentNode.width * 1.25;
   }
 
-  putNodeAndChildrenIntoContainer(node) {
-    this.nodeContainer.putNodeAndChildrenIntoContainer(node);
+  calculatePositionOfNewNode(parentNode, distanceFromParentNode) {
+    const mouseX = MousePosition.getX();
+    const mouseY = MousePosition.getY();
+    return MindmapMath.calculatePositionOfNewNode(
+      parentNode,
+      distanceFromParentNode,
+      mouseX,
+      mouseY
+    );
   }
 
   removeNode(node) {
@@ -93,22 +102,5 @@ export default class NodeController {
 
   getNodeAtPosition(x, y) {
     return this.nodeContainer.getNodeAtPosition(x, y);
-  }
-
-  calculateDistanceFromParentNode(parentNode) {
-    return parentNode instanceof Circle
-      ? parentNode.radius * 2.2
-      : parentNode.width * 1.25;
-  }
-
-  calculatePositionOfNewNode(parentNode, distanceFromParentNode) {
-    const mouseX = MousePosition.getX();
-    const mouseY = MousePosition.getY();
-    return MindmapMath.calculatePositionOfNewNode(
-      parentNode,
-      distanceFromParentNode,
-      mouseX,
-      mouseY
-    );
   }
 }
