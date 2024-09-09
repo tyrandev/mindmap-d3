@@ -106,6 +106,10 @@ export default class Rectangle extends Node {
     this.calculateFontSize();
   }
 
+  getClassName() {
+    return "Rectangle";
+  }
+
   toJSON() {
     return {
       ...super.toJSON(),

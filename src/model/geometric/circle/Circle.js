@@ -64,6 +64,10 @@ export default class Circle extends Node {
     this.text = newText;
   }
 
+  getClassName() {
+    return "Circle";
+  }
+
   toJSON() {
     return {
       ...super.toJSON(),

@@ -16,6 +16,16 @@ export default class BorderlessRectangle extends Rectangle {
     console.log("Fill color cannot be set.");
   }
 
+  getClassName() {
+    return "BorderlessRectangle";
+  }
+
+  toJSON() {
+    return {
+      ...super.toJSON(),
+    };
+  }
+
   clone() {
     const clone = new BorderlessRectangle(this.x, this.y);
     clone.width = this.width;
@@ -30,11 +40,5 @@ export default class BorderlessRectangle extends Rectangle {
     });
     clone.makeInvisible();
     return clone;
-  }
-
-  toJSON() {
-    return {
-      ...super.toJSON(),
-    };
   }
 }

@@ -118,7 +118,8 @@ export default class Node {
   }
 
   getClassName() {
-    return this.constructor.name;
+    // return this.constructor.name;
+    return "Node";
   }
 
   toJSON() {
@@ -139,9 +140,7 @@ export default class Node {
   }
 
   equals(other) {
-    if (!(other instanceof Node)) {
-      return false;
-    }
+    if (!(other instanceof Node)) return false;
     return (
       this.x === other.x &&
       this.y === other.y &&
