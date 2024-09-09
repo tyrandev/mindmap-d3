@@ -90,7 +90,7 @@ export default class NodeContextMenu extends ContextMenu {
 
   deleteNode() {
     if (!this.contextMenuNode) return;
-    this.nodeController.removeNode(this.contextMenuNode);
+    this.nodeController.deleteNode(this.contextMenuNode);
     this.hideContextMenu();
   }
 

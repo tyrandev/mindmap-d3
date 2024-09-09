@@ -62,7 +62,7 @@ export default class NodeController {
     );
   }
 
-  removeNode(node) {
+  deleteNode(node) {
     StackEventEmitter.emitSaveStateForUndo();
     this.nodeContainer.removeNodeAndChildren(node);
   }

@@ -120,7 +120,7 @@ export default class KeyboardHandler {
 
   handleDeleteNode(event) {
     if (this.selectionController.getSelectedNode()) {
-      this.nodeController.removeNode(
+      this.nodeController.deleteNode(
         this.selectionController.getSelectedNode()
       );
     }

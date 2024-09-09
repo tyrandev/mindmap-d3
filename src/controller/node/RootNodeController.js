@@ -40,7 +40,7 @@ export default class RootNodeController {
 
   reinitializeRootNode(initialText = "Mindmap") {
     if (this.rootNode) {
-      this.nodeController.removeNode(this.rootNode);
+      this.nodeController.deleteNode(this.rootNode);
       this.rootNode = null;
     }
     this.initRootNode(initialText);
