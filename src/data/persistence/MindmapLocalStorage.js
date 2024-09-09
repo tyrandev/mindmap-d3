@@ -1,7 +1,7 @@
 import LocalStorageUIHandler from "../../gui/storage/LocalStorageUIHandler.js";
 import LocalStorage from "./LocalStorage.js";
-import NodeSerializer from "../serialization/NodeSerializer.js";
 import MindmapState from "../../state/MindmapState.js";
+import JsonMindmapLoader from "../serialization/JsonMindmapLoader.js";
 
 const LOCAL_STORAGE_KEY = "mindmaps";
 
@@ -10,6 +10,7 @@ export default class MindmapLocalStorage {
     this.rootNodeController = rootNodeController;
     this.localStorage = new LocalStorage(LOCAL_STORAGE_KEY);
     this.uiHandler = new LocalStorageUIHandler(this);
+    this.jsonMindmapLoader = new JsonMindmapLoader(this.rootNodeController);
   }
 
   saveToLocalStorage() {
@@ -26,7 +27,7 @@ export default class MindmapLocalStorage {
     if (!json) {
       throw new Error("Mindmap does not exist!");
     }
-    this._loadMindMapFromJson(json);
+    this.jsonMindmapLoader.loadFromJson(json);
     MindmapState.setCurrentMindmap(name, json);
   }
 
@@ -65,10 +66,5 @@ export default class MindmapLocalStorage {
   _getFilenameForSave() {
     const suggestedName = MindmapState.currentFilename || "";
     return prompt("Enter the filename for the JSON file:", suggestedName);
-  }
-
-  _loadMindMapFromJson(json) {
-    const rootNode = NodeSerializer.deserialize(json);
-    this.rootNodeController.loadMindMap(rootNode);
   }
 }

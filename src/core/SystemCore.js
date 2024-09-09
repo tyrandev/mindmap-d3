@@ -9,6 +9,7 @@ import TopMenuHandler from "../gui/topmenu/TopMenuHandler.js";
 import SvgEventAttacher from "../services/event/attacher/SvgEventAttacher.js";
 import NodeEventAttacher from "../services/event/attacher/NodeEventAttacher.js";
 import Session from "../state/Session.js";
+import JsonMindmapLoader from "../data/serialization/JsonMindmapLoader.js";
 
 export default class SystemCore {
   startApplication() {
