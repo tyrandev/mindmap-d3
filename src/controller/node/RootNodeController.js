@@ -4,9 +4,10 @@ import NodeSerializer from "../../data/serialization/NodeSerializer.js";
 import StackEventEmitter from "../../services/event/emitter/StackEventEmitter.js";
 
 export default class RootNodeController {
-  constructor(nodeController, nodeContainer) {
-    this.nodeController = nodeController;
+  constructor(nodeMovementController, nodeContainer, nodeDeletionController) {
+    this.nodeMovementController = nodeMovementController;
     this.nodeContainer = nodeContainer;
+    this.nodeDeletionController = nodeDeletionController;
     this.rootNode = null;
   }
 
@@ -40,7 +41,7 @@ export default class RootNodeController {
 
   reinitializeRootNode(initialText = "Mindmap") {
     if (this.rootNode) {
-      this.nodeController.deleteNode(this.rootNode);
+      this.nodeDeletionController.deleteNode(this.rootNode);
       this.rootNode = null;
     }
     this.initRootNode(initialText);
@@ -77,5 +78,14 @@ export default class RootNodeController {
     this.loadRootNode(rootNode);
     this.nodeController.moveRootNodeToCenter();
     StackEventEmitter.emit("clearAllStacks");
+  }
+
+  moveRootNodeToCenter() {
+    const rootNode = this.getRootNode();
+    if (!rootNode) {
+      console.error("No root node found.");
+      return;
+    }
+    this.nodeMovementController.moveNodeToCenter(rootNode);
   }
 }

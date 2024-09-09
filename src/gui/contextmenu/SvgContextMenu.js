@@ -5,6 +5,7 @@ export default class SvgContextMenu extends ContextMenu {
   constructor(nodeController) {
     super(nodeController, "canvas-context-menu");
     this.nodeController = nodeController;
+    this.rootNodeController = this.nodeController.rootNodeController;
   }
 
   initContextMenu() {
@@ -20,7 +21,7 @@ export default class SvgContextMenu extends ContextMenu {
   }
 
   centerMindmap() {
-    this.nodeController.moveRootNodeToCenter();
+    this.rootNodeController.moveRootNodeToCenter();
   }
 
   toggleLocalStorage() {
@@ -32,6 +33,6 @@ export default class SvgContextMenu extends ContextMenu {
       "Are you sure you want to reset the mindmap? This action cannot be undone."
     );
     if (!userConfirmed) return;
-    this.nodeController.resetMindmap();
+    this.rootNodeController.resetMindmap();
   }
 }
