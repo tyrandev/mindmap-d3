@@ -59,7 +59,7 @@ export default class MindmapLocalStorage {
   }
 
   _getSerializedJson() {
-    return this.nodeController.serializeRootNode();
+    return this.nodeController.rootNodeController.serializeRootNode();
   }
 
   _getFilenameForSave() {

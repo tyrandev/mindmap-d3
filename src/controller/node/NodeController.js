@@ -88,19 +88,19 @@ export default class NodeController {
     });
   }
 
+  moveNodeToCenter(node) {
+    const svgCenter = svgManager.getCenterCoordinates();
+    const offsetX = svgCenter.x - node.x;
+    const offsetY = svgCenter.y - node.y;
+    this.moveNode(node, node.x + offsetX, node.y + offsetY);
+  }
+
   moveRootNodeToCenter() {
     const rootNode = this.rootNodeController.getRootNode();
     if (!rootNode) {
       console.error("No root node found.");
       return;
     }
-    const svgCenter = svgManager.getCenterCoordinates();
-    const offsetX = svgCenter.x - rootNode.x;
-    const offsetY = svgCenter.y - rootNode.y;
-    this.moveNode(rootNode, rootNode.x + offsetX, rootNode.y + offsetY);
-  }
-
-  getNodeAtPosition(x, y) {
-    return this.nodeContainer.getNodeAtPosition(x, y);
+    this.moveNodeToCenter(rootNode);
   }
 }
