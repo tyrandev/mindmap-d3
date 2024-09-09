@@ -51,9 +51,8 @@ export default class SelectionController {
   renameSelectedNodePrompt() {
     const currentName = this.selectedNode.text || "";
     const newName = prompt("Enter new name for the node:", currentName);
-    if (newName) {
-      this.renameSelectedNode(newName);
-    }
+    if (!newName) return;
+    this.renameSelectedNode(newName);
   }
 
   randomizeSelectedNodeColor() {
@@ -91,36 +90,20 @@ export default class SelectionController {
 
   setSelectedRectangleDimensions(newWidth, newHeight) {
     if (!(this.selectedNode instanceof Rectangle)) return;
-    const validWidth = Math.max(newWidth, rc.MIN_RECTANGLE_WIDTH);
-    const validHeight = Math.max(newHeight, rc.MIN_RECTANGLE_HEIGHT);
-    if (
-      isNaN(validWidth) ||
-      validWidth <= 0 ||
-      isNaN(validHeight) ||
-      validHeight <= 0
-    ) {
-      console.error("Invalid dimensions");
-      return;
-    }
     StackEventEmitter.emitSaveStateForUndo();
-    this.selectedNode.addWidthBasedOnTextLength();
-    this.selectedNode.setDimensions(validWidth, validHeight);
+    this.selectedNode.setDimensions(newWidth, newHeight);
   }
 
   setSelectedCircleRadius(newRadius) {
     if (!(this.selectedNode instanceof Circle)) return;
-    if (isNaN(newRadius) || newRadius <= 0) {
-      console.error("invalid radius");
-      return;
-    }
     StackEventEmitter.emitSaveStateForUndo();
     this.selectedNode.setRadius(newRadius);
   }
 
   toggleSelectedNodeCollapse() {
-    StackEventEmitter.emitSaveStateForUndo();
     if (!this.selectedNode) return;
     if (!this.selectedNode.hasChildren()) return;
+    StackEventEmitter.emitSaveStateForUndo();
     this.selectedNode.toggleCollapse();
   }
 

@@ -48,8 +48,19 @@ export default class Rectangle extends Node {
   }
 
   setDimensions(newWidth, newHeight) {
-    this.originalWidth = newWidth;
-    this.height = newHeight;
+    const validWidth = Math.max(newWidth, rc.MIN_RECTANGLE_WIDTH);
+    const validHeight = Math.max(newHeight, rc.MIN_RECTANGLE_HEIGHT);
+    if (
+      isNaN(validWidth) ||
+      validWidth <= 0 ||
+      isNaN(validHeight) ||
+      validHeight <= 0
+    ) {
+      console.error("Invalid dimensions of Rectangle");
+      return;
+    }
+    this.originalWidth = validWidth;
+    this.height = validHeight;
     this.addWidthBasedOnTextLength();
     this.calculateFontSize();
   }
