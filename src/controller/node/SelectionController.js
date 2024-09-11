@@ -11,35 +11,15 @@ export default class SelectionController {
     this.originalNodeColor = null;
   }
 
-  setUnselectedNodeStyle() {
-    const selectedNode = this.nodeContainer.getSelectedNode();
-    if (selectedNode) {
-      selectedNode.setFillColor(this.originalNodeColor);
-    }
-  }
-
-  setSelectedNodeStyle() {
-    const selectedNode = this.nodeContainer.getSelectedNode();
-    if (selectedNode) {
-      this.originalNodeColor = selectedNode.fillColor;
-    }
-  }
-
   selectNode(node) {
     const currentSelectedNode = this.nodeContainer.getSelectedNode();
     if (currentSelectedNode === node) return;
-    if (currentSelectedNode) {
-      this.setUnselectedNodeStyle();
-    }
     this.nodeContainer.selectNode(node);
-    this.setSelectedNodeStyle();
   }
 
   unselectNode() {
     const selectedNode = this.nodeContainer.getSelectedNode();
     if (!selectedNode) return;
-
-    this.setUnselectedNodeStyle();
     this.nodeContainer.unselectNode();
     this.originalNodeColor = null;
     console.log(
@@ -51,7 +31,6 @@ export default class SelectionController {
   deleteSelectedNode() {
     const selectedNode = this.nodeContainer.getSelectedNode();
     if (!selectedNode) return;
-
     StackEventEmitter.emitSaveStateForUndo();
     this.nodeContainer.removeNodeAndChildren(selectedNode);
     this.nodeContainer.unselectNode();
