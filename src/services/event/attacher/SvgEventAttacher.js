@@ -45,7 +45,7 @@ export default class SvgEventAttacher {
 
   handleContextMenu(event) {
     event.preventDefault();
-    if (this.selectionController.selectedNode) return;
+    if (this.selectionController.getSelectedNode()) return;
     this.svgContextMenu.showContextMenu();
   }
 

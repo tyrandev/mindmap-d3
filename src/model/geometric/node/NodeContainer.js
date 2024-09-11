@@ -3,6 +3,7 @@ import Node from "./Node.js";
 export default class NodeContainer {
   constructor() {
     this.nodes = [];
+    this.selectedNode = null;
   }
 
   putNodeIntoContainer(node) {
@@ -48,5 +49,19 @@ export default class NodeContainer {
 
   getNodes() {
     return this.nodes;
+  }
+
+  // --- Methods to manage selection state ---
+
+  getSelectedNode() {
+    return this.selectedNode;
+  }
+
+  selectNode(node) {
+    this.selectedNode = node;
+  }
+
+  unselectNode() {
+    this.selectedNode = null;
   }
 }

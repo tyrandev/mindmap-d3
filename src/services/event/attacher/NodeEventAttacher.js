@@ -82,7 +82,7 @@ export default class NodeEventAttacher {
 
   // !! is not working
   handleMouseWheel(event) {
-    if (!this.selectionController.selectedNode) return;
+    if (!this.selectionController.getSelectedNode()) return;
     this.selectionController.updateSelectedNodeDimensions(
       event.deltaY > 0 ? -5 : 5
     );

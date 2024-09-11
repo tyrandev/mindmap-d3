@@ -15,7 +15,7 @@ export default class SvgCreator {
   }
 
   drawNodes() {
-    this.svg.selectAll("*").remove();
+    this.svg.selectAll("*").remove(); // Clear previous nodes
     this.renderedNodes.clear();
     this.nodeContainer.getNodes().forEach((node) => this.renderNode(node));
   }
@@ -23,11 +23,13 @@ export default class SvgCreator {
   renderNode(node) {
     const nodeSelection = this.renderNodeContent(node);
     this.addEventListeners(nodeSelection, node);
+    this.applySelectionStyle(nodeSelection, node); // Apply selection styles here
     this.trackNodeAsRendered(node);
     this.renderNodeChildren(node);
   }
 
   renderNodeContent(node) {
+    // Render the appropriate node type (Rectangle or Circle)
     if (node instanceof Rectangle) {
       return this.RectangleSvg.render(node);
     } else if (node instanceof Circle) {
@@ -48,6 +50,23 @@ export default class SvgCreator {
   renderNodeChildren(node) {
     if (node.children) {
       node.children.forEach((child) => this.renderNode(child));
+    }
+  }
+
+  applySelectionStyle(nodeSelection, node) {
+    // Get the currently selected node from the NodeContainer
+    const selectedNode = this.nodeContainer.getSelectedNode();
+
+    // Apply special styles to the selected node (e.g., a thicker border)
+    if (selectedNode === node) {
+      nodeSelection
+        .attr("stroke", node.borderColor)
+        .attr("stroke-width", node.borderWidth + 1); // Thicker border for selected node
+    } else {
+      // Reset to default styles for unselected nodes
+      nodeSelection
+        .attr("stroke", node.borderColor)
+        .attr("stroke-width", node.borderWidth);
     }
   }
 }
