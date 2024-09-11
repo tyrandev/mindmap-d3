@@ -2,7 +2,7 @@ import LineMath from "../../math/LineMath.js";
 import CollapseIndicator from "../../../model/indicators/CollapseIndicator.js";
 import CollapseIndicatorRenderer from "../indicators/CollapseIndicatorRenderer.js";
 import * as d3 from "d3";
-import ConnectionLineSvg from "./ConnectionLineSvg.js";
+import ConnectionLineSvg from "../lines/ConnectionLineSvg.js";
 
 export default class NodeRenderer {
   constructor(svg) {

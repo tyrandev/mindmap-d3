@@ -1,6 +1,6 @@
 import NodeSvg from "./NodeSvg.js";
 import CircleTextUtil from "../../../util/text/CircleTextUtil.js";
-import ConnectionLineSvg from "./ConnectionLineSvg.js"; // Import ConnectionLineSvg
+import ConnectionLineSvg from "../lines/ConnectionLineSvg.js"; // Import ConnectionLineSvg
 
 export default class CircleSvg extends NodeSvg {
   constructor(svg) {
@@ -59,18 +59,5 @@ export default class CircleSvg extends NodeSvg {
         .style("font-family", "Arial")
         .text(line);
     });
-  }
-
-  // ! this method startX and startY are nan
-  connectLineToChildNodes(circle, child) {
-    const { startX, startY, endX, endY } =
-      this.connectionLineSvg.calculateConnectionPoints(circle, child);
-    this.connectionLineSvg.connectWithCurvedLine(
-      startX,
-      startY,
-      endX,
-      endY,
-      circle.getLineColor()
-    );
   }
 }

@@ -2,7 +2,7 @@ import NodeSvg from "./NodeSvg.js";
 import RectangleMath from "../../math/RectangleMath.js";
 import Circle from "../../../model/geometric/circle/Circle.js";
 import Rectangle from "../../../model/geometric/rectangle/Rectangle.js";
-import ConnectionLineSvg from "./ConnectionLineSvg.js"; // Import ConnectionLineSvg
+import ConnectionLineSvg from "../lines/ConnectionLineSvg.js"; // Import ConnectionLineSvg
 
 export default class RectangleSvg extends NodeSvg {
   constructor(svg) {
@@ -79,17 +79,5 @@ export default class RectangleSvg extends NodeSvg {
         .style("font-family", "Arial")
         .text(line);
     });
-  }
-
-  connectLineToChildNodes(rectangle, child) {
-    const { startX, startY, endX, endY } =
-      this.connectionLineSvg.calculateConnectionPoints(rectangle, child);
-    this.connectionLineSvg.connectWithCurvedLine(
-      startX,
-      startY,
-      endX,
-      endY,
-      rectangle.getLineColor()
-    );
   }
 }
