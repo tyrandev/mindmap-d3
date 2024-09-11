@@ -12,8 +12,8 @@ export default class SvgCreator {
     this.nodeEventAttacher = nodeEventAttacher;
     this.svg = svgManager.getSvg();
     this.renderedNodes = new Set();
-    this.CircleSvg = new CircleSvg(this.svg);
-    this.RectangleSvg = new RectangleSvg(this.svg);
+    this.circleSvg = new CircleSvg(this.svg);
+    this.rectangleSvg = new RectangleSvg(this.svg);
   }
 
   drawNodes() {
@@ -31,9 +31,9 @@ export default class SvgCreator {
 
   renderNodeContent(node) {
     if (node instanceof Rectangle) {
-      return this.RectangleSvg.render(node);
+      return this.rectangleSvg.render(node);
     } else if (node instanceof Circle) {
-      return this.CircleSvg.render(node);
+      return this.circleSvg.render(node);
     } else {
       throw new Error("Trying to render unsupported type of node");
     }
