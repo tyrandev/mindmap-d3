@@ -24,17 +24,19 @@ export default class RectangleSvg extends NodeSvg {
       .attr("stroke", rectangle.borderColor)
       .attr("stroke-width", rectangle.borderWidth);
 
+    this.applyCornerRadius(rect, rectangle);
+    return rect;
+  }
+
+  applyCornerRadius(rect, rectangle) {
     const [radius] = RectangleMath.adjustRadii(
       rectangle.actualWidth,
       rectangle.height,
       rectangle.cornerRadii
     );
-
     if (radius > 0) {
       rect.attr("rx", radius).attr("ry", radius);
     }
-
-    return rect;
   }
 
   computeTextLines(rectangle) {
