@@ -1,10 +1,13 @@
 import NodeSvg from "./NodeSvg.js";
-import CircleMath from "../../math/CircleMath.js";
 import CircleTextUtil from "../../../util/text/CircleTextUtil.js";
-import Circle from "../../../model/geometric/circle/Circle.js";
-import Rectangle from "../../../model/geometric/rectangle/Rectangle.js";
+import ConnectionLineSvg from "./ConnectionLineSvg.js"; // Import ConnectionLineSvg
 
 export default class CircleSvg extends NodeSvg {
+  constructor(svg) {
+    super(svg);
+    this.connectionLineSvg = new ConnectionLineSvg(svg);
+  }
+
   drawShapeWithText(circle) {
     const circleSelection = this.drawCircleShape(circle);
     this.drawNodeText(circle);
@@ -58,38 +61,16 @@ export default class CircleSvg extends NodeSvg {
     });
   }
 
+  // ! this method startX and startY are nan
   connectLineToChildNodes(circle, child) {
-    const { startX, startY, endX, endY } = this.calculateConnectionPoints(
-      circle,
-      child
-    );
-    this.connectWithCurvedLine(
+    const { startX, startY, endX, endY } =
+      this.connectionLineSvg.calculateConnectionPoints(circle, child);
+    this.connectionLineSvg.connectWithCurvedLine(
       startX,
       startY,
       endX,
       endY,
       circle.getLineColor()
     );
-  }
-
-  calculateConnectionPoints(circle, child) {
-    const angle = CircleMath.calculateAngle(
-      circle.x,
-      circle.y,
-      child.x,
-      child.y
-    );
-
-    if (child instanceof Circle) {
-      return CircleMath.calculateCircleToCircleConnection(circle, child, angle);
-    } else if (child instanceof Rectangle) {
-      return CircleMath.calculateCircleToRectangleConnection(
-        circle,
-        child,
-        angle
-      );
-    } else {
-      throw new Error("Unknown or unsupported type of node child");
-    }
   }
 }

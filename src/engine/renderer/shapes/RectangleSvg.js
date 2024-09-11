@@ -2,9 +2,14 @@ import NodeSvg from "./NodeSvg.js";
 import RectangleMath from "../../math/RectangleMath.js";
 import Circle from "../../../model/geometric/circle/Circle.js";
 import Rectangle from "../../../model/geometric/rectangle/Rectangle.js";
-import * as d3 from "d3";
+import ConnectionLineSvg from "./ConnectionLineSvg.js"; // Import ConnectionLineSvg
 
 export default class RectangleSvg extends NodeSvg {
+  constructor(svg) {
+    super(svg);
+    this.connectionLineSvg = new ConnectionLineSvg(svg); // Initialize ConnectionLineSvg
+  }
+
   drawShapeWithText(rectangle) {
     const rectangleSelection = this.drawRectangleShape(rectangle);
     this.drawNodeText(rectangle);
@@ -77,32 +82,14 @@ export default class RectangleSvg extends NodeSvg {
   }
 
   connectLineToChildNodes(rectangle, child) {
-    const { startX, startY, endX, endY } = this.calculateConnectionPoints(
-      rectangle,
-      child
-    );
-    this.connectWithCurvedLine(
+    const { startX, startY, endX, endY } =
+      this.connectionLineSvg.calculateConnectionPoints(rectangle, child);
+    this.connectionLineSvg.connectWithCurvedLine(
       startX,
       startY,
       endX,
       endY,
       rectangle.getLineColor()
     );
-  }
-
-  calculateConnectionPoints(rectangle, child) {
-    if (child instanceof Circle) {
-      return RectangleMath.calculateRectangleToCircleConnection(
-        rectangle,
-        child
-      );
-    } else if (child instanceof Rectangle) {
-      return RectangleMath.calculateRectangleToRectangleConnection(
-        rectangle,
-        child
-      );
-    } else {
-      throw new Error("Unknown or unsupported type of node child");
-    }
   }
 }

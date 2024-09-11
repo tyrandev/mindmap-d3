@@ -2,6 +2,7 @@ import LineMath from "../../math/LineMath.js";
 import CollapseIndicator from "../../../model/indicators/CollapseIndicator.js";
 import CollapseIndicatorRenderer from "../indicators/CollapseIndicatorRenderer.js";
 import * as d3 from "d3";
+import ConnectionLineSvg from "./ConnectionLineSvg.js";
 
 export default class NodeRenderer {
   constructor(svg) {
@@ -10,6 +11,7 @@ export default class NodeRenderer {
     }
     this.svg = svg;
     this.collapseIndicatorRenderer = new CollapseIndicatorRenderer();
+    this.connectionLineSvg = new ConnectionLineSvg(svg);
   }
 
   render(node) {
@@ -37,7 +39,6 @@ export default class NodeRenderer {
   }
 
   drawNodeText(node) {
-    this.setTextStyle(node);
     this.computeTextLines(node);
   }
 
@@ -45,13 +46,15 @@ export default class NodeRenderer {
     throw new Error("Method 'computeTextLines()' must be implemented.");
   }
 
-  connectLineToChildNodes(node, child) {
-    this.connectWithCurvedLine(
-      node.x,
-      node.y,
-      child.x,
-      child.y,
-      node.getLineColor()
+  connectLineToChildNodes(startNode, child) {
+    const { startX, startY, endX, endY } =
+      this.connectionLineSvg.calculateConnectionPoints(startNode, child);
+    this.connectionLineSvg.connectWithCurvedLine(
+      startX,
+      startY,
+      endX,
+      endY,
+      startNode.getLineColor()
     );
   }
 

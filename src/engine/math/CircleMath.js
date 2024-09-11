@@ -25,11 +25,18 @@ export default class CircleMath {
   }
 
   static calculateCircleToCircleConnection(sourceCircle, targetCircle, angle) {
-    const startX = CircleMath.getCircleEdge(sourceCircle, angle).x;
-    const startY = CircleMath.getCircleEdge(sourceCircle, angle).y;
-    const endX = CircleMath.getCircleEdge(targetCircle, angle + Math.PI).x;
-    const endY = CircleMath.getCircleEdge(targetCircle, angle + Math.PI).y;
-    return { startX, startY, endX, endY };
+    const startEdge = CircleMath.getCircleEdge(sourceCircle, angle);
+    const endEdge = CircleMath.getCircleEdge(targetCircle, angle + Math.PI);
+
+    CircleMath.checkForNaN(startEdge);
+    CircleMath.checkForNaN(endEdge);
+
+    return {
+      startX: startEdge.x,
+      startY: startEdge.y,
+      endX: endEdge.x,
+      endY: endEdge.y,
+    };
   }
 
   static calculateCircleToRectangleConnection(
@@ -42,17 +49,25 @@ export default class CircleMath {
       sourceCircle,
       angle
     );
-    const startX = CircleMath.getCircleEdge(sourceCircle, angle).x;
-    const startY = CircleMath.getCircleEdge(sourceCircle, angle).y;
-    const endX = closestPoint.x;
-    const endY = closestPoint.y;
-    return { startX, startY, endX, endY };
+    const startEdge = CircleMath.getCircleEdge(sourceCircle, angle);
+
+    CircleMath.checkForNaN(startEdge);
+    CircleMath.checkForNaN(closestPoint);
+
+    return {
+      startX: startEdge.x,
+      startY: startEdge.y,
+      endX: closestPoint.x,
+      endY: closestPoint.y,
+    };
   }
 
   static getCircleEdge(circle, angle) {
-    if (!(circle instanceof Circle)) return;
+    if (!(circle instanceof Circle)) return { x: NaN, y: NaN };
+
     const edgeX = circle.x + Math.cos(angle) * circle.radius;
     const edgeY = circle.y + Math.sin(angle) * circle.radius;
+
     return { x: edgeX, y: edgeY };
   }
 
@@ -60,15 +75,12 @@ export default class CircleMath {
     const halfWidth = targetRectangle.width / 2;
     const halfHeight = targetRectangle.height / 2;
 
-    // Determine which side of the rectangle to connect to
     const dx = sourceCircle.x - targetRectangle.x;
     const dy = sourceCircle.y - targetRectangle.y;
 
     let closestX, closestY;
 
-    // Adjust the multiplier (e.g., 1.5) to favor horizontal connections
     if (Math.abs(dx) * 3.7 > Math.abs(dy)) {
-      // Connect to the left or right side
       if (dx > 0) {
         closestX = targetRectangle.x + halfWidth;
         closestY = targetRectangle.y;
@@ -77,7 +89,6 @@ export default class CircleMath {
         closestY = targetRectangle.y;
       }
     } else {
-      // Connect to the top or bottom side
       if (dy > 0) {
         closestX = targetRectangle.x;
         closestY = targetRectangle.y + halfHeight;
@@ -86,12 +97,25 @@ export default class CircleMath {
         closestY = targetRectangle.y - halfHeight;
       }
     }
+
     return { x: closestX, y: closestY };
   }
 
   static calculateAngle(x1, y1, x2, y2) {
     const dx = x2 - x1;
     const dy = y2 - y1;
-    return Math.atan2(dy, dx);
+    const angle = Math.atan2(dy, dx);
+
+    if (isNaN(angle)) {
+      throw new Error("Calculated angle is NaN");
+    }
+
+    return angle;
+  }
+
+  static checkForNaN(point) {
+    if (isNaN(point.x) || isNaN(point.y)) {
+      throw new Error("Calculated point is NaN");
+    }
   }
 }
