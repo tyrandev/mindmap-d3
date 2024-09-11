@@ -41,10 +41,6 @@ export default class NodeRenderer {
     this.computeTextLines(node);
   }
 
-  setTextStyle(node) {
-    // Can be customized in subclasses
-  }
-
   computeTextLines(node) {
     throw new Error("Method 'computeTextLines()' must be implemented.");
   }
