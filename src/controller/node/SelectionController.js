@@ -1,7 +1,6 @@
 import ColorHandler from "../../util/color/ColorHandler.js";
 import * as cc from "../../constants/CircleConstants.js";
 import * as rc from "../../constants/RectangleConstants.js";
-import * as nc from "../../constants/NodeConstants.js";
 import Circle from "../../model/geometric/circle/Circle.js";
 import Rectangle from "../../model/geometric/rectangle/Rectangle.js";
 import StackEventEmitter from "../../services/event/emitter/StackEventEmitter.js";
@@ -16,7 +15,6 @@ export default class SelectionController {
     const selectedNode = this.nodeContainer.getSelectedNode();
     if (selectedNode) {
       selectedNode.setFillColor(this.originalNodeColor);
-      // selectedNode.borderWidth = nc.BASE_NODE_BORDER_WITH;
     }
   }
 
@@ -24,28 +22,16 @@ export default class SelectionController {
     const selectedNode = this.nodeContainer.getSelectedNode();
     if (selectedNode) {
       this.originalNodeColor = selectedNode.fillColor;
-      // selectedNode.setFillColor(
-      //   ColorHandler.lightenColor(selectedNode.fillColor, 1.5)
-      // );
-      // selectedNode.borderWidth = nc.SELECTED_NODE_BORDER_WIDTH;
     }
   }
 
   selectNode(node) {
     const currentSelectedNode = this.nodeContainer.getSelectedNode();
-
-    // If node is already selected, do nothing
     if (currentSelectedNode === node) return;
-
-    // If another node was selected, reset its style
     if (currentSelectedNode) {
       this.setUnselectedNodeStyle();
     }
-
-    // Set the new selected node
     this.nodeContainer.selectNode(node);
-
-    // Apply the style for the new selected node
     this.setSelectedNodeStyle();
   }
 
@@ -54,7 +40,7 @@ export default class SelectionController {
     if (!selectedNode) return;
 
     this.setUnselectedNodeStyle();
-    this.nodeContainer.unselectNode(); // Unselect in nodeContainer
+    this.nodeContainer.unselectNode();
     this.originalNodeColor = null;
     console.log(
       "Node was unselected. Now it is:",

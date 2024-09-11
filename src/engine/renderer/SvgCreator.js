@@ -3,6 +3,7 @@ import RectangleSvg from "./shapes/RectangleSvg.js";
 import Rectangle from "../../model/geometric/rectangle/Rectangle.js";
 import Circle from "../../model/geometric/circle/Circle.js";
 import svgManager from "../../view/SvgManager.js";
+import ColorHandler from "../../util/color/ColorHandler.js";
 
 export default class SvgCreator {
   constructor(nodeContainer, nodeEventAttacher) {
@@ -15,7 +16,7 @@ export default class SvgCreator {
   }
 
   drawNodes() {
-    this.svg.selectAll("*").remove(); // Clear previous nodes
+    this.svg.selectAll("*").remove();
     this.renderedNodes.clear();
     this.nodeContainer.getNodes().forEach((node) => this.renderNode(node));
   }
@@ -23,13 +24,12 @@ export default class SvgCreator {
   renderNode(node) {
     const nodeSelection = this.renderNodeContent(node);
     this.addEventListeners(nodeSelection, node);
-    this.applySelectionStyle(nodeSelection, node); // Apply selection styles here
+    this.applySelectionStyle(nodeSelection, node);
     this.trackNodeAsRendered(node);
     this.renderNodeChildren(node);
   }
 
   renderNodeContent(node) {
-    // Render the appropriate node type (Rectangle or Circle)
     if (node instanceof Rectangle) {
       return this.RectangleSvg.render(node);
     } else if (node instanceof Circle) {
@@ -54,19 +54,13 @@ export default class SvgCreator {
   }
 
   applySelectionStyle(nodeSelection, node) {
-    // Get the currently selected node from the NodeContainer
     const selectedNode = this.nodeContainer.getSelectedNode();
-
-    // Apply special styles to the selected node (e.g., a thicker border)
     if (selectedNode === node) {
+      const lightenedFillColor = ColorHandler.lightenColor(node.fillColor, 3);
       nodeSelection
         .attr("stroke", node.borderColor)
-        .attr("stroke-width", node.borderWidth + 1); // Thicker border for selected node
-    } else {
-      // Reset to default styles for unselected nodes
-      nodeSelection
-        .attr("stroke", node.borderColor)
-        .attr("stroke-width", node.borderWidth);
+        .attr("stroke-width", node.borderWidth + 1)
+        .attr("fill", lightenedFillColor);
     }
   }
 }
