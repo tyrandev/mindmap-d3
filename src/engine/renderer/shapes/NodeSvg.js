@@ -1,7 +1,5 @@
-import LineMath from "../../math/LineMath.js";
 import CollapseIndicator from "../../../model/indicators/CollapseIndicator.js";
 import CollapseIndicatorRenderer from "../indicators/CollapseIndicatorRenderer.js";
-import * as d3 from "d3";
 import ConnectionLineSvg from "../lines/ConnectionLineSvg.js";
 
 export default class NodeRenderer {
@@ -21,7 +19,7 @@ export default class NodeRenderer {
 
     if (!node.collapsed) {
       node.children.forEach((child) => {
-        this.connectLineToChildNodes(node, child);
+        this.connectionLineSvg.connectLineToChildNodes(node, child);
       });
     } else {
       this.renderCollapseIndicator(node);
@@ -44,42 +42,5 @@ export default class NodeRenderer {
 
   computeTextLines(node) {
     throw new Error("Method 'computeTextLines()' must be implemented.");
-  }
-
-  connectLineToChildNodes(startNode, child) {
-    const { startX, startY, endX, endY } =
-      this.connectionLineSvg.calculateConnectionPoints(startNode, child);
-    this.connectionLineSvg.connectWithCurvedLine(
-      startX,
-      startY,
-      endX,
-      endY,
-      startNode.getLineColor()
-    );
-  }
-
-  connectWithStraightLine(startX, startY, endX, endY) {
-    this.svg
-      .append("line")
-      .attr("x1", startX)
-      .attr("y1", startY)
-      .attr("x2", endX)
-      .attr("y2", endY)
-      .attr("stroke", "black");
-  }
-
-  connectWithCurvedLine(startX, startY, endX, endY, lineColor) {
-    const { controlX1, controlY1, controlX2, controlY2 } =
-      LineMath.calculateControlPointsForCurvedLine(startX, startY, endX, endY);
-
-    const path = d3.path();
-    path.moveTo(startX, startY);
-    path.bezierCurveTo(controlX1, controlY1, controlX2, controlY2, endX, endY);
-
-    this.svg
-      .append("path")
-      .attr("d", path.toString())
-      .attr("stroke", lineColor)
-      .attr("fill", "none");
   }
 }

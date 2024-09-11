@@ -13,6 +13,20 @@ export default class ConnectionLineSvg {
     this.svg = svg;
   }
 
+  connectLineToChildNodes(startNode, child) {
+    const { startX, startY, endX, endY } = this.calculateConnectionPoints(
+      startNode,
+      child
+    );
+    this.connectWithCurvedLine(
+      startX,
+      startY,
+      endX,
+      endY,
+      startNode.getLineColor()
+    );
+  }
+
   connectWithStraightLine(startX, startY, endX, endY, lineColor = "black") {
     this.svg
       .append("line")

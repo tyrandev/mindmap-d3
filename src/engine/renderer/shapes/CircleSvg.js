@@ -1,11 +1,9 @@
 import NodeSvg from "./NodeSvg.js";
 import CircleTextUtil from "../../../util/text/CircleTextUtil.js";
-import ConnectionLineSvg from "../lines/ConnectionLineSvg.js"; // Import ConnectionLineSvg
 
 export default class CircleSvg extends NodeSvg {
   constructor(svg) {
     super(svg);
-    this.connectionLineSvg = new ConnectionLineSvg(svg);
   }
 
   drawShapeWithText(circle) {

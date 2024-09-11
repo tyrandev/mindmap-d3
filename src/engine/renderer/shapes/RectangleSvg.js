@@ -1,13 +1,9 @@
 import NodeSvg from "./NodeSvg.js";
 import RectangleMath from "../../math/RectangleMath.js";
-import Circle from "../../../model/geometric/circle/Circle.js";
-import Rectangle from "../../../model/geometric/rectangle/Rectangle.js";
-import ConnectionLineSvg from "../lines/ConnectionLineSvg.js"; // Import ConnectionLineSvg
 
 export default class RectangleSvg extends NodeSvg {
   constructor(svg) {
     super(svg);
-    this.connectionLineSvg = new ConnectionLineSvg(svg); // Initialize ConnectionLineSvg
   }
 
   drawShapeWithText(rectangle) {
