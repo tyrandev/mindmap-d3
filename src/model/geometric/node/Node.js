@@ -19,7 +19,7 @@ export default class Node {
     this.collapsed = null;
     this.children = [];
     this.parent = null;
-    this.link = null; // Add link attribute
+    this.link = null;
     this.setColorsBasedOnFillColor(this.fillColor);
   }
 
@@ -148,7 +148,7 @@ export default class Node {
       borderWidth: this.borderWidth,
       collapsed: this.collapsed ? this.collapsed.toJSON() : null,
       children: this.children.map((child) => child.toJSON()),
-      link: this.link ? this.link.toJSON() : null, // Add link to the JSON
+      link: this.link ? this.link.toJSON() : null,
     };
   }
 
@@ -164,7 +164,7 @@ export default class Node {
     nodeInstance.borderWidth = data.borderWidth;
 
     if (data.link) {
-      nodeInstance.link = Link.fromJSON(data.link); // Set link from JSON
+      nodeInstance.link = Link.fromJSON(data.link);
     }
 
     return nodeInstance;
