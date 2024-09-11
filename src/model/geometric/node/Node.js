@@ -1,4 +1,5 @@
 import ColorHandler from "../../../util/color/ColorHandler.js";
+import Link from "../../links/Link.js";
 
 export default class Node {
   constructor(x = 0, y = 0) {
@@ -18,7 +19,19 @@ export default class Node {
     this.collapsed = null;
     this.children = [];
     this.parent = null;
+    this.link = null; // Add link attribute
     this.setColorsBasedOnFillColor(this.fillColor);
+  }
+
+  getLink() {
+    return this.link;
+  }
+
+  setLink(link) {
+    if (!(link instanceof Link)) {
+      throw new Error("Expected an instance of Link.");
+    }
+    this.link = link;
   }
 
   clone() {
@@ -27,22 +40,6 @@ export default class Node {
 
   setId(newId) {
     this.id = newId;
-  }
-
-  async toggleCollapse() {
-    if (!this.hasChildren()) return;
-    const { default: CollapseIndicator } = await import(
-      "../../indicators/CollapseIndicator.js"
-    );
-    if (!this.collapsed) {
-      this.collapsed = new CollapseIndicator();
-    } else {
-      this.collapsed = null;
-    }
-  }
-
-  isCollapsed() {
-    return this.collapsed;
   }
 
   hasChildren() {
@@ -84,6 +81,22 @@ export default class Node {
     this.setLineColor(darkenedColor);
   }
 
+  async toggleCollapse() {
+    if (!this.hasChildren()) return;
+    const { default: CollapseIndicator } = await import(
+      "../../indicators/CollapseIndicator.js"
+    );
+    if (!this.collapsed) {
+      this.collapsed = new CollapseIndicator();
+    } else {
+      this.collapsed = null;
+    }
+  }
+
+  isCollapsed() {
+    return this.collapsed;
+  }
+
   hasCollapsedAncestor() {
     let currentNode = this;
     while (currentNode.parent) {
@@ -118,7 +131,6 @@ export default class Node {
   }
 
   getClassName() {
-    // return this.constructor.name;
     return "Node";
   }
 
@@ -136,6 +148,7 @@ export default class Node {
       borderWidth: this.borderWidth,
       collapsed: this.collapsed ? this.collapsed.toJSON() : null,
       children: this.children.map((child) => child.toJSON()),
+      link: this.link ? this.link.toJSON() : null, // Add link to the JSON
     };
   }
 
@@ -150,6 +163,10 @@ export default class Node {
     nodeInstance.textColor = data.textColor;
     nodeInstance.borderWidth = data.borderWidth;
 
+    if (data.link) {
+      nodeInstance.link = Link.fromJSON(data.link); // Set link from JSON
+    }
+
     return nodeInstance;
   }
 
@@ -162,7 +179,9 @@ export default class Node {
       this.fillColor === other.fillColor &&
       this.collapsed === other.collapsed &&
       (this.parent === other.parent ||
-        (this.parent && other.parent && this.parent.id === other.parent.id))
+        (this.parent && other.parent && this.parent.id === other.parent.id)) &&
+      (this.link === other.link ||
+        (this.link && other.link && this.link.equals(other.link)))
     );
   }
 }
