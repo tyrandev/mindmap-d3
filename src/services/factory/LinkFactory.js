@@ -1,6 +1,5 @@
 import MindmapLink from "../../model/links/MindmapLink.js";
 import UrlLink from "../../model/links/UrlLink.js";
-// Import other link types as needed
 
 export default class LinkFactory {
   static createLinkFromJson(data) {

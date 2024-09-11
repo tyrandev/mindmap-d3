@@ -2,8 +2,8 @@ import ContextMenuEventEmitter from "../../services/event/emitter/ContextMenuEve
 import mousePositionInstance from "../../input/mouse/MousePosition.js";
 
 export default class ContextMenu {
-  constructor(systemCore, contextMenuId) {
-    this.systemCore = systemCore;
+  constructor(controllerCore, contextMenuId) {
+    this.controllerCore = controllerCore;
     this.contextMenu = document.getElementById(contextMenuId);
     this.svg = document.getElementById("mindMapSvg");
     this.contextMenuNode = null;
