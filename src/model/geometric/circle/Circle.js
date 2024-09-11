@@ -75,6 +75,13 @@ export default class Circle extends Node {
     };
   }
 
+  static fromJSON(data) {
+    const circle = new Circle(data.x, data.y);
+    Node.fromJSON(data, circle);
+    circle.radius = data.radius;
+    return circle;
+  }
+
   equals(other) {
     if (!(other instanceof Circle)) {
       return false;

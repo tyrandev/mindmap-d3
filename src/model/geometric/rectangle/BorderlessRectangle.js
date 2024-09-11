@@ -26,6 +26,13 @@ export default class BorderlessRectangle extends Rectangle {
     };
   }
 
+  static fromJSON(data) {
+    const borderlessRectangle = new BorderlessRectangle(data.x, data.y);
+    Rectangle.fromJSON(data, borderlessRectangle);
+    borderlessRectangle.makeInvisible();
+    return borderlessRectangle;
+  }
+
   clone() {
     const clone = new BorderlessRectangle(this.x, this.y);
     clone.width = this.width;

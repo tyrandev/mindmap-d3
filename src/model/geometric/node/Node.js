@@ -69,6 +69,10 @@ export default class Node {
     return this.borderColor;
   }
 
+  getFillColor() {
+    return this.fillColor;
+  }
+
   setFillColor(newColor) {
     this.fillColor = newColor;
     this.setColorsBasedOnFillColor(newColor);
@@ -78,10 +82,6 @@ export default class Node {
     const darkenedColor = ColorHandler.darkenColor(newColor, 40);
     this.setBorderColor(darkenedColor);
     this.setLineColor(darkenedColor);
-  }
-
-  getFillColor() {
-    return this.fillColor;
   }
 
   hasCollapsedAncestor() {
@@ -137,6 +137,20 @@ export default class Node {
       collapsed: this.collapsed ? this.collapsed.toJSON() : null,
       children: this.children.map((child) => child.toJSON()),
     };
+  }
+
+  static fromJSON(data, nodeInstance) {
+    nodeInstance.id = data.id;
+    nodeInstance.x = data.x;
+    nodeInstance.y = data.y;
+    nodeInstance.text = data.text;
+    nodeInstance.fillColor = data.fillColor;
+    nodeInstance.borderColor = data.borderColor;
+    nodeInstance.lineColor = data.lineColor;
+    nodeInstance.textColor = data.textColor;
+    nodeInstance.borderWidth = data.borderWidth;
+
+    return nodeInstance;
   }
 
   equals(other) {

@@ -119,6 +119,15 @@ export default class Rectangle extends Node {
     };
   }
 
+  static fromJSON(data) {
+    const rectangle = new Rectangle(data.x, data.y);
+    Node.fromJSON(data, rectangle);
+    rectangle.width = data.width;
+    rectangle.height = data.height;
+    rectangle.cornerRadii = data.cornerRadii;
+    return rectangle;
+  }
+
   equals(other) {
     if (!(other instanceof Rectangle)) {
       return false;

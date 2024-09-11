@@ -22,52 +22,19 @@ export default class NodeFactory {
   }
 
   static createCircleFromJson(data) {
-    return NodeFactory._initializeNodeFromJson(
-      new Circle(data.x, data.y),
-      data
-    );
+    return Circle.fromJSON(data);
   }
 
   static createRectangleFromJson(data) {
-    return NodeFactory._initializeNodeFromJson(
-      new Rectangle(data.x, data.y),
-      data
-    );
+    return Rectangle.fromJSON(data);
   }
 
   static createBorderlessRectangleFromJson(data) {
-    return NodeFactory._initializeNodeFromJson(
-      new BorderlessRectangle(data.x, data.y),
-      data
-    );
+    return BorderlessRectangle.fromJSON(data);
   }
 
   static _initializeNode(node) {
     node.setId(NodeFactory.incrementId());
-    return node;
-  }
-
-  static _initializeNodeFromJson(node, data) {
-    node.id = data.id;
-    node.x = data.x;
-    node.y = data.y;
-    node.text = data.text;
-    node.fillColor = data.fillColor;
-    node.borderColor = data.borderColor;
-    node.lineColor = data.lineColor;
-    node.textColor = data.textColor;
-    node.borderWidth = data.borderWidth;
-
-    if (node instanceof Circle) {
-      node.radius = data.radius;
-    } else if (
-      node instanceof Rectangle ||
-      node instanceof BorderlessRectangle
-    ) {
-      node.width = data.width;
-      node.height = data.height;
-      node.cornerRadii = data.cornerRadii;
-    }
     return node;
   }
 }
