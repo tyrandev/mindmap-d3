@@ -3,7 +3,7 @@ import GuiDisplayUtil from "../../util/display/GuiDisplayUtil.js";
 
 export default class SvgContextMenu extends ContextMenu {
   constructor(controllerCore) {
-    super(controllerCore, "canvas-context-menu");
+    super(controllerCore, "svg-context-menu");
     this.controllerCore = controllerCore;
     this.rootNodeController = this.controllerCore.rootNodeController;
   }

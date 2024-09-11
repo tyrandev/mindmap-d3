@@ -2,7 +2,6 @@ import SvgContextMenu from "../../../gui/contextmenu/SvgContextMenu.js";
 import MouseModeState from "../../../state/MouseModeState.js";
 import * as MouseConstants from "../../../constants/MouseConstants.js";
 import ContextMenuEventEmitter from "../emitter/ContextMenuEventEmitter.js";
-import svgManager from "../../../view/SvgManager.js";
 
 export default class SvgEventAttacher {
   constructor(svg, controllerCore) {
