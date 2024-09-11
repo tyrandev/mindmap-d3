@@ -4,6 +4,7 @@ import Rectangle from "../../model/geometric/rectangle/Rectangle.js";
 import Circle from "../../model/geometric/circle/Circle.js";
 import svgManager from "../../view/SvgManager.js";
 import ColorHandler from "../../util/color/ColorHandler.js";
+import BorderlessRectangle from "../../model/geometric/rectangle/BorderlessRectangle.js";
 
 export default class SvgCreator {
   constructor(nodeContainer, nodeEventAttacher) {
@@ -55,12 +56,12 @@ export default class SvgCreator {
 
   applySelectionStyle(nodeSelection, node) {
     const selectedNode = this.nodeContainer.getSelectedNode();
-    if (selectedNode === node) {
-      const lightenedFillColor = ColorHandler.lightenColor(node.fillColor, 3);
-      nodeSelection
-        .attr("stroke", node.borderColor)
-        .attr("stroke-width", node.borderWidth + 1)
-        .attr("fill", lightenedFillColor);
-    }
+    if (selectedNode !== node) return;
+    if (selectedNode instanceof BorderlessRectangle) return;
+    const lightenedFillColor = ColorHandler.lightenColor(node.fillColor, 3);
+    nodeSelection
+      .attr("stroke", node.borderColor)
+      .attr("stroke-width", node.borderWidth + 1)
+      .attr("fill", lightenedFillColor);
   }
 }
