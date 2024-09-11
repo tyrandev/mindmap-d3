@@ -26,7 +26,6 @@ export default class SvgCreator {
     const nodeSelection = this.renderNodeContent(node);
     this.addEventListeners(nodeSelection, node);
     this.applySelectionStyle(nodeSelection, node);
-    this.trackNodeAsRendered(node);
     this.renderNodeChildren(node);
   }
 
@@ -42,10 +41,6 @@ export default class SvgCreator {
 
   addEventListeners(nodeSelection, node) {
     this.nodeEventAttacher.attachEventListeners(nodeSelection, node);
-  }
-
-  trackNodeAsRendered(node) {
-    this.renderedNodes.add(node.id);
   }
 
   renderNodeChildren(node) {
