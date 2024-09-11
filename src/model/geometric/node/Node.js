@@ -162,11 +162,7 @@ export default class Node {
     nodeInstance.lineColor = data.lineColor;
     nodeInstance.textColor = data.textColor;
     nodeInstance.borderWidth = data.borderWidth;
-
-    if (data.link) {
-      nodeInstance.link = Link.fromJSON(data.link);
-    }
-
+    nodeInstance.link = data.link;
     return nodeInstance;
   }
 

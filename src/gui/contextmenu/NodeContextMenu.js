@@ -14,8 +14,8 @@ export default class NodeContextMenu extends ContextMenu {
     this.handleBorderColorChange = this.handleBorderColorChange.bind(this);
     this.handleFillColorChange = this.handleFillColorChange.bind(this);
     this.addBorderlessRectangle = this.addBorderlessRectangle.bind(this);
-    this.handleOpenLink = this.handleOpenLink.bind(this); // Bind new method
-    this.handleSetMindmap = this.handleSetMindmap.bind(this); // Bind new method
+    this.handleOpenLink = this.handleOpenLink.bind(this);
+    this.handleSetMindmap = this.handleSetMindmap.bind(this);
 
     this.colorPicker.addEventListener("input", this.handleFillColorChange);
     this.colorPicker.addEventListener(
@@ -68,6 +68,16 @@ export default class NodeContextMenu extends ContextMenu {
     this.prepareContextMenu(x, y);
     this.contextMenu.style.display = "block";
     this.contextMenuNode = node;
+    this.updateOpenLinkVisibility();
+  }
+
+  updateOpenLinkVisibility() {
+    const openLinkMenuItem = document.getElementById("open-link");
+    if (this.contextMenuNode && this.contextMenuNode.getLink()) {
+      openLinkMenuItem.style.display = "block";
+    } else {
+      openLinkMenuItem.style.display = "none";
+    }
   }
 
   handleOpenLink() {
@@ -78,11 +88,11 @@ export default class NodeContextMenu extends ContextMenu {
       alert("No link is set for this node.");
       return;
     }
+    console.log(link);
 
     if (link.getType() === "MindmapLink") {
       const mindmapName = link.getMindmapName();
       console.log(`Opening mindmap link: ${mindmapName}`);
-      // Assuming a method to load and display the mindmap, like `loadFromLocalStorage()`
       try {
         this.linkController.mindmapLocalStorage.loadFromLocalStorage(
           mindmapName

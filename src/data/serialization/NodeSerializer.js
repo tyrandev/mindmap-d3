@@ -1,6 +1,7 @@
 import Node from "../../model/geometric/node/Node.js";
 import NodeFactory from "../../services/factory/NodeFactory.js";
 import CollapseIndicator from "../../model/indicators/CollapseIndicator.js";
+import LinkFactory from "../../services/factory/LinkFactory.js";
 
 export default class NodeSerializer {
   static serialize(node) {
@@ -32,6 +33,12 @@ export default class NodeSerializer {
         node.collapsed = new CollapseIndicator();
       } else {
         node.collapsed = null;
+      }
+
+      if (data.link) {
+        node.link = LinkFactory.createLinkFromJson(data.link);
+      } else {
+        node.link = null;
       }
 
       if (Array.isArray(data.children)) {
