@@ -17,9 +17,10 @@ export default class CollapseIndicatorRenderer {
       .attr("y", textY)
       .attr("text-anchor", "middle")
       .attr("dominant-baseline", "middle")
+      .attr("font-weight", 200)
       .style("fill", "black")
       .style("font-size", "14px")
       .style("font-family", "Arial")
-      .text("(collapsed)");
+      .text("<collapsed>");
   }
 }

@@ -17,6 +17,7 @@
 
 .context-menu ul li {
   font-size: 16.5px;
+  font-weight: 500;
   padding: 5px 10px;
   cursor: pointer;
 }
