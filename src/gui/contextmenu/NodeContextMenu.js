@@ -14,6 +14,9 @@ export default class NodeContextMenu extends ContextMenu {
     this.handleBorderColorChange = this.handleBorderColorChange.bind(this);
     this.handleFillColorChange = this.handleFillColorChange.bind(this);
     this.addBorderlessRectangle = this.addBorderlessRectangle.bind(this);
+    this.handleOpenLink = this.handleOpenLink.bind(this); // Bind new method
+    this.handleSetMindmap = this.handleSetMindmap.bind(this); // Bind new method
+
     this.colorPicker.addEventListener("input", this.handleFillColorChange);
     this.colorPicker.addEventListener(
       "colorChange",
@@ -52,6 +55,12 @@ export default class NodeContextMenu extends ContextMenu {
     document
       .getElementById("select-border-color-node")
       .addEventListener("mousedown", this.selectBorderColorNode.bind(this));
+    document
+      .getElementById("open-link")
+      .addEventListener("mousedown", this.handleOpenLink.bind(this));
+    document
+      .getElementById("set-mindmap-link")
+      .addEventListener("mousedown", this.handleSetMindmap.bind(this));
   }
 
   showContextMenu(node) {
@@ -59,6 +68,83 @@ export default class NodeContextMenu extends ContextMenu {
     this.prepareContextMenu(x, y);
     this.contextMenu.style.display = "block";
     this.contextMenuNode = node;
+  }
+
+  handleOpenLink() {
+    if (!this.contextMenuNode) return;
+
+    const link = this.contextMenuNode.getLink();
+    if (!link) {
+      alert("No link is set for this node.");
+      return;
+    }
+
+    if (link.getType() === "MindmapLink") {
+      const mindmapName = link.getMindmapName();
+      console.log(`Opening mindmap link: ${mindmapName}`);
+      // Assuming a method to load and display the mindmap, like `loadFromLocalStorage()`
+      try {
+        this.linkController.mindmapLocalStorage.loadFromLocalStorage(
+          mindmapName
+        );
+      } catch (error) {
+        alert(`Error: ${error.message}`);
+      }
+    } else {
+      alert("Unsupported link type.");
+    }
+
+    this.hideContextMenu();
+  }
+
+  async handleSetMindmap() {
+    if (!this.contextMenuNode) return;
+
+    // Get the list of available mindmaps
+    const mindmaps =
+      this.linkController.mindmapLocalStorage.listSavedMindMaps();
+    if (mindmaps.length === 0) {
+      alert("No mindmaps available to link.");
+      return;
+    }
+
+    // Prompt the user to choose a mindmap to link to the node
+    const userInput = prompt(
+      `Select a mindmap to link to this node (Available mindmaps: ${mindmaps.join(
+        ", "
+      )}):`
+    );
+
+    if (!userInput) {
+      alert("Mindmap selection canceled.");
+      return;
+    }
+
+    // Sanitize input: remove extra spaces and convert to lower case for comparison
+    const selectedMindmap = userInput.trim();
+
+    // Validate the user's selection
+    const mindmapExists = mindmaps.some(
+      (map) => map.toLowerCase() === selectedMindmap.toLowerCase()
+    );
+
+    if (mindmapExists) {
+      try {
+        // If valid, set the link to the selected mindmap
+        this.linkController.setMindmapLink(
+          this.contextMenuNode,
+          selectedMindmap
+        );
+        console.log(`Mindmap link set to: ${selectedMindmap}`);
+      } catch (error) {
+        alert(`Error setting mindmap link: ${error.message}`);
+      }
+    } else {
+      // If the mindmap name doesn't exist, show an error
+      alert(`Invalid mindmap name. Please select from: ${mindmaps.join(", ")}`);
+    }
+
+    this.hideContextMenu();
   }
 
   addCircle() {
@@ -118,14 +204,12 @@ export default class NodeContextMenu extends ContextMenu {
 
   selectColorNode() {
     if (!this.contextMenuNode) return;
-    // Set a flag to indicate fill color change
     this.colorPicker.colorMode = "fill";
     this.colorPicker.trigger();
   }
 
   selectBorderColorNode() {
     if (!this.contextMenuNode) return;
-    // Set a flag to indicate border color change
     this.colorPicker.colorMode = "border";
     this.colorPicker.trigger();
     console.log("Select border color node called");

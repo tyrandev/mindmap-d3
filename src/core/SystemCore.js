@@ -31,7 +31,11 @@ export default class SystemCore {
 
   initializeEventAttachers() {
     const svg = svgManager.getSvg();
-    this.nodeEventAttacher = new NodeEventAttacher(svg, this.controllerCore);
+    this.nodeEventAttacher = new NodeEventAttacher(
+      svg,
+      this.controllerCore,
+      this.linkController
+    );
     this.svgEventAttacher = new SvgEventAttacher(svg, this.controllerCore);
     this.svgEventAttacher.attachEventListeners();
   }
