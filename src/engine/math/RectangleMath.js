@@ -47,6 +47,8 @@ export default class RectangleMath {
         edgeY = y - rectHalfHeight;
       }
     }
+
+    RectangleMath.checkForNaN({ x: edgeX, y: edgeY });
     return { x: edgeX, y: edgeY };
   }
 
@@ -54,6 +56,8 @@ export default class RectangleMath {
     if (!(circle instanceof Circle)) return;
     const edgeX = circle.x - Math.cos(angle) * circle.radius;
     const edgeY = circle.y - Math.sin(angle) * circle.radius;
+
+    RectangleMath.checkForNaN({ x: edgeX, y: edgeY });
     return { x: edgeX, y: edgeY };
   }
 
@@ -118,5 +122,13 @@ export default class RectangleMath {
       endX: endEdge.x,
       endY: endEdge.y,
     };
+  }
+
+  static checkForNaN(point) {
+    if (isNaN(point.x) || isNaN(point.y)) {
+      throw new Error(
+        `Calculated point contains NaN values: x=${point.x}, y=${point.y}`
+      );
+    }
   }
 }
