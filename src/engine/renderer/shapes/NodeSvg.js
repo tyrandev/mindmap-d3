@@ -2,7 +2,7 @@ import CollapseIndicator from "../../../model/indicators/CollapseIndicator.js";
 import CollapseIndicatorRenderer from "../indicators/CollapseIndicatorRenderer.js";
 import ConnectionLineSvg from "../lines/ConnectionLineSvg.js";
 
-export default class NodeRenderer {
+export default class NodeSvg {
   constructor(svg) {
     if (!svg) {
       throw new Error("SVG element is required");

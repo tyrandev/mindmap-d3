@@ -115,7 +115,9 @@ export default class CircleMath {
 
   static checkForNaN(point) {
     if (isNaN(point.x) || isNaN(point.y)) {
-      throw new Error("Calculated point is NaN");
+      throw new Error(
+        `Calculated point contains NaN values: x=${point.x}, y=${point.y}`
+      );
     }
   }
 }
