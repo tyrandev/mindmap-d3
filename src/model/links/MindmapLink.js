@@ -1,23 +1,34 @@
 import Link from "./Link.js";
 
 export default class MindmapLink extends Link {
-  constructor(label, nodeId) {
-    super(label, `node://${nodeId}`);
-    this.nodeId = nodeId;
+  constructor(mindmapName) {
+    super();
+    this.label = "Mindmap Link";
+    this.mindmapName = mindmapName || "";
   }
 
   getType() {
     return "MindmapLink";
   }
 
+  setMindmapName(newMindmapName) {
+    this.mindmapName = newMindmapName;
+  }
+
+  getMindmapName() {
+    return this.mindmapName;
+  }
+
   toJSON() {
     return {
       ...super.toJSON(),
-      nodeId: this.nodeId,
+      mindmapName: this.mindmapName,
     };
   }
 
   static fromJSON(json) {
-    return new MindmapLink(json.label, json.nodeId);
+    const mindmapLink = new MindmapLink(json.mindmapName);
+    mindmapLink.setLabel(json.label);
+    return mindmapLink;
   }
 }
