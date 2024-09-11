@@ -8,7 +8,7 @@ export default class Rectangle extends Node {
     this.width = rc.BASE_RECTANGLE_WIDTH;
     this.height = rc.BASE_RECTANGLE_HEIGHT;
     this.originalWidth = this.width;
-    this.cornerRadii = [2, 2, 2, 2]; // [top-left, top-right, bottom-right, bottom-left]
+    this.cornerRadii = [2];
     this.setText(this.text);
     this.setDimensions(this.width, this.height);
   }

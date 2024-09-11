@@ -14,19 +14,7 @@ export default class RectangleSvg extends NodeSvg {
   }
 
   drawRectangleShape(rectangle) {
-    const allRadiiPositive = rectangle.cornerRadii.every(
-      (radius) => radius > 0
-    );
-
-    if (allRadiiPositive) {
-      return this.drawRoundedRectangle(rectangle);
-    } else {
-      return this.drawStandardRectangle(rectangle);
-    }
-  }
-
-  drawStandardRectangle(rectangle) {
-    return this.svg
+    const rect = this.svg
       .append("rect")
       .attr("x", rectangle.x - rectangle.actualWidth / 2)
       .attr("y", rectangle.y - rectangle.height / 2)
@@ -35,27 +23,18 @@ export default class RectangleSvg extends NodeSvg {
       .attr("fill", rectangle.fillColor)
       .attr("stroke", rectangle.borderColor)
       .attr("stroke-width", rectangle.borderWidth);
-  }
 
-  drawRoundedRectangle(rectangle) {
-    const [topLeftRadius, topRightRadius, bottomRightRadius, bottomLeftRadius] =
-      RectangleMath.adjustRadii(
-        rectangle.actualWidth,
-        rectangle.height,
-        rectangle.cornerRadii
-      );
+    const [radius] = RectangleMath.adjustRadii(
+      rectangle.actualWidth,
+      rectangle.height,
+      rectangle.cornerRadii
+    );
 
-    return this.svg
-      .append("rect")
-      .attr("x", rectangle.x - rectangle.actualWidth / 2)
-      .attr("y", rectangle.y - rectangle.height / 2)
-      .attr("width", rectangle.actualWidth)
-      .attr("height", rectangle.height)
-      .attr("fill", rectangle.fillColor)
-      .attr("stroke", rectangle.borderColor)
-      .attr("stroke-width", rectangle.borderWidth)
-      .attr("rx", topLeftRadius)
-      .attr("ry", topLeftRadius);
+    if (radius > 0) {
+      rect.attr("rx", radius).attr("ry", radius);
+    }
+
+    return rect;
   }
 
   computeTextLines(rectangle) {
