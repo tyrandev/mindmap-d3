@@ -3,9 +3,10 @@ import ContextMenu from "./ContextMenu.js";
 import ColorPicker from "../topmenu/ColorPicker.js";
 
 export default class NodeContextMenu extends ContextMenu {
-  constructor(controllerCore) {
+  constructor(controllerCore, linkController) {
     super(controllerCore, "node-context-menu");
     this.controllerCore = controllerCore;
+    this.linkController = linkController;
     this.selectionController = this.controllerCore.selectionController;
     this.nodeCreationController = controllerCore.nodeCreationController;
     this.nodeDeletionController = controllerCore.nodeDeletionController;

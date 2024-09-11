@@ -9,7 +9,7 @@ import TopMenuHandler from "../gui/topmenu/TopMenuHandler.js";
 import SvgEventAttacher from "../services/event/attacher/SvgEventAttacher.js";
 import NodeEventAttacher from "../services/event/attacher/NodeEventAttacher.js";
 import Session from "../state/Session.js";
-import JsonMindmapLoader from "../data/serialization/JsonMindmapLoader.js";
+import LinkController from "../controller/link/LinkController.js";
 
 export default class SystemCore {
   startApplication() {
@@ -26,6 +26,7 @@ export default class SystemCore {
     this.mindmapLocalStorage = new MindmapLocalStorage(
       this.controllerCore.getRootNodeController()
     );
+    this.linkController = new LinkController(this.mindmapLocalStorage);
   }
 
   initializeEventAttachers() {
