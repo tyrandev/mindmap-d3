@@ -6,7 +6,7 @@ export default class RectangleSvg extends NodeSvg {
     super(svg);
   }
 
-  drawShapeWithText(rectangle) {
+  createSvgShapeWithText(rectangle) {
     const rectangleSelection = this.drawRectangleShape(rectangle);
     this.drawNodeText(rectangle);
     return rectangleSelection;

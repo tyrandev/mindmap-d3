@@ -38,11 +38,11 @@ export default class SvgCreator {
   renderNodeContent(node) {
     if (node.hasCollapsedAncestor()) return;
     if (node instanceof Rectangle) {
-      return this.rectangleSvg.render(node);
+      return this.rectangleSvg.getSvgNode(node);
     } else if (node instanceof Circle) {
-      return this.circleSvg.render(node);
+      return this.circleSvg.getSvgNode(node);
     } else {
-      throw new Error("Trying to render unsupported type of node");
+      throw new Error("Trying to getSvgNode unsupported type of node");
     }
   }
 

@@ -6,12 +6,12 @@ export default class NodeSvg {
     this.svg = svg;
   }
 
-  render(node) {
-    return this.drawShapeWithText(node);
+  getSvgNode(node) {
+    return this.createSvgShapeWithText(node);
   }
 
-  drawShapeWithText(node) {
-    throw new Error("Method 'drawShapeWithText()' must be implemented.");
+  createSvgShapeWithText(node) {
+    throw new Error("Method 'createSvgShapeWithText()' must be implemented.");
   }
 
   drawNodeText(node) {

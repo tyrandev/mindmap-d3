@@ -6,7 +6,7 @@ export default class CircleSvg extends NodeSvg {
     super(svg);
   }
 
-  drawShapeWithText(circle) {
+  createSvgShapeWithText(circle) {
     const circleSelection = this.drawCircleShape(circle);
     this.drawNodeText(circle);
     return circleSelection;
