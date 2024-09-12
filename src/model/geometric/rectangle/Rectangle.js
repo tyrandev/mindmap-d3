@@ -1,5 +1,6 @@
 import Node from "../node/Node.js";
 import * as rc from "../../../constants/RectangleConstants.js";
+import RectangleTextUtil from "../../../util/text/RectangleTextUtil.js";
 
 export default class Rectangle extends Node {
   constructor(x = 0, y = 0) {
@@ -44,7 +45,7 @@ export default class Rectangle extends Node {
     return this.originalWidth + this.additionalWidth;
   }
 
-  setDimensions(newWidth, newHeight) {
+  validateDimensions(newWidth, newHeight) {
     const validWidth = Math.max(newWidth, rc.MIN_RECTANGLE_WIDTH);
     const validHeight = Math.max(newHeight, rc.MIN_RECTANGLE_HEIGHT);
     if (
@@ -53,18 +54,20 @@ export default class Rectangle extends Node {
       isNaN(validHeight) ||
       validHeight <= 0
     ) {
-      console.error("Invalid dimensions of Rectangle");
-      return;
+      throw new Error("Invalid dimensions of Rectangle");
     }
-    this.originalWidth = validWidth;
-    this.height = validHeight;
+    return { validWidth, validHeight };
+  }
+
+  setDimensions(newWidth, newHeight) {
+    const dimensions = this.validateDimensions(newWidth, newHeight);
+    if (!dimensions) return;
+    this.originalWidth = dimensions.validWidth;
+    this.height = dimensions.validHeight;
     this.calculateFontSize();
   }
 
   calculateFontSize() {
-    if (this.height <= 0) {
-      throw new Error("Invalid height of rectangle.");
-    }
     let baseFontSize = this.height / 2.45;
     const k = 0.004;
     this.fontSize = baseFontSize / (1 + k * this.width);
@@ -80,19 +83,14 @@ export default class Rectangle extends Node {
   }
 
   addWidthBasedOnTextLength() {
-    const countLettersAndNumbers = this.text.replace(
-      /[^a-zA-Z0-9]/g,
-      ""
-    ).length;
-    if (countLettersAndNumbers > 12) {
-      this.additionalWidth = Math.max(
-        0,
-        (countLettersAndNumbers - 12) * rc.PIXELS_PER_CHARACTER
-      );
-      console.log("additional width: ", this.additionalWidth);
-    } else {
+    const numberOfLetters = RectangleTextUtil.countLettersAndNumbers(this.text);
+    if (numberOfLetters < 12) {
       this.additionalWidth = 0;
     }
+    this.additionalWidth = Math.max(
+      0,
+      (numberOfLetters - 12) * rc.PIXELS_PER_CHARACTER
+    );
   }
 
   isPointInsideOfNode(x, y) {
@@ -127,15 +125,11 @@ export default class Rectangle extends Node {
   }
 
   equals(other) {
-    if (!(other instanceof Rectangle)) {
-      return false;
-    }
-
+    if (!(other instanceof Rectangle)) return false;
     return (
       super.equals(other) &&
       this.width === other.width &&
-      this.height === other.height &&
-      this.cornerRadii.every((r, i) => r === other.cornerRadii[i])
+      this.height === other.height
     );
   }
 }

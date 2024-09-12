@@ -48,16 +48,19 @@ export default class Circle extends Node {
     return squaredDistance <= radius * radius;
   }
 
-  setRadius(newRadius) {
+  validateRadius(newRadius) {
     if (isNaN(newRadius)) {
-      console.error(`Invalid radius value: ${newRadius}. Must be a number.`);
-      return;
+      throw new Error(`Invalid radius value: ${newRadius}. Must be a number.`);
     }
     if (newRadius < CircleConstants.MIN_CIRCLE_RADIUS) {
-      newRadius = CircleConstants.MIN_CIRCLE_RADIUS;
+      return CircleConstants.MIN_CIRCLE_RADIUS;
     }
-    this.radius = newRadius;
-    this.setText(this.text);
+    return newRadius;
+  }
+
+  setRadius(newRadius) {
+    const validRadius = this.validateRadius(newRadius);
+    this.radius = validRadius;
   }
 
   setText(newText) {
