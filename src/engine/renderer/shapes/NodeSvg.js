@@ -15,10 +15,6 @@ export default class NodeSvg {
   }
 
   drawNodeText(node) {
-    this.computeTextLines(node);
-  }
-
-  computeTextLines(node) {
-    throw new Error("Method 'computeTextLines()' must be implemented.");
+    throw new Error("Method 'drawNodeText()' must be implemented.");
   }
 }

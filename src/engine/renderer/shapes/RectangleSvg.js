@@ -38,6 +38,10 @@ export default class RectangleSvg extends NodeSvg {
     }
   }
 
+  drawNodeText(rectangle) {
+    this.computeTextLines(rectangle);
+  }
+
   computeTextLines(rectangle) {
     const lineHeight = rectangle.fontSize + 4;
     const lines = rectangle.text.split("\n");

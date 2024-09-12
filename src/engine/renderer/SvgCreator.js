@@ -30,9 +30,9 @@ export default class SvgCreator {
   renderNode(node) {
     const nodeSelection = this.renderNodeContent(node);
     this.renderCollapseIndicator(node);
-    this.addEventListeners(nodeSelection, node);
     this.applySelectionStyle(nodeSelection, node);
     this.renderNodeChildren(node);
+    this.addEventListeners(nodeSelection, node);
   }
 
   renderNodeContent(node) {
