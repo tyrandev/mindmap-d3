@@ -1,4 +1,5 @@
 import Rectangle from "../rectangle/Rectangle.js";
+import Node from "../node/Node.js";
 
 export default class BorderlessRectangle extends Rectangle {
   constructor(x = 0, y = 0) {
@@ -28,7 +29,10 @@ export default class BorderlessRectangle extends Rectangle {
 
   static fromJSON(data) {
     const borderlessRectangle = new BorderlessRectangle(data.x, data.y);
-    Rectangle.fromJSON(data, borderlessRectangle);
+    Node.fromJSON(data, borderlessRectangle);
+    borderlessRectangle.width = data.width;
+    borderlessRectangle.height = data.height;
+    borderlessRectangle.cornerRadii = data.cornerRadii;
     borderlessRectangle.makeInvisible();
     return borderlessRectangle;
   }
