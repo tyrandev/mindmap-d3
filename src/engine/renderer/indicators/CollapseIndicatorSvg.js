@@ -1,6 +1,6 @@
 import svgManager from "../../../view/SvgManager.js";
 
-export default class CollapseIndicatorRenderer {
+export default class CollapseIndicatorSvg {
   constructor() {
     this.svg = svgManager.getSvg();
   }
@@ -17,7 +17,7 @@ export default class CollapseIndicatorRenderer {
       .attr("y", textY)
       .attr("text-anchor", "middle")
       .attr("dominant-baseline", "middle")
-      .attr("font-weight", 200)
+      .attr("font-weight", 100)
       .style("fill", "black")
       .style("font-size", "14px")
       .style("font-family", "Arial")

@@ -9,7 +9,6 @@ export default class RectangleSvg extends NodeSvg {
   drawShapeWithText(rectangle) {
     const rectangleSelection = this.drawRectangleShape(rectangle);
     this.drawNodeText(rectangle);
-    this.renderCollapseIndicator(rectangle);
     return rectangleSelection;
   }
 

@@ -5,6 +5,9 @@ import Circle from "../../model/geometric/circle/Circle.js";
 import svgManager from "../../view/SvgManager.js";
 import ColorHandler from "../../util/color/ColorHandler.js";
 import BorderlessRectangle from "../../model/geometric/rectangle/BorderlessRectangle.js";
+import ConnectionLineSvg from "./lines/ConnectionLineSvg.js";
+import CollapseIndicator from "../../model/indicators/CollapseIndicator.js";
+import CollapseIndicatorSvg from "./indicators/CollapseIndicatorSvg.js";
 
 export default class SvgCreator {
   constructor(nodeContainer, nodeEventAttacher) {
@@ -14,6 +17,8 @@ export default class SvgCreator {
     this.renderedNodes = new Set();
     this.circleSvg = new CircleSvg(this.svg);
     this.rectangleSvg = new RectangleSvg(this.svg);
+    this.connectionLineSvg = new ConnectionLineSvg(this.svg);
+    this.collapseIndicatorSvg = new CollapseIndicatorSvg();
   }
 
   drawNodes() {
@@ -24,12 +29,14 @@ export default class SvgCreator {
 
   renderNode(node) {
     const nodeSelection = this.renderNodeContent(node);
+    this.renderCollapseIndicator(node);
     this.addEventListeners(nodeSelection, node);
     this.applySelectionStyle(nodeSelection, node);
     this.renderNodeChildren(node);
   }
 
   renderNodeContent(node) {
+    if (node.hasCollapsedAncestor()) return;
     if (node instanceof Rectangle) {
       return this.rectangleSvg.render(node);
     } else if (node instanceof Circle) {
@@ -44,8 +51,18 @@ export default class SvgCreator {
   }
 
   renderNodeChildren(node) {
-    if (node.children) {
-      node.children.forEach((child) => this.renderNode(child));
+    if (!node.children) return;
+    node.children.forEach((child) => {
+      this.renderNode(child);
+      if (!node.collapsed) {
+        this.connectionLineSvg.connectLineToChildNodes(node, child);
+      }
+    });
+  }
+
+  renderCollapseIndicator(node) {
+    if (node.collapsed && node.collapsed instanceof CollapseIndicator) {
+      this.collapseIndicatorSvg.drawCollapseIndicator(node);
     }
   }
 

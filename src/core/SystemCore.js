@@ -14,6 +14,7 @@ import LinkController from "../controller/link/LinkController.js";
 export default class SystemCore {
   startApplication() {
     this.initializeControllers();
+    this.initializeStorage();
     this.initializeEventAttachers();
     this.initializeEngine();
     Session.initialize();
@@ -23,6 +24,9 @@ export default class SystemCore {
   initializeControllers() {
     this.nodeContainer = new NodeContainer();
     this.controllerCore = new ControllerCore(this.nodeContainer);
+  }
+
+  initializeStorage() {
     this.mindmapLocalStorage = new MindmapLocalStorage(
       this.controllerCore.getRootNodeController()
     );
