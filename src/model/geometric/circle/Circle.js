@@ -1,10 +1,10 @@
 import Node from "../node/Node.js";
-import * as CircleConstants from "../../../constants/CircleConstants.js";
+import * as cc from "../../../constants/CircleConstants.js";
 
 export default class Circle extends Node {
   constructor(x = 0, y = 0) {
     super(x, y);
-    this.radius = CircleConstants.BASE_CIRCLE_RADIUS;
+    this.radius = cc.BASE_CIRCLE_RADIUS;
     this.setText(this.text);
   }
 
@@ -52,8 +52,8 @@ export default class Circle extends Node {
     if (isNaN(newRadius)) {
       throw new Error(`Invalid radius value: ${newRadius}. Must be a number.`);
     }
-    if (newRadius < CircleConstants.MIN_CIRCLE_RADIUS) {
-      return CircleConstants.MIN_CIRCLE_RADIUS;
+    if (newRadius < cc.MIN_CIRCLE_RADIUS) {
+      return cc.MIN_CIRCLE_RADIUS;
     }
     return newRadius;
   }
