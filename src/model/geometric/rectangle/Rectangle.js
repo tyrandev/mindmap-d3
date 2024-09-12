@@ -65,6 +65,7 @@ export default class Rectangle extends Node {
     this.originalWidth = dimensions.validWidth;
     this.height = dimensions.validHeight;
     this.calculateFontSize();
+    this.addWidthBasedOnTextLength();
   }
 
   calculateFontSize() {
