@@ -152,18 +152,18 @@ export default class Node {
     };
   }
 
-  static fromJSON(data, nodeInstance) {
-    nodeInstance.id = data.id;
-    nodeInstance.x = data.x;
-    nodeInstance.y = data.y;
-    nodeInstance.text = data.text;
-    nodeInstance.fillColor = data.fillColor;
-    nodeInstance.borderColor = data.borderColor;
-    nodeInstance.lineColor = data.lineColor;
-    nodeInstance.textColor = data.textColor;
-    nodeInstance.borderWidth = data.borderWidth;
-    nodeInstance.link = data.link;
-    return nodeInstance;
+  static fromJSON(data, node) {
+    node.id = data.id;
+    node.x = data.x;
+    node.y = data.y;
+    node.text = data.text;
+    node.fillColor = data.fillColor;
+    node.borderColor = data.borderColor;
+    node.lineColor = data.lineColor;
+    node.textColor = data.textColor;
+    node.borderWidth = data.borderWidth;
+    node.link = data.link;
+    return node;
   }
 
   equals(other) {

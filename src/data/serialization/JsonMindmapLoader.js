@@ -7,6 +7,6 @@ export default class JsonMindmapLoader {
 
   loadFromJson(json) {
     const rootNode = NodeSerializer.deserialize(json);
-    this.rootNodeController.loadMindMap(rootNode);
+    this.rootNodeController.loadMindMap(rootNode.clone());
   }
 }

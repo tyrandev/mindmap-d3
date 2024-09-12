@@ -63,12 +63,16 @@ export default class NodeEventAttacher {
   }
 
   handleDrag(event, node) {
-    const svgElement = this.svg.node();
-    const [x, y] = d3.pointer(event, svgElement);
-    const newX = x - this.dragOffset.x;
-    const newY = y - this.dragOffset.y;
-    this.nodeMovementController.moveNode(node, newX, newY);
-    d3.select(event.sourceEvent.target).attr("cx", node.x).attr("cy", node.y);
+    try {
+      const svgElement = this.svg.node();
+      const [x, y] = d3.pointer(event, svgElement);
+      const newX = x - this.dragOffset.x;
+      const newY = y - this.dragOffset.y;
+      this.nodeMovementController.moveNode(node, newX, newY);
+      d3.select(event.sourceEvent.target).attr("cx", node.x).attr("cy", node.y);
+    } catch (error) {
+      console.warn("dragging node outside of mindmap borders");
+    }
   }
 
   handleDragEnd(event, node) {

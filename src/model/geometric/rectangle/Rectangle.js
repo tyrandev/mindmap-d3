@@ -9,7 +9,6 @@ export default class Rectangle extends Node {
     this.height = rc.BASE_RECTANGLE_HEIGHT;
     this.originalWidth = this.width;
     this.cornerRadii = [2];
-    this.setText(this.text);
     this.setDimensions(this.width, this.height);
   }
 
@@ -39,8 +38,6 @@ export default class Rectangle extends Node {
 
   set width(value) {
     this.originalWidth = value;
-    this.addWidthBasedOnTextLength();
-    this.calculateFontSize();
   }
 
   get actualWidth() {
@@ -61,8 +58,25 @@ export default class Rectangle extends Node {
     }
     this.originalWidth = validWidth;
     this.height = validHeight;
-    this.addWidthBasedOnTextLength();
     this.calculateFontSize();
+  }
+
+  calculateFontSize() {
+    if (this.height <= 0) {
+      throw new Error("Invalid height of rectangle.");
+    }
+    let baseFontSize = this.height / 2.45;
+    const k = 0.004;
+    this.fontSize = baseFontSize / (1 + k * this.width);
+    return this.fontSize;
+  }
+
+  setText(newText) {
+    if (newText.length > rc.RECTANGLE_MAX_CHARACTERS) {
+      newText = newText.substring(0, rc.RECTANGLE_MAX_CHARACTERS);
+    }
+    this.text = newText;
+    this.addWidthBasedOnTextLength();
   }
 
   addWidthBasedOnTextLength() {
@@ -81,13 +95,6 @@ export default class Rectangle extends Node {
     }
   }
 
-  calculateFontSize() {
-    let baseFontSize = this.height / 2.45;
-    const k = 0.004;
-    this.fontSize = baseFontSize / (1 + k * this.width);
-    return this.fontSize;
-  }
-
   isPointInsideOfNode(x, y) {
     return (
       x >= this.x - this.actualWidth / 2 &&
@@ -95,15 +102,6 @@ export default class Rectangle extends Node {
       y >= this.y - this.height / 2 &&
       y <= this.y + this.height / 2
     );
-  }
-
-  setText(newText) {
-    if (newText.length > rc.RECTANGLE_MAX_CHARACTERS) {
-      newText = newText.substring(0, rc.RECTANGLE_MAX_CHARACTERS);
-    }
-    this.text = newText;
-    this.addWidthBasedOnTextLength();
-    this.calculateFontSize();
   }
 
   getClassName() {
