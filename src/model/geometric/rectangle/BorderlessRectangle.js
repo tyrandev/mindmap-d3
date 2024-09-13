@@ -7,8 +7,25 @@ export default class BorderlessRectangle extends Rectangle {
     this.makeInvisible();
   }
 
+  clone() {
+    const clone = new BorderlessRectangle(this.x, this.y);
+    clone.width = this.width;
+    clone.height = this.height;
+    clone.text = this.text;
+    clone.cornerRadii = this.cornerRadii;
+    clone.id = this.id;
+    clone.collapsed = this.collapsed;
+    clone.setDimensions(this.width, this.height);
+    this.children.forEach((child) => {
+      const childClone = child.clone();
+      clone.addChildNode(childClone);
+    });
+    clone.makeInvisible();
+    return clone;
+  }
+
   makeInvisible() {
-    this.fillColor = "white";
+    this.fillColor = "#ffffff";
     this.borderColor = "rgba(0, 0, 0, 0)";
     this.borderWidth = 0;
   }
@@ -35,22 +52,5 @@ export default class BorderlessRectangle extends Rectangle {
     borderlessRectangle.cornerRadii = data.cornerRadii;
     borderlessRectangle.makeInvisible();
     return borderlessRectangle;
-  }
-
-  clone() {
-    const clone = new BorderlessRectangle(this.x, this.y);
-    clone.width = this.width;
-    clone.height = this.height;
-    clone.text = this.text;
-    clone.cornerRadii = this.cornerRadii;
-    clone.id = this.id;
-    clone.collapsed = this.collapsed;
-    clone.setDimensions(this.width, this.height);
-    this.children.forEach((child) => {
-      const childClone = child.clone();
-      clone.addChildNode(childClone);
-    });
-    clone.makeInvisible();
-    return clone;
   }
 }

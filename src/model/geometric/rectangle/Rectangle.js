@@ -83,6 +83,7 @@ export default class Rectangle extends Node {
     this.addWidthBasedOnTextLength();
   }
 
+  // TODO: this should be in svg layer
   addWidthBasedOnTextLength() {
     const numberOfLetters = RectangleTextUtil.countLettersAndNumbers(this.text);
     if (numberOfLetters < 12) {
