@@ -10,10 +10,13 @@ import SvgEventAttacher from "../services/event/attacher/SvgEventAttacher.js";
 import NodeEventAttacher from "../services/event/attacher/NodeEventAttacher.js";
 import Session from "../state/Session.js";
 import LinkController from "../controller/link/LinkController.js";
+import JsonMindmapSaver from "../data/serialization/JsonMindmapSaver";
+import JsonMindmapLoader from "../data/serialization/JsonMindmapLoader.js";
 
 export default class SystemCore {
   startApplication() {
     this.initializeControllers();
+    this.initializeJson();
     this.initializeStorage();
     this.initializeEventAttachers();
     this.initializeEngine();
@@ -26,9 +29,16 @@ export default class SystemCore {
     this.controllerCore = new ControllerCore(this.nodeContainer);
   }
 
+  initializeJson() {
+    const rootController = this.controllerCore.getRootNodeController();
+    this.jsonMindmapLoader = new JsonMindmapLoader(rootController);
+    this.jsonMindmapSaver = new JsonMindmapSaver(rootController);
+  }
+
   initializeStorage() {
     this.mindmapLocalStorage = new MindmapLocalStorage(
-      this.controllerCore.getRootNodeController()
+      this.jsonMindmapLoader,
+      this.jsonMindmapSaver
     );
     this.linkController = new LinkController(this.mindmapLocalStorage);
   }

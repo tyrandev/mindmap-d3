@@ -1,18 +1,15 @@
 import LocalStorageUIHandler from "../../gui/storage/LocalStorageUIHandler.js";
 import LocalStorage from "./LocalStorage.js";
 import MindmapState from "../../state/MindmapState.js";
-import JsonMindmapLoader from "../serialization/JsonMindmapLoader.js";
-import JsonMindmapSaver from "../serialization/JsonMindmapSaver.js";
 
 const LOCAL_STORAGE_KEY = "mindmaps";
 
 export default class MindmapLocalStorage {
-  constructor(rootNodeController) {
-    this.rootNodeController = rootNodeController;
+  constructor(jsonMindmapLoader, jsonMindmapSaver) {
     this.localStorage = new LocalStorage(LOCAL_STORAGE_KEY);
     this.uiHandler = new LocalStorageUIHandler(this);
-    this.jsonMindmapLoader = new JsonMindmapLoader(this.rootNodeController);
-    this.jsonMindmapSaver = new JsonMindmapSaver(this.rootNodeController);
+    this.jsonMindmapLoader = jsonMindmapLoader;
+    this.jsonMindmapSaver = jsonMindmapSaver;
   }
 
   saveToLocalStorage() {
