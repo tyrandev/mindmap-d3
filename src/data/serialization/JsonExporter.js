@@ -1,10 +1,8 @@
 import MindmapState from "../../state/MindmapState.js";
-import JsonMindmapSaver from "../serialization/JsonMindmapSaver.js";
 
 export default class JsonExporter {
-  constructor(rootNodeController) {
-    this.rootNodeController = rootNodeController;
-    this.jsonMindmapSaver = new JsonMindmapSaver(this.rootNodeController);
+  constructor(jsonMindmapSaver) {
+    this.jsonMindmapSaver = jsonMindmapSaver;
   }
 
   exportToJson() {

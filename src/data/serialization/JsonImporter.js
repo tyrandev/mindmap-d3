@@ -1,10 +1,8 @@
 import fileInputManager from "../../util/file/FileInputManager.js";
-import JsonMindmapLoader from "./JsonMindmapLoader.js";
 
 export default class JsonImporter {
-  constructor(rootNodeController) {
-    this.rootNodeController = rootNodeController;
-    this.jsonMindmapLoader = new JsonMindmapLoader(rootNodeController);
+  constructor(jsonMindmapLoader) {
+    this.jsonMindmapLoader = jsonMindmapLoader;
     this.setupFileInput();
   }
 

@@ -4,20 +4,22 @@ import NodeOutlineText from "../../services/converter/text/NodeOutlineText.js";
 import FileInputManager from "../../util/file/FileInputManager.js";
 import MouseModeState from "../../state/MouseModeState.js";
 import * as mc from "../../constants/MouseConstants.js";
-import JsonExporter from "../../data/serialization/JsonExporter.js";
-import JsonImporter from "../../data/serialization/JsonImporter.js";
 import svgManager from "../../view/SvgManager.js";
 import GuiDisplayUtil from "../../util/display/GuiDisplayUtil.js";
 import StackEventEmitter from "../../services/event/emitter/StackEventEmitter.js";
 
 export default class TopMenuHandler {
-  constructor(controllerCore, mindmapLocalStorage) {
-    this.controllerCore = controllerCore;
-    this.rootNodeController = this.controllerCore.rootNodeController;
+  constructor(
+    jsonExporter,
+    jsonImporter,
+    mindmapLocalStorage,
+    rootNodeController
+  ) {
+    this.rootNodeController = rootNodeController;
     this.mindmapLocalStorage = mindmapLocalStorage;
     this.modeManager = MouseModeState;
-    this.jsonExporter = new JsonExporter(this.rootNodeController);
-    this.jsonImporter = new JsonImporter(this.rootNodeController);
+    this.jsonExporter = jsonExporter;
+    this.jsonImporter = jsonImporter;
     this.initEventListeners();
   }
 

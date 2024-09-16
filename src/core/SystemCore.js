@@ -12,6 +12,8 @@ import Session from "../state/Session.js";
 import LinkController from "../controller/link/LinkController.js";
 import JsonMindmapSaver from "../data/serialization/JsonMindmapSaver";
 import JsonMindmapLoader from "../data/serialization/JsonMindmapLoader.js";
+import JsonExporter from "../data/serialization/JsonExporter.js";
+import JsonImporter from "../data/serialization/JsonImporter.js";
 
 export default class SystemCore {
   startApplication() {
@@ -33,6 +35,8 @@ export default class SystemCore {
     const rootController = this.controllerCore.getRootNodeController();
     this.jsonMindmapLoader = new JsonMindmapLoader(rootController);
     this.jsonMindmapSaver = new JsonMindmapSaver(rootController);
+    this.jsonImporter = new JsonImporter(this.jsonMindmapLoader);
+    this.jsonExporter = new JsonExporter(this.jsonMindmapSaver);
   }
 
   initializeStorage() {
@@ -68,8 +72,10 @@ export default class SystemCore {
       this.mindmapLocalStorage
     );
     this.topMenuHandler = new TopMenuHandler(
-      this.controllerCore,
-      this.mindmapLocalStorage
+      this.jsonExporter,
+      this.jsonImporter,
+      this.mindmapLocalStorage,
+      this.rootNodeController
     );
   }
 }
