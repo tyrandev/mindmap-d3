@@ -18,8 +18,9 @@ export default class MindmapLocalStorage {
     if (!name) return;
     const json = this._getSerializedJson();
     this.localStorage.saveItem(name, json);
-    MindmapState.setCurrentMindmap(name, json);
+    // MindmapState.setCurrentMindmap(name, json);
     this.uiHandler.createLocalStorageList();
+    console.log(json);
   }
 
   loadFromLocalStorage(name) {
@@ -27,8 +28,9 @@ export default class MindmapLocalStorage {
     if (!json) {
       throw new Error("Mindmap does not exist!");
     }
-    this.jsonMindmapLoader.loadFromJson(json);
-    MindmapState.setCurrentMindmap(name, json);
+    console.log(json);
+    this.jsonMindmapLoader.importFromJsonString(json);
+    // MindmapState.setCurrentMindmap(name, json);
   }
 
   deleteFromLocalStorage(name) {
@@ -49,9 +51,9 @@ export default class MindmapLocalStorage {
       return;
     }
     this.localStorage.renameItem(oldName, newName);
-    if (oldName == MindmapState.currentMindmapJson) {
-      MindmapState.setCurrentMindmap(newName, MindmapState.currentMindmapJson);
-    }
+    // if (oldName == MindmapState.currentMindmapJson) {
+    //   MindmapState.setCurrentMindmap(newName, MindmapState.currentMindmapJson);
+    // }
     this.uiHandler.createLocalStorageList();
   }
 
@@ -64,7 +66,8 @@ export default class MindmapLocalStorage {
   }
 
   _getFilenameForSave() {
-    const suggestedName = MindmapState.currentFilename || "";
+    // const suggestedName = MindmapState.currentFilename || "";
+    const suggestedName = "mindmap";
     return prompt("Enter the filename for the JSON file:", suggestedName);
   }
 }

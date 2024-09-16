@@ -14,7 +14,7 @@ export default class JsonExporter {
   }
 
   _getFilenameForExport() {
-    const suggestedName = MindmapState.currentFilename || "";
+    const suggestedName = "";
     return prompt("Enter the name to export the mind map:", suggestedName);
   }
 

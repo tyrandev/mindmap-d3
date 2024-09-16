@@ -28,9 +28,30 @@ export default class Node {
   }
 
   setLink(link) {
+    // Ensure the link is an instance of the base Link class
     if (!(link instanceof Link)) {
       throw new Error("Expected an instance of Link.");
     }
+
+    // If the link is a MindmapLink, handle specific attributes
+    if (link instanceof MindmapLink) {
+      console.log(
+        "Setting a MindmapLink with attributes: ",
+        link.getMindmapName()
+      );
+      // Set MindmapLink specific properties (if any)
+      this.mindmapLinkName = link.getMindmapName(); // Example of setting mindmap name
+    }
+
+    // Handle other types of links if necessary (e.g., UrlLink)
+    if (link instanceof UrlLink) {
+      console.log("Setting a UrlLink with URL: ", link.getUrl());
+      // Set UrlLink specific properties (if any)
+      this.urlLinkUrl = link.getUrl(); // Example of setting the URL
+    }
+
+    // Finally, set the link to this node
+    console.log("Link is set to: ", link);
     this.link = link;
   }
 
@@ -135,6 +156,7 @@ export default class Node {
   }
 
   toJSON() {
+    console.log(`link to json:${this.link}`);
     return {
       type: this.getClassName(),
       id: this.id,

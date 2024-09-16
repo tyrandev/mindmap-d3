@@ -50,8 +50,12 @@ export default class NodeFactory {
         throw new Error(`Unknown node type: ${data.type}`);
     }
 
+    console.log("data link", data.link);
+
     if (data.link) {
-      node.setLink(LinkFactory.createLinkFromJson(data.link));
+      const link = LinkFactory.createLinkFromJson(data.link);
+      console.log("link loaded from json:", link);
+      node.setLink(link);
     }
 
     return node;

@@ -2,6 +2,7 @@ import Node from "../../model/geometric/node/Node.js";
 import NodeFactory from "../../services/factory/NodeFactory.js";
 import CollapseIndicator from "../../model/indicators/CollapseIndicator.js";
 import LinkFactory from "../../services/factory/LinkFactory.js";
+import MindmapLink from "../../model/links/MindmapLink.js";
 
 export default class NodeSerializer {
   static serialize(node) {
@@ -35,10 +36,20 @@ export default class NodeSerializer {
         node.collapsed = null;
       }
 
+      // console.log("link: ", data.link);
+
       if (data.link) {
-        node.link = LinkFactory.createLinkFromJson(data.link);
+        const link = LinkFactory.createLinkFromJson(data.link);
+        if (link instanceof MindmapLink) {
+          console.log("it is instance of mindmap link");
+        } else {
+          console.log("it is not instqnce of mindmap link");
+        }
+        node.setLink(link);
+        console.log("link: ", data.link);
       } else {
         node.link = null;
+        console.log("link is null");
       }
 
       if (Array.isArray(data.children)) {
