@@ -6,7 +6,6 @@ import svgManager from "../../view/SvgManager.js";
 import ColorHandler from "../../util/color/ColorHandler.js";
 import BorderlessRectangle from "../../model/geometric/rectangle/BorderlessRectangle.js";
 import ConnectionLineSvg from "./lines/ConnectionLineSvg.js";
-import CollapseIndicator from "../../model/indicators/CollapseIndicator.js";
 import CollapseIndicatorSvg from "./indicators/CollapseIndicatorSvg.js";
 
 export default class SvgCreator {
@@ -29,11 +28,11 @@ export default class SvgCreator {
 
   renderNode(node) {
     const nodeSelection = this.renderNodeContent(node);
+    this.renderNodeChildren(node);
+    this.renderLines(node);
     this.renderCollapseIndicator(node);
     this.applySelectionStyle(nodeSelection, node);
-    this.renderNodeChildren(node);
     this.addEventListeners(nodeSelection, node);
-    this.applyLinkStyle(nodeSelection, node);
   }
 
   renderNodeContent(node) {
@@ -55,16 +54,21 @@ export default class SvgCreator {
     if (!node.children) return;
     node.children.forEach((child) => {
       this.renderNode(child);
-      if (!node.collapsed) {
-        this.connectionLineSvg.connectLineToChildNodes(node, child);
-      }
+    });
+  }
+
+  renderLines(node) {
+    if (!node.children) return;
+    node.children.forEach((child) => {
+      if (node.hasCollapsedAncestor()) return;
+      if (node.collapsed) return;
+      this.connectionLineSvg.connectLineToChildNodes(node, child);
     });
   }
 
   renderCollapseIndicator(node) {
-    if (node.collapsed && node.collapsed instanceof CollapseIndicator) {
-      this.collapseIndicatorSvg.drawCollapseIndicator(node);
-    }
+    if (node.hasCollapsedAncestor()) return;
+    this.collapseIndicatorSvg.drawCollapseIndicator(node);
   }
 
   applySelectionStyle(nodeSelection, node) {
@@ -76,11 +80,5 @@ export default class SvgCreator {
       .attr("stroke", node.borderColor)
       .attr("stroke-width", node.borderWidth + 1)
       .attr("fill", lightenedFillColor);
-  }
-
-  applyLinkStyle(nodeSelection, node) {
-    if (node.link) {
-      nodeSelection.select("text").style("text-decoration", "underline");
-    }
   }
 }
