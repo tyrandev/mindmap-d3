@@ -1,10 +1,10 @@
-import NodeSerializer from "./NodeSerializer.js";
 import fileInputManager from "../../util/file/FileInputManager.js";
-import MindmapState from "../../state/MindmapState.js";
+import JsonMindmapLoader from "./JsonMindmapLoader.js";
 
 export default class JsonImporter {
   constructor(rootNodeController) {
     this.rootNodeController = rootNodeController;
+    this.jsonMindmapLoader = new JsonMindmapLoader(rootNodeController);
     this.setupFileInput();
     this._initializeEventListeners();
   }
@@ -31,7 +31,7 @@ export default class JsonImporter {
       reader.onload = (e) => {
         try {
           const json = e.target.result;
-          this._loadFromJson(json, file.name);
+          this.jsonMindmapLoader.loadFromJson(json, file.name);
           resolve({ json, filename: file.name });
         } catch (error) {
           reject(error);
@@ -42,24 +42,10 @@ export default class JsonImporter {
     });
   }
 
-  importFromJsonString(jsonString, filename = null) {
-    try {
-      this._loadFromJson(jsonString, filename);
-    } catch (error) {
-      throw new Error("Invalid JSON string");
-    }
-  }
-
-  _loadFromJson(json, filename) {
-    const rootNode = NodeSerializer.deserialize(json);
-    this.rootNodeController.loadMindMap(rootNode);
-    MindmapState.setCurrentMindmap(filename, json);
-  }
-
   _initializeEventListeners() {
     document.addEventListener("fileLoaded", (event) => {
       const { json, filename } = event.detail;
-      this.importFromJsonString(json, filename);
+      this.jsonMindmapLoader.importFromJsonString(json, filename);
     });
   }
 }

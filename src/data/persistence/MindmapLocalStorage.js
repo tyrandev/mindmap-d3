@@ -27,7 +27,7 @@ export default class MindmapLocalStorage {
     if (!json) {
       throw new Error("Mindmap does not exist!");
     }
-    this.jsonMindmapLoader.loadFromJson(json);
+    this.jsonMindmapLoader.importFromJsonString(json);
     MindmapState.setCurrentMindmap(name, json);
   }
 

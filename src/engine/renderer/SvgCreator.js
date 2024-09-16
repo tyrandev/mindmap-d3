@@ -33,6 +33,7 @@ export default class SvgCreator {
     this.applySelectionStyle(nodeSelection, node);
     this.renderNodeChildren(node);
     this.addEventListeners(nodeSelection, node);
+    this.applyLinkStyle(nodeSelection, node);
   }
 
   renderNodeContent(node) {
@@ -75,5 +76,11 @@ export default class SvgCreator {
       .attr("stroke", node.borderColor)
       .attr("stroke-width", node.borderWidth + 1)
       .attr("fill", lightenedFillColor);
+  }
+
+  applyLinkStyle(nodeSelection, node) {
+    if (node.link) {
+      nodeSelection.select("text").style("text-decoration", "underline");
+    }
   }
 }

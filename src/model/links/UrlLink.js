@@ -27,7 +27,6 @@ export default class UrlLink extends Link {
   }
 
   static fromJSON(json) {
-    // Ensure the instance is created using 'new'
     const urlLink = new UrlLink(json.url);
     urlLink.setLabel(json.label);
     return urlLink;

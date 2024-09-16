@@ -53,9 +53,6 @@ export default class NodeContextMenu extends ContextMenu {
       .getElementById("random-color-node")
       .addEventListener("mousedown", this.randomColorNode.bind(this));
     document
-      .getElementById("select-border-color-node")
-      .addEventListener("mousedown", this.selectBorderColorNode.bind(this));
-    document
       .getElementById("open-link")
       .addEventListener("mousedown", this.handleOpenLink.bind(this));
     document
@@ -88,7 +85,6 @@ export default class NodeContextMenu extends ContextMenu {
       alert("No link is set for this node.");
       return;
     }
-    console.log(link);
 
     if (link.getType() === "MindmapLink") {
       const mindmapName = link.getMindmapName();
