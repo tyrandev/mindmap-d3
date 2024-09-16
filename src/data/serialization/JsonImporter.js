@@ -6,7 +6,6 @@ export default class JsonImporter {
     this.rootNodeController = rootNodeController;
     this.jsonMindmapLoader = new JsonMindmapLoader(rootNodeController);
     this.setupFileInput();
-    this._initializeEventListeners();
   }
 
   setupFileInput() {
@@ -19,10 +18,9 @@ export default class JsonImporter {
 
   handleFileInputChange(event) {
     const file = event.target.files[0];
-    if (!file) return;
-    this.importFromFile(file).catch((error) => {
-      console.error("Error loading JSON:", error);
-    });
+    if (file) {
+      this.importFromFile(file);
+    }
   }
 
   importFromFile(file) {
@@ -39,13 +37,6 @@ export default class JsonImporter {
       };
       reader.onerror = () => reject(reader.error);
       reader.readAsText(file);
-    });
-  }
-
-  _initializeEventListeners() {
-    document.addEventListener("fileLoaded", (event) => {
-      const { json, filename } = event.detail;
-      this.jsonMindmapLoader.importFromJsonString(json, filename);
     });
   }
 }

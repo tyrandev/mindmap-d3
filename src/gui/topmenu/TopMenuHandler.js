@@ -17,7 +17,7 @@ export default class TopMenuHandler {
     this.mindmapLocalStorage = mindmapLocalStorage;
     this.modeManager = MouseModeState;
     this.jsonExporter = new JsonExporter(this.rootNodeController);
-    this.JsonImporter = new JsonImporter(this.rootNodeController);
+    this.jsonImporter = new JsonImporter(this.rootNodeController);
     this.initEventListeners();
   }
 
@@ -91,22 +91,7 @@ export default class TopMenuHandler {
   }
 
   handleImport() {
-    const fileInput = FileInputManager.getFileInput();
-    if (!fileInput) {
-      console.error("File input element not found");
-      return;
-    }
-    fileInput.addEventListener("change", this.handleFileInputChange.bind(this));
-    fileInput.click();
-  }
-
-  handleFileInputChange(event) {
-    const file = event.target.files[0];
-    if (file) {
-      FileInputManager.importFromFile(file)
-        .then(() => console.log("Import successful"))
-        .catch((error) => console.error("Import failed", error));
-    }
+    FileInputManager.clickFileInput();
   }
 
   handleExport() {
@@ -122,9 +107,7 @@ export default class TopMenuHandler {
   }
 
   handleTextConversion() {
-    NodeOutlineText.downloadTextOutline(
-      this.controllerCore.rootNodeController.getRootNode()
-    );
+    NodeOutlineText.downloadTextOutline(this.rootNodeController.getRootNode());
   }
 
   handleColorMode() {

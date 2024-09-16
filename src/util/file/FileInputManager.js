@@ -15,20 +15,10 @@ class FileInputManager {
     return this.fileInput;
   }
 
-  importFromFile(file) {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        try {
-          const json = JSON.parse(event.target.result);
-          resolve(json);
-        } catch (error) {
-          reject(new Error("Invalid JSON file"));
-        }
-      };
-      reader.onerror = () => reject(new Error("Error reading file"));
-      reader.readAsText(file);
-    });
+  clickFileInput() {
+    const fileInput = this.getFileInput();
+    if (!fileInput) throw new Error("File input element not found");
+    fileInput.click();
   }
 }
 
