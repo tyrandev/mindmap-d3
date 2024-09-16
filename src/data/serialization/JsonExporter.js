@@ -1,16 +1,17 @@
 import MindmapState from "../../state/MindmapState.js";
+import JsonMindmapSaver from "../serialization/JsonMindmapSaver.js";
 
 export default class JsonExporter {
   constructor(rootNodeController) {
     this.rootNodeController = rootNodeController;
+    this.jsonMindmapSaver = new JsonMindmapSaver(this.rootNodeController);
   }
 
   exportToJson() {
     const filename = this._getFilenameForExport();
     if (!filename) return;
-
-    const json = this._getSerializedJson();
-    this._downloadFile(filename, json);
+    const blob = this.jsonMindmapSaver.createJsonBlob();
+    this._saveJsonToFile(filename, blob);
   }
 
   _getFilenameForExport() {
@@ -18,12 +19,7 @@ export default class JsonExporter {
     return prompt("Enter the name to export the mind map:", suggestedName);
   }
 
-  _getSerializedJson() {
-    return this.rootNodeController.serializeRootNode();
-  }
-
-  _downloadFile(filename, content) {
-    const blob = new Blob([content], { type: "application/json" });
+  _saveJsonToFile(filename, blob) {
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;

@@ -2,6 +2,7 @@ import LocalStorageUIHandler from "../../gui/storage/LocalStorageUIHandler.js";
 import LocalStorage from "./LocalStorage.js";
 import MindmapState from "../../state/MindmapState.js";
 import JsonMindmapLoader from "../serialization/JsonMindmapLoader.js";
+import JsonMindmapSaver from "../serialization/JsonMindmapSaver.js";
 
 const LOCAL_STORAGE_KEY = "mindmaps";
 
@@ -11,24 +12,22 @@ export default class MindmapLocalStorage {
     this.localStorage = new LocalStorage(LOCAL_STORAGE_KEY);
     this.uiHandler = new LocalStorageUIHandler(this);
     this.jsonMindmapLoader = new JsonMindmapLoader(this.rootNodeController);
+    this.jsonMindmapSaver = new JsonMindmapSaver(this.rootNodeController);
   }
 
   saveToLocalStorage() {
     const name = this._getFilenameForSave();
     if (!name) return;
-    const json = this._getSerializedJson();
+    const json = this.jsonMindmapSaver.getSerializedJson();
     this.localStorage.saveItem(name, json);
     MindmapState.setCurrentMindmap(name, json);
     this.uiHandler.createLocalStorageList();
   }
 
-  loadFromLocalStorage(name) {
-    const json = this.localStorage.getItem(name);
-    if (!json) {
-      throw new Error("Mindmap does not exist!");
-    }
-    this.jsonMindmapLoader.importFromJsonString(json);
-    MindmapState.setCurrentMindmap(name, json);
+  loadFromLocalStorage(filename) {
+    const json = this.localStorage.getItem(filename);
+    if (!json) throw new Error("Mindmap does not exist!");
+    this.jsonMindmapLoader.importFromJsonString(json, filename);
   }
 
   deleteFromLocalStorage(name) {
@@ -49,9 +48,7 @@ export default class MindmapLocalStorage {
       return;
     }
     this.localStorage.renameItem(oldName, newName);
-    if (oldName == MindmapState.currentMindmapJson) {
-      MindmapState.setCurrentMindmap(newName, MindmapState.currentMindmapJson);
-    }
+    this._updateCurrentMindmapState(oldName, newName);
     this.uiHandler.createLocalStorageList();
   }
 
@@ -59,12 +56,14 @@ export default class MindmapLocalStorage {
     return this.localStorage.listItems();
   }
 
-  _getSerializedJson() {
-    return this.rootNodeController.serializeRootNode();
-  }
-
   _getFilenameForSave() {
     const suggestedName = MindmapState.currentFilename || "";
     return prompt("Enter the filename for the JSON file:", suggestedName);
+  }
+
+  _updateCurrentMindmapState(oldName, newName) {
+    if (oldName === MindmapState.currentMindmapJson) {
+      MindmapState.setCurrentMindmap(newName, MindmapState.currentMindmapJson);
+    }
   }
 }
