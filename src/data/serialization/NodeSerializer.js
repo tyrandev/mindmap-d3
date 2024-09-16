@@ -35,8 +35,11 @@ export default class NodeSerializer {
         node.collapsed = null;
       }
 
+      console.log(data.link);
       if (data.link) {
-        node.link = LinkFactory.createLinkFromJson(data.link);
+        const link = LinkFactory.createLinkFromJson(data.link);
+        console.log("link:", link);
+        node.setLink(link);
       } else {
         node.link = null;
       }

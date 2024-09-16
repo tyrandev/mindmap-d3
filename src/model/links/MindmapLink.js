@@ -27,6 +27,7 @@ export default class MindmapLink extends Link {
   }
 
   static fromJSON(json) {
+    // Ensure the instance is created using 'new'
     const mindmapLink = new MindmapLink(json.mindmapName);
     mindmapLink.setLabel(json.label);
     return mindmapLink;

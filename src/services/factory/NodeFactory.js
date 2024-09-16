@@ -50,6 +50,8 @@ export default class NodeFactory {
         throw new Error(`Unknown node type: ${data.type}`);
     }
 
+    console.log("data link: ", data.link);
+
     if (data.link) {
       node.setLink(LinkFactory.createLinkFromJson(data.link));
     }
@@ -59,6 +61,7 @@ export default class NodeFactory {
 
   static _initializeNode(node) {
     node.setId(NodeFactory.incrementId());
+
     return node;
   }
 }

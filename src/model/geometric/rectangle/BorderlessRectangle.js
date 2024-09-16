@@ -15,6 +15,7 @@ export default class BorderlessRectangle extends Rectangle {
     clone.cornerRadii = this.cornerRadii;
     clone.id = this.id;
     clone.collapsed = this.collapsed;
+    clone.link = this.link;
     clone.setDimensions(this.width, this.height);
     this.children.forEach((child) => {
       const childClone = child.clone();
