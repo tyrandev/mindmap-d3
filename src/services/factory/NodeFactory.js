@@ -1,7 +1,6 @@
 import Circle from "../../model/geometric/circle/Circle.js";
 import Rectangle from "../../model/geometric/rectangle/Rectangle.js";
 import BorderlessRectangle from "../../model/geometric/rectangle/BorderlessRectangle.js";
-import LinkFactory from "./LinkFactory.js";
 
 export default class NodeFactory {
   static idCounter = 0;
@@ -49,19 +48,11 @@ export default class NodeFactory {
       default:
         throw new Error(`Unknown node type: ${data.type}`);
     }
-
-    console.log("data link: ", data.link);
-
-    if (data.link) {
-      node.setLink(LinkFactory.createLinkFromJson(data.link));
-    }
-
     return node;
   }
 
   static _initializeNode(node) {
     node.setId(NodeFactory.incrementId());
-
     return node;
   }
 }

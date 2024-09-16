@@ -28,21 +28,8 @@ export default class NodeSerializer {
           throw new Error(`Unknown node type in JSON data: ${data.type}`);
       }
 
-      node.id = data.id || node.id;
-      if (data.collapsed) {
-        node.collapsed = new CollapseIndicator();
-      } else {
-        node.collapsed = null;
-      }
-
-      console.log(data.link);
-      if (data.link) {
-        const link = LinkFactory.createLinkFromJson(data.link);
-        console.log("link:", link);
-        node.setLink(link);
-      } else {
-        node.link = null;
-      }
+      node.collapsed = data.collapsed ? new CollapseIndicator() : null;
+      node.link = data.link ? LinkFactory.createLinkFromJson(data.link) : null;
 
       if (Array.isArray(data.children)) {
         data.children.forEach((childData) => {
