@@ -41,9 +41,6 @@ export default class NodeContextMenu extends ContextMenu {
       .getElementById("delete-node")
       .addEventListener("mousedown", this.deleteNode.bind(this));
     document
-      .getElementById("resize-node")
-      .addEventListener("mousedown", this.resizeNode.bind(this));
-    document
       .getElementById("collapse-node")
       .addEventListener("mousedown", this.collapseNode.bind(this));
     document
@@ -186,25 +183,6 @@ export default class NodeContextMenu extends ContextMenu {
   deleteNode() {
     if (!this.contextMenuNode) return;
     this.nodeDeletionController.deleteNode(this.contextMenuNode);
-    this.hideContextMenu();
-  }
-
-  resizeNode() {
-    if (!this.contextMenuNode) {
-      console.error("No circle selected for resizing.");
-      return;
-    }
-    const newRadiusStr = prompt(
-      "Enter new radius for the node:",
-      this.contextMenuNode.radius
-    );
-    if (newRadiusStr === null) return;
-    const newRadius = parseFloat(newRadiusStr);
-    if (isNaN(newRadius) || newRadius <= 0) {
-      alert("Invalid radius value. Please enter a number greater than 0.");
-      return;
-    }
-    this.selectionController.setSelectedCircleRadius(newRadius);
     this.hideContextMenu();
   }
 
