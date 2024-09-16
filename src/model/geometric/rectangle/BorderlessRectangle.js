@@ -26,7 +26,7 @@ export default class BorderlessRectangle extends Rectangle {
 
   makeInvisible() {
     this.fillColor = "#ffffff";
-    this.borderColor = "rgba(0, 0, 0, 0)";
+    this.borderColor = "#ffffff";
     this.borderWidth = 0;
   }
 
