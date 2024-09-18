@@ -24,7 +24,7 @@ body {
   width: 0;
 }
 
-#canvas-container {
+#svg-container {
   display: flex;
   justify-content: center;
   align-items: center;

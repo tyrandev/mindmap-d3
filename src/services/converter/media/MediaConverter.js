@@ -2,7 +2,7 @@ import * as GlobalConstants from "../../../constants/GlobalConstants.js";
 import html2canvas from "html2canvas";
 
 export default class MediaConverter {
-  static containerSelector = "#canvas-container";
+  static containerSelector = "#svg-container";
   static defaultFileName = "mindmap";
 
   static getContainer() {
