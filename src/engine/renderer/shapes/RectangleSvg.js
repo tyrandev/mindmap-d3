@@ -8,7 +8,7 @@ export default class RectangleSvg extends NodeSvg {
 
   createSvgShapeWithText(rectangle) {
     const rectangleSelection = this.drawRectangleShape(rectangle);
-    this.drawNodeText(rectangle);
+    this.drawText(rectangle);
     return rectangleSelection;
   }
 
@@ -38,7 +38,7 @@ export default class RectangleSvg extends NodeSvg {
     }
   }
 
-  drawNodeText(rectangle) {
+  drawText(rectangle) {
     this.computeTextLines(rectangle);
   }
 

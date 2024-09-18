@@ -8,7 +8,7 @@ export default class CircleSvg extends NodeSvg {
 
   createSvgShapeWithText(circle) {
     const circleSelection = this.drawCircleShape(circle);
-    this.drawNodeText(circle);
+    this.drawText(circle);
     return circleSelection;
   }
 
@@ -23,7 +23,7 @@ export default class CircleSvg extends NodeSvg {
       .attr("stroke-width", circle.borderWidth);
   }
 
-  drawNodeText(circle) {
+  drawText(circle) {
     const textAttributes = this.calculateTextAttributes(circle);
     this.drawTextLines(circle, textAttributes);
   }
