@@ -60,8 +60,8 @@ export default class SvgCreator {
   renderLines(node) {
     if (!node.children) return;
     node.children.forEach((child) => {
-      if (node.hasCollapsedAncestor()) return;
       if (node.collapsed) return;
+      if (node.hasCollapsedAncestor()) return;
       this.connectionLineSvg.connectLineToChildNodes(node, child);
     });
   }

@@ -14,6 +14,7 @@ import JsonMindmapSaver from "../data/serialization/JsonMindmapSaver";
 import JsonMindmapLoader from "../data/serialization/JsonMindmapLoader.js";
 import JsonExporter from "../data/serialization/JsonExporter.js";
 import JsonImporter from "../data/serialization/JsonImporter.js";
+import SvgCreator from "../engine/renderer/SvgCreator.js";
 
 export default class SystemCore {
   startApplication() {
@@ -59,9 +60,13 @@ export default class SystemCore {
   }
 
   initializeEngine() {
-    this.graphicsEngine = new GraphicsEngine(
+    this.svgCreator = new SvgCreator(
       this.nodeContainer,
       this.nodeEventAttacher
+    );
+    this.graphicsEngine = new GraphicsEngine(
+      this.nodeContainer,
+      this.svgCreator
     );
   }
 

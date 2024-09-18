@@ -1,6 +1,6 @@
-import Node from "../node/Node.js";
 import * as rc from "../../../constants/RectangleConstants.js";
 import RectangleTextUtil from "../../../util/text/RectangleTextUtil.js";
+import Node from "../node/Node.js";
 
 export default class Rectangle extends Node {
   constructor(x = 0, y = 0) {

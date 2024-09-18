@@ -1,12 +1,10 @@
-import SvgCreator from "./renderer/SvgCreator.js";
 import AnimationController from "./animation/AnimationController.js";
 import svgManager from "../view/SvgManager.js";
-import NodeEventAttacher from "../services/event/attacher/NodeEventAttacher.js";
 
 export default class GraphicsEngine {
-  constructor(nodeContainer, nodeEventAttacher) {
-    this.nodeEventAttacher = nodeEventAttacher;
-    this.svgCreator = new SvgCreator(nodeContainer, nodeEventAttacher);
+  constructor(nodeContainer, svgCreator) {
+    this.nodeContainer = nodeContainer;
+    this.svgCreator = svgCreator;
     this.animationController = new AnimationController(
       this.onAnimate.bind(this)
     );
