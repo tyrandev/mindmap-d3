@@ -64,7 +64,7 @@ export default class NodeEventAttacher {
 
     this.grabbingTimeout = setTimeout(() => {
       MouseModeState.setMode(mc.MOUSE_MODES.GRABBING);
-    }, 110);
+    }, 125);
   }
 
   handleDrag(event, node) {
