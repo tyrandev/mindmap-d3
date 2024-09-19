@@ -6,7 +6,7 @@ import StackEventEmitter from "../../services/event/emitter/StackEventEmitter.js
 
 export default class KeyboardHandler {
   constructor(controllerCore, mindmapLocalStorage) {
-    this.svg = svgManager.getSvg();
+    this.svg = svgManager.getSvgGroup();
     this.controllerCore = controllerCore;
     this.selectionController = this.controllerCore.selectionController;
     this.nodeDeletionController = this.controllerCore.nodeDeletionController;

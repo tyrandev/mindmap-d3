@@ -1,5 +1,4 @@
-import SvgInitializer from "./SvgInitializer.js";
-import SvgZoom from "./SvgZoom.js";
+import * as d3 from "d3";
 
 class SvgManager {
   constructor() {
@@ -7,35 +6,92 @@ class SvgManager {
       return SvgManager.instance;
     }
     SvgManager.instance = this;
-    this.svg = null;
-    this.svgWidth = 0;
-    this.svgHeight = 0;
-    this.svgGroup = null;
-    this.SvgInitializer = new SvgInitializer(this);
-    this.svgZoom = new SvgZoom(this.svg, this.svgGroup);
+    this.svg = d3
+      .select("#svg-container")
+      .append("svg")
+      .attr("width", this.getContainerWidth())
+      .attr("height", this.getContainerHeight());
+
+    this.g = this.svg.append("g");
+    this.setupZoom();
   }
 
   getSvg() {
-    if (!this.svg) {
-      throw new Error("SVG not initialized. Call initialize() first.");
-    }
     return this.svg;
   }
 
+  getSvgGroup() {
+    return this.g;
+  }
+
+  getContainerWidth() {
+    return d3.select("#svg-container").node().clientWidth;
+  }
+
+  getContainerHeight() {
+    return d3.select("#svg-container").node().clientHeight;
+  }
+
+  setupZoom() {
+    this.zoom = d3
+      .zoom()
+      .scaleExtent([0.25, 5])
+      .on("zoom", (event) => {
+        this.g.attr("transform", event.transform);
+      });
+
+    this.svg.call(this.zoom);
+  }
+
+  zoomBy(factor) {
+    const transform = d3.zoomTransform(this.svg.node());
+    this.svg.transition().duration(500).call(this.zoom.scaleBy, factor);
+  }
+
+  zoomIn() {
+    this.zoomBy(1.2);
+  }
+
+  zoomOut() {
+    this.zoomBy(0.8);
+  }
+
+  panTop() {
+    this.pan(0, 50);
+  }
+
+  panBottom() {
+    this.pan(0, -50);
+  }
+
+  panLeft() {
+    this.pan(50, 0);
+  }
+
+  panRight() {
+    this.pan(-50, 0);
+  }
+
+  pan(dx, dy) {
+    const transform = d3.zoomTransform(this.svg.node());
+    const newTransform = transform.translate(dx, dy);
+    this.svg.transition().duration(500).call(this.zoom.transform, newTransform);
+  }
+
   getSvgWidth() {
-    return this.svgWidth;
+    return +this.svg.attr("width");
   }
 
   getSvgHeight() {
-    return this.svgHeight;
+    return +this.svg.attr("height");
   }
 
   getCenterX() {
-    return this.svgWidth / 2;
+    return this.getSvgWidth() / 2;
   }
 
   getCenterY() {
-    return this.svgHeight / 2;
+    return this.getSvgHeight() / 2;
   }
 
   getCenterCoordinates() {
@@ -43,18 +99,6 @@ class SvgManager {
       x: this.getCenterX(),
       y: this.getCenterY(),
     };
-  }
-
-  zoomIn() {
-    this.svgZoom.zoomIn();
-  }
-
-  zoomOut() {
-    this.svgZoom.zoomOut();
-  }
-
-  pan(addX, addY) {
-    this.svgZoom.pan(addX, addY);
   }
 }
 

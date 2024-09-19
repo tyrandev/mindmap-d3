@@ -24,7 +24,6 @@ export default class GraphicsEngine {
   }
 
   clearAndRenderSvg() {
-    svgManager.getSvg().selectAll("*").remove();
     this.svgCreator.drawNodes();
   }
 }

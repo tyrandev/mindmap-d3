@@ -1,15 +1,16 @@
 import ContextMenuEventEmitter from "../../services/event/emitter/ContextMenuEventEmitter.js";
 import mousePositionInstance from "../../input/mouse/MousePosition.js";
+import svgManager from "../../view/SvgManager.js";
 
 export default class ContextMenu {
   constructor(controllerCore, contextMenuId) {
     this.controllerCore = controllerCore;
     this.contextMenu = document.getElementById(contextMenuId);
-    this.svg = document.getElementById("mindMapSvg");
+    this.svg = svgManager.getSvg().node();
     this.contextMenuNode = null;
     this.initContextMenu();
     this.preventBrowserContextMenu();
-    this.ensureSvgFocusable();
+    // this.ensureSvgFocusable();
     document.addEventListener("mousedown", this.handleDocumentClick.bind(this));
     ContextMenuEventEmitter.on(
       "onHideContextMenu",

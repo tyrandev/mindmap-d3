@@ -84,11 +84,11 @@ export default class NodeEventAttacher {
     this.nodeContextMenu.showContextMenu(node);
   }
 
-  // !! is not working
   handleMouseWheel(event) {
     if (!this.selectionController.getSelectedNode()) return;
     this.selectionController.updateSelectedNodeDimensions(
       event.deltaY > 0 ? -5 : 5
     );
+    console.log("mouse wheel");
   }
 }

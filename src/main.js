@@ -1,4 +1,4 @@
-import SystemCore from "./core/SystemCore.js";
+import SystemCore from "./core/SystemCore";
 
 const systemCore = new SystemCore();
 systemCore.startApplication();

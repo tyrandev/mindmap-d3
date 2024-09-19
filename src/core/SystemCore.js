@@ -33,9 +33,9 @@ export default class SystemCore {
   }
 
   initializeJson() {
-    const rootController = this.controllerCore.getRootNodeController();
-    this.jsonMindmapLoader = new JsonMindmapLoader(rootController);
-    this.jsonMindmapSaver = new JsonMindmapSaver(rootController);
+    this.rootNodeController = this.controllerCore.getRootNodeController();
+    this.jsonMindmapLoader = new JsonMindmapLoader(this.rootNodeController);
+    this.jsonMindmapSaver = new JsonMindmapSaver(this.rootNodeController);
     this.jsonImporter = new JsonImporter(this.jsonMindmapLoader);
     this.jsonExporter = new JsonExporter(this.jsonMindmapSaver);
   }
@@ -49,13 +49,13 @@ export default class SystemCore {
   }
 
   initializeEventAttachers() {
-    const svg = svgManager.getSvg();
+    const svg = svgManager.getSvgGroup();
     this.nodeEventAttacher = new NodeEventAttacher(
       svg,
       this.controllerCore,
       this.linkController
     );
-    this.svgEventAttacher = new SvgEventAttacher(svg, this.controllerCore);
+    this.svgEventAttacher = new SvgEventAttacher(this.controllerCore);
     this.svgEventAttacher.attachEventListeners();
   }
 

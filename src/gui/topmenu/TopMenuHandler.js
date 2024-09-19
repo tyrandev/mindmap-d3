@@ -15,11 +15,11 @@ export default class TopMenuHandler {
     mindmapLocalStorage,
     rootNodeController
   ) {
-    this.rootNodeController = rootNodeController;
     this.mindmapLocalStorage = mindmapLocalStorage;
     this.modeManager = MouseModeState;
     this.jsonExporter = jsonExporter;
     this.jsonImporter = jsonImporter;
+    this.rootNodeController = rootNodeController;
     this.initEventListeners();
   }
 

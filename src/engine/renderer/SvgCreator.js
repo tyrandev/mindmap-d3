@@ -12,7 +12,7 @@ export default class SvgCreator {
   constructor(nodeContainer, nodeEventAttacher) {
     this.nodeContainer = nodeContainer;
     this.nodeEventAttacher = nodeEventAttacher;
-    this.svg = svgManager.getSvg();
+    this.svg = svgManager.getSvgGroup();
     this.renderedNodes = new Set();
     this.circleSvg = new CircleSvg(this.svg);
     this.rectangleSvg = new RectangleSvg(this.svg);
