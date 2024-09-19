@@ -7,7 +7,8 @@ class MouseModeState {
     }
     this.currentMode = MouseConstants.MOUSE_MODES.NORMAL;
     this.listeners = [];
-    this.svg = document.getElementById("mindMapSvg");
+    // TODO: check if element exists
+    this.svg = document.getElementById("svg-container");
     MouseModeState.instance = this;
   }
 
