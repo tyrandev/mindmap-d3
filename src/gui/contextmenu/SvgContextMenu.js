@@ -1,5 +1,6 @@
 import ContextMenu from "./ContextMenu.js";
 import GuiDisplayUtil from "../../util/display/GuiDisplayUtil.js";
+import svgView from "../../view/SvgView.js";
 
 export default class SvgContextMenu extends ContextMenu {
   constructor(controllerCore) {
@@ -18,6 +19,9 @@ export default class SvgContextMenu extends ContextMenu {
     document
       .getElementById("new-mindmap")
       .addEventListener("mousedown", this.newMindmap.bind(this));
+    document
+      .getElementById("reset-zoom")
+      .addEventListener("mousedown", this.resetZoom.bind(this));
   }
 
   centerMindmap() {
@@ -34,5 +38,9 @@ export default class SvgContextMenu extends ContextMenu {
     );
     if (!userConfirmed) return;
     this.rootNodeController.resetMindmap();
+  }
+
+  resetZoom() {
+    svgView.resetZoom();
   }
 }
