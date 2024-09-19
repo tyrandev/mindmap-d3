@@ -3,6 +3,7 @@ import MouseModeState from "../../../state/MouseModeState.js";
 import * as MouseConstants from "../../../constants/MouseConstants.js";
 import ContextMenuEventEmitter from "../emitter/ContextMenuEventEmitter.js";
 import svgManager from "../../../view/SvgManager.js";
+import * as d3 from "d3";
 
 export default class SvgEventAttacher {
   constructor(controllerCore) {
@@ -37,6 +38,10 @@ export default class SvgEventAttacher {
   handleSvgClick(event) {
     event.preventDefault();
     console.log("SVG background clicked");
+
+    const [x, y] = d3.pointer(event, this.svg.node());
+    console.log(`Click position: x=${x}, y=${y}`);
+
     if (event.button === 0) {
       MouseModeState.setMode(MouseConstants.MOUSE_MODES.NORMAL);
       this.selectionController.unselectNode();

@@ -2,7 +2,7 @@ import * as d3 from "d3";
 import NodeContextMenu from "../../../gui/contextmenu/NodeContextMenu.js";
 import NodeSelectionHandler from "../../../input/mouse/NodeSelectionHandler.js";
 import MouseModeState from "../../../state/MouseModeState.js";
-import * as MouseConstants from "../../../constants/MouseConstants.js";
+import * as mc from "../../../constants/MouseConstants.js";
 import ContextMenuEventEmitter from "../emitter/ContextMenuEventEmitter.js";
 
 export default class NodeEventAttacher {
@@ -47,7 +47,7 @@ export default class NodeEventAttacher {
       this.nodeSelectionHandler.handleNodeSelection(node);
       ContextMenuEventEmitter.emit("onHideContextMenu");
     } else if (event.button === 2) {
-      MouseModeState.setMode(MouseConstants.MOUSE_MODES.NORMAL);
+      MouseModeState.setMode(mc.MOUSE_MODES.NORMAL);
       this.showNodeContextMenu(node);
     }
   }
@@ -60,6 +60,7 @@ export default class NodeEventAttacher {
       x: x - node.x,
       y: y - node.y,
     };
+    MouseModeState.setMode(mc.MOUSE_MODES.GRABBING);
   }
 
   handleDrag(event, node) {
@@ -77,6 +78,7 @@ export default class NodeEventAttacher {
 
   handleDragEnd(event, node) {
     console.log("Ended dragging of: ", node);
+    MouseModeState.setMode(mc.MOUSE_MODES.NORMAL);
   }
 
   showNodeContextMenu(node) {

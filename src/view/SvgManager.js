@@ -107,6 +107,20 @@ class SvgManager {
       y: this.getCenterY(),
     };
   }
+
+  // Method to reset zoom level to the default (scale = 1)
+  resetZoom() {
+    this.svg.transition().duration(500).call(this.zoom.scaleTo, 1);
+  }
+
+  // Method to reset panning by translating back to the original position (0, 0)
+  resetPan() {
+    const identityTransform = d3.zoomIdentity; // Default transform (scale 1, translate 0, 0)
+    this.svg
+      .transition()
+      .duration(500)
+      .call(this.zoom.transform, identityTransform);
+  }
 }
 
 const svgManager = new SvgManager();

@@ -8,6 +8,7 @@ export default class KeyboardHandler {
   constructor(controllerCore, mindmapLocalStorage) {
     this.svg = svgManager.getSvg();
     this.controllerCore = controllerCore;
+    this.rootController = controllerCore.rootController;
     this.selectionController = this.controllerCore.selectionController;
     this.nodeDeletionController = this.controllerCore.nodeDeletionController;
     this.mindmapLocalStorage = mindmapLocalStorage;
@@ -31,7 +32,6 @@ export default class KeyboardHandler {
       delete: this.handleDeleteNode.bind(this),
       tab: this.handleRandomizeColor.bind(this),
       escape: this.handleUnselectNode.bind(this),
-      shift: this.handleShiftKeyDown.bind(this),
       z: this.handleUndo.bind(this),
       y: this.handleRedo.bind(this),
       s: this.handleSaveToLocalStorage.bind(this),
@@ -45,14 +45,19 @@ export default class KeyboardHandler {
       "+": this.handleZoomIn.bind(this),
       "-": this.handleZoomOut.bind(this),
       u: this.handleToggleTopMenu.bind(this),
+      0: this.handleResetZoom.bind(this), // Adding handler for reset zoom/pan
     };
 
     if (handlers[key]) {
       event.preventDefault();
       handlers[key](event);
     }
+  }
 
-    this.handleArrowKeys(event);
+  handleResetZoom(event) {
+    if (event.ctrlKey) {
+      svgManager.resetZoom();
+    }
   }
 
   handleToggleTopMenu(event) {
@@ -75,15 +80,6 @@ export default class KeyboardHandler {
 
   handleShiftKeyUp(event) {
     if (event.key === "Shift") {
-      MouseModeState.setMode(MouseConstants.MOUSE_MODES.NORMAL);
-    }
-  }
-
-  handleShiftKeyDown(event) {
-    if (event.type === "keydown") {
-      MouseModeState.setMode(MouseConstants.MOUSE_MODES.GRABBING_MINDMAP);
-      console.log("Dragging is on");
-    } else if (event.type === "keyup") {
       MouseModeState.setMode(MouseConstants.MOUSE_MODES.NORMAL);
     }
   }
@@ -183,32 +179,15 @@ export default class KeyboardHandler {
     this.selectionController.updateSelectedNodeDimensions(-5);
   }
 
-  handleZoomIn() {
-    svgManager.zoomIn();
+  handleZoomIn(event) {
+    if (event.ctrlKey || event.metaKey) {
+      svgManager.zoomIn();
+    }
   }
 
-  handleZoomOut() {
-    svgManager.zoomOut();
-  }
-
-  handleArrowKeys(event) {
-    const step = 10;
-
-    switch (event.key) {
-      case "ArrowUp":
-        svgManager.pan(0, -step);
-        break;
-      case "ArrowDown":
-        svgManager.pan(0, step);
-        break;
-      case "ArrowLeft":
-        svgManager.pan(-step, 0);
-        break;
-      case "ArrowRight":
-        svgManager.pan(step, 0);
-        break;
-      default:
-        return;
+  handleZoomOut(event) {
+    if (event.ctrlKey || event.metaKey) {
+      svgManager.zoomOut();
     }
   }
 }
