@@ -17,6 +17,7 @@ export default class NodeEventAttacher {
     );
     this.nodeMovementController = this.controllerCore.nodeMovementController;
     this.dragOffset = { x: 0, y: 0 };
+    this.grabbingTimeout = null;
   }
 
   attachEventListeners(selection, node) {
@@ -60,7 +61,10 @@ export default class NodeEventAttacher {
       x: x - node.x,
       y: y - node.y,
     };
-    MouseModeState.setMode(mc.MOUSE_MODES.GRABBING);
+
+    this.grabbingTimeout = setTimeout(() => {
+      MouseModeState.setMode(mc.MOUSE_MODES.GRABBING);
+    }, 110);
   }
 
   handleDrag(event, node) {
@@ -78,6 +82,10 @@ export default class NodeEventAttacher {
 
   handleDragEnd(event, node) {
     console.log("Ended dragging of: ", node);
+    if (this.grabbingTimeout) {
+      clearTimeout(this.grabbingTimeout);
+      this.grabbingTimeout = null;
+    }
     MouseModeState.setMode(mc.MOUSE_MODES.NORMAL);
   }
 
