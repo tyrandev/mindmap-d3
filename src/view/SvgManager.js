@@ -56,11 +56,11 @@ class SvgManager {
   }
 
   zoomIn() {
-    this.zoomBy(1.2);
+    this.zoomBy(1.1);
   }
 
   zoomOut() {
-    this.zoomBy(0.8);
+    this.zoomBy(0.9);
   }
 
   panTop() {
