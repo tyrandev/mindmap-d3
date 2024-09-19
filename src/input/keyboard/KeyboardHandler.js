@@ -6,7 +6,7 @@ import StackEventEmitter from "../../services/event/emitter/StackEventEmitter.js
 
 export default class KeyboardHandler {
   constructor(controllerCore, mindmapLocalStorage) {
-    this.svg = svgManager.getSvgGroup();
+    this.svg = svgManager.getSvg();
     this.controllerCore = controllerCore;
     this.selectionController = this.controllerCore.selectionController;
     this.nodeDeletionController = this.controllerCore.nodeDeletionController;
@@ -16,9 +16,9 @@ export default class KeyboardHandler {
 
   initKeyListeners() {
     const svgElement = this.svg.node(); // Get the actual DOM element of SVG
+    console.log(svgElement);
     svgElement.setAttribute("tabindex", 0); // Make sure it's focusable
-    svgElement.focus(); // Programmatically focus the SVG element
-
+    svgElement.focus();
     svgElement.addEventListener("keydown", this.handleKeyDown.bind(this));
     svgElement.addEventListener("keyup", this.handleShiftKeyUp.bind(this));
   }
