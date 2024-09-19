@@ -6,9 +6,7 @@ class MouseModeState {
       return MouseModeState.instance;
     }
     this.currentMode = MouseConstants.MOUSE_MODES.NORMAL;
-    this.listeners = [];
-    // TODO: check if element exists
-    this.svg = document.getElementById("svg-container");
+    this.setSvgElement();
     MouseModeState.instance = this;
   }
 
@@ -17,6 +15,13 @@ class MouseModeState {
       MouseModeState.instance = new MouseModeState();
     }
     return MouseModeState.instance;
+  }
+
+  setSvgElement() {
+    this.svg = document.getElementById("svg-container");
+    if (!this.svg) {
+      throw new Error("SVG container element not found: #svg-container");
+    }
   }
 
   getMode() {
