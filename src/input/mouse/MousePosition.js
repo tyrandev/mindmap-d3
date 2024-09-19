@@ -1,4 +1,4 @@
-import svgManager from "../../view/SvgManager.js";
+import svgView from "../../view/SvgView.js";
 
 class MousePosition {
   static instance = null;
@@ -16,7 +16,7 @@ class MousePosition {
         "Use MousePosition.getInstance() to get the single instance of this class."
       );
     }
-    this.svg = svgManager.getSvg();
+    this.svg = svgView.getSvg();
     this.mouseX = 0;
     this.mouseY = 0;
     this.handleMouseMove = this.handleMouseMove.bind(this);

@@ -1,11 +1,11 @@
 import * as d3 from "d3";
 
-class SvgManager {
+class SvgView {
   constructor() {
-    if (SvgManager.instance) {
-      return SvgManager.instance;
+    if (SvgView.instance) {
+      return SvgView.instance;
     }
-    SvgManager.instance = this;
+    SvgView.instance = this;
     this.svg = d3
       .select("#svg-container")
       .append("svg")
@@ -123,5 +123,5 @@ class SvgManager {
   }
 }
 
-const svgManager = new SvgManager();
-export default svgManager;
+const svgView = new SvgView();
+export default svgView;

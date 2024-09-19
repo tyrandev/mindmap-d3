@@ -1,6 +1,6 @@
 import * as nc from "../../constants/NodeConstants.js";
 import StackEventEmitter from "../../services/event/emitter/StackEventEmitter.js";
-import svgManager from "../../view/SvgManager.js";
+import svgView from "../../view/SvgView.js";
 
 export default class NodeMovementController {
   constructor(nodeContainer) {
@@ -30,7 +30,7 @@ export default class NodeMovementController {
   }
 
   moveNodeToCenter(node) {
-    const svgCenter = svgManager.getCenterCoordinates();
+    const svgCenter = svgView.getCenterCoordinates();
     const offsetX = svgCenter.x - node.x;
     const offsetY = svgCenter.y - node.y;
     this.moveNode(node, node.x + offsetX, node.y + offsetY);

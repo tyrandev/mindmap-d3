@@ -2,7 +2,7 @@ import CircleSvg from "./shapes/CircleSvg.js";
 import RectangleSvg from "./shapes/RectangleSvg.js";
 import Rectangle from "../../model/geometric/rectangle/Rectangle.js";
 import Circle from "../../model/geometric/circle/Circle.js";
-import svgManager from "../../view/SvgManager.js";
+import svgView from "../../view/SvgView.js";
 import ColorHandler from "../../util/color/ColorHandler.js";
 import BorderlessRectangle from "../../model/geometric/rectangle/BorderlessRectangle.js";
 import ConnectionLineSvg from "./lines/ConnectionLineSvg.js";
@@ -12,7 +12,7 @@ export default class SvgCreator {
   constructor(nodeContainer, nodeEventAttacher) {
     this.nodeContainer = nodeContainer;
     this.nodeEventAttacher = nodeEventAttacher;
-    this.svg = svgManager.getSvgGroup();
+    this.svg = svgView.getSvgGroup();
     this.renderedNodes = new Set();
     this.circleSvg = new CircleSvg(this.svg);
     this.rectangleSvg = new RectangleSvg(this.svg);

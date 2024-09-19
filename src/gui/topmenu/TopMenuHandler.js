@@ -4,7 +4,7 @@ import NodeOutlineText from "../../services/converter/text/NodeOutlineText.js";
 import FileInputManager from "../../util/file/FileInputManager.js";
 import MouseModeState from "../../state/MouseModeState.js";
 import * as mc from "../../constants/MouseConstants.js";
-import svgManager from "../../view/SvgManager.js";
+import svgView from "../../view/SvgView.js";
 import GuiDisplayUtil from "../../util/display/GuiDisplayUtil.js";
 import StackEventEmitter from "../../services/event/emitter/StackEventEmitter.js";
 
@@ -137,11 +137,11 @@ export default class TopMenuHandler {
   }
 
   handleZoomIn() {
-    svgManager.zoomIn();
+    svgView.zoomIn();
   }
 
   handleZoomOut() {
-    svgManager.zoomOut();
+    svgView.zoomOut();
   }
 
   toggleLocalStorage() {

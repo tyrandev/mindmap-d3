@@ -1,4 +1,4 @@
-import svgManager from "../../view/SvgManager.js";
+import svgView from "../../view/SvgView.js";
 import GuiDisplayUtil from "../../util/display/GuiDisplayUtil.js";
 import MouseModeState from "../../state/MouseModeState.js";
 import * as MouseConstants from "../../constants/MouseConstants.js";
@@ -6,7 +6,7 @@ import StackEventEmitter from "../../services/event/emitter/StackEventEmitter.js
 
 export default class KeyboardHandler {
   constructor(controllerCore, mindmapLocalStorage) {
-    this.svg = svgManager.getSvg();
+    this.svg = svgView.getSvg();
     this.controllerCore = controllerCore;
     this.rootController = controllerCore.rootController;
     this.selectionController = this.controllerCore.selectionController;
@@ -56,7 +56,7 @@ export default class KeyboardHandler {
 
   handleResetZoom(event) {
     if (event.ctrlKey) {
-      svgManager.resetZoom();
+      svgView.resetZoom();
     }
   }
 
@@ -181,13 +181,13 @@ export default class KeyboardHandler {
 
   handleZoomIn(event) {
     if (event.ctrlKey || event.metaKey) {
-      svgManager.zoomIn();
+      svgView.zoomIn();
     }
   }
 
   handleZoomOut(event) {
     if (event.ctrlKey || event.metaKey) {
-      svgManager.zoomOut();
+      svgView.zoomOut();
     }
   }
 }

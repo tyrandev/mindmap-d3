@@ -1,5 +1,5 @@
 import NodeFactory from "../../services/factory/NodeFactory.js";
-import svgManager from "../../view/SvgManager.js";
+import svgView from "../../view/SvgView.js";
 import NodeSerializer from "../../data/serialization/NodeSerializer.js";
 import StackEventEmitter from "../../services/event/emitter/StackEventEmitter.js";
 
@@ -21,7 +21,7 @@ export default class RootNodeController {
 
   initRootCircle(initialText) {
     try {
-      const { x, y } = svgManager.getCenterCoordinates();
+      const { x, y } = svgView.getCenterCoordinates();
       this.rootNode = NodeFactory.createCircle(x, y);
       this.rootNode.setText(initialText);
       this.nodeContainer.putNodeIntoContainer(this.rootNode);

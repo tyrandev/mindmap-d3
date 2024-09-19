@@ -1,12 +1,12 @@
 import ContextMenuEventEmitter from "../../services/event/emitter/ContextMenuEventEmitter.js";
 import mousePositionInstance from "../../input/mouse/MousePosition.js";
-import svgManager from "../../view/SvgManager.js";
+import svgView from "../../view/SvgView.js";
 
 export default class ContextMenu {
   constructor(controllerCore, contextMenuId) {
     this.controllerCore = controllerCore;
     this.contextMenu = document.getElementById(contextMenuId);
-    this.svg = svgManager.getSvg().node();
+    this.svg = svgView.getSvg().node();
     this.contextMenuNode = null;
     this.initContextMenu();
     this.preventBrowserContextMenu();

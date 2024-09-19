@@ -1,4 +1,4 @@
-import svgManager from "../view/SvgManager.js";
+import svgView from "../view/SvgView.js";
 import NodeContainer from "../model/geometric/node/NodeContainer.js";
 import GraphicsEngine from "../engine/GraphicsEngine.js";
 import ControllerCore from "./controller/ControllerCore.js";
@@ -49,7 +49,7 @@ export default class SystemCore {
   }
 
   initializeEventAttachers() {
-    const svg = svgManager.getSvgGroup();
+    const svg = svgView.getSvgGroup();
     this.nodeEventAttacher = new NodeEventAttacher(
       svg,
       this.controllerCore,

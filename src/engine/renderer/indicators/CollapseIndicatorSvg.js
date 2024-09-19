@@ -1,8 +1,8 @@
-import svgManager from "../../../view/SvgManager.js";
+import svgView from "../../../view/SvgView.js";
 
 export default class CollapseIndicatorSvg {
   constructor() {
-    this.svg = svgManager.getSvgGroup();
+    this.svg = svgView.getSvgGroup();
   }
 
   drawCollapseIndicator(node) {
