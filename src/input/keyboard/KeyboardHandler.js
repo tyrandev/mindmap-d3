@@ -15,10 +15,7 @@ export default class KeyboardHandler {
   }
 
   initKeyListeners() {
-    const svgElement = this.svg.node(); // Get the actual DOM element of SVG
-    console.log(svgElement);
-    svgElement.setAttribute("tabindex", 0); // Make sure it's focusable
-    svgElement.focus();
+    const svgElement = this.svg.node();
     svgElement.addEventListener("keydown", this.handleKeyDown.bind(this));
     svgElement.addEventListener("keyup", this.handleShiftKeyUp.bind(this));
   }

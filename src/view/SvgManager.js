@@ -14,9 +14,13 @@ class SvgManager {
 
     this.g = this.svg.append("g");
     this.setupZoom();
-    this.svg.select("svg").attr("tabindex", 0); // Make the SVG focusable
-    // this.g.select("svg").attr("tabindex", 0);
-    this.svg.node().focus();
+    this.setSvgElementFocusable();
+  }
+
+  setSvgElementFocusable() {
+    this.svgElement = this.svg.node();
+    this.svgElement.setAttribute("tabindex", 0);
+    this.svgElement.focus();
   }
 
   getSvg() {
