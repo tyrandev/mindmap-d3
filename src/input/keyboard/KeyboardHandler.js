@@ -42,10 +42,11 @@ export default class KeyboardHandler {
       d: this.handleDeleteMindMap.bind(this),
       o: this.handleCenterMindmap.bind(this),
       r: this.handleResetMindmap.bind(this),
-      "+": this.handleZoomIn.bind(this),
-      "-": this.handleZoomOut.bind(this),
+      "+": this.handleIncreaseNodeSize.bind(this),
+      "=": this.handleIncreaseNodeSize.bind(this),
+      "-": this.handleDecreaseNodeSize.bind(this),
       u: this.handleToggleTopMenu.bind(this),
-      0: this.handleResetZoom.bind(this), // Adding handler for reset zoom/pan
+      0: this.handleResetZoom.bind(this),
     };
 
     if (handlers[key]) {

@@ -32,8 +32,8 @@ export default class NodeEventAttacher {
 
     selection
       .on("mousedown", (event) => this.handleNodeClick(event, node))
-      .on("mouseenter", () => this.disableZoom()) // Disable zoom on hover
-      .on("mouseleave", () => this.enableZoom()) // Enable zoom on mouse leave
+      .on("mouseenter", () => this.mouseenter()) // Disable zoom on hover
+      .on("mouseleave", () => this.mouseleave()) // Enable zoom on mouse leave
       .call(drag);
 
     selection
@@ -99,17 +99,10 @@ export default class NodeEventAttacher {
   }
 
   handleMouseWheel(event) {
-    if (!this.selectionController.getSelectedNode()) return;
-    this.selectionController.updateSelectedNodeDimensions(
-      event.deltaY > 0 ? -5 : 5
-    );
+    console.log("node mouse wheel called");
   }
 
-  disableZoom() {
-    svgView.setZoomEnabled(false);
-  }
+  mouseenter() {}
 
-  enableZoom() {
-    svgView.setZoomEnabled(true);
-  }
+  mouseleave() {}
 }

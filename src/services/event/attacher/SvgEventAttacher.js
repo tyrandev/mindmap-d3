@@ -67,8 +67,7 @@ export default class SvgEventAttacher {
     if (event.button === 0) {
       // Left-click
       // Handle node dragging or selection logic here
-      MouseModeState.setMode(MouseConstants.MOUSE_MODES.DRAGGING);
-      console.log("Mouse mode set to DRAGGING");
+      console.log("dragging mindmap");
     } else if (event.button === 1) {
       // Middle-click
       // Handle any other functionality for middle click

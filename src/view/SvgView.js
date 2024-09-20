@@ -132,6 +132,12 @@ class SvgView {
   // Method to enable or disable zooming
   setZoomEnabled(enabled) {
     this.isZoomEnabled = enabled;
+    if (enabled) {
+      // Adjust zoom level if re-enabled
+      const currentTransform = d3.zoomTransform(this.svg.node());
+      this.svg.call(this.zoom.transform, currentTransform); // Set to current transform
+    }
+    console.log("zoom is: ", enabled);
   }
 }
 
