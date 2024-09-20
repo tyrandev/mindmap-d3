@@ -26,6 +26,7 @@ export default class CircleSvg extends NodeSvg {
   drawText(circle) {
     const textAttributes = this.calculateTextAttributes(circle);
     this.drawTextLines(circle, textAttributes);
+    if (!circle.link) return;
   }
 
   calculateTextAttributes(circle) {
@@ -55,6 +56,7 @@ export default class CircleSvg extends NodeSvg {
         .style("fill", circle.textColor || "black")
         .style("font-size", `${fontSize}px`)
         .style("font-family", "Arial")
+        .style("text-decoration", circle.link ? "underline" : "none")
         .text(line);
     });
   }

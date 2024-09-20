@@ -39,10 +39,11 @@ export default class RectangleSvg extends NodeSvg {
   }
 
   drawText(rectangle) {
-    this.computeTextLines(rectangle);
+    this.drawTextLines(rectangle);
+    if (!rectangle.link) return;
   }
 
-  computeTextLines(rectangle) {
+  drawTextLines(rectangle) {
     const lineHeight = rectangle.fontSize + 4;
     const lines = rectangle.text.split("\n");
 
@@ -57,6 +58,7 @@ export default class RectangleSvg extends NodeSvg {
         .style("fill", rectangle.textColor || "black")
         .style("font-size", `${rectangle.fontSize}px`)
         .style("font-family", "Arial")
+        .style("text-decoration", rectangle.link ? "underline" : "none")
         .text(line);
     });
   }
