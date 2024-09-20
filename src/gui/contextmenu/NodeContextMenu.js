@@ -51,11 +51,16 @@ export default class NodeContextMenu extends ContextMenu {
       .addEventListener("mousedown", this.randomColorNode.bind(this));
     document
       .getElementById("open-link")
-      .addEventListener("mousedown", this.handleOpenMindmapLink.bind(this));
+      .addEventListener("mousedown", this.handleOpenLink.bind(this));
     document
       .getElementById("set-mindmap-link")
       .addEventListener("mousedown", this.handleSetMindmap.bind(this));
+    document
+      .getElementById("set-url-link")
+      .addEventListener("mousedown", this.handleSetUrlLink.bind(this));
   }
+
+  // TODO: add set url link functionnality. element id -> set-url-link
 
   showContextMenu(node) {
     const { x, y } = mousePositionInstance.getMouseCoordinates();
@@ -95,6 +100,69 @@ export default class NodeContextMenu extends ContextMenu {
       }
     } else {
       alert("Unsupported link type.");
+    }
+
+    this.hideContextMenu();
+  }
+
+  handleOpenUrlLink() {
+    if (!this.contextMenuNode) return;
+
+    const link = this.contextMenuNode.getLink();
+    if (!link) {
+      alert("No link is set for this node.");
+      return;
+    }
+
+    if (link.getType() === "UrlLink") {
+      const url = link.getUrl(); // Assuming UrlLink has a getUrl method
+      console.log(`Opening URL: ${url}`);
+      window.open(url, "_blank"); // Open the URL in a new tab
+    } else {
+      alert("Unsupported link type.");
+    }
+
+    this.hideContextMenu();
+  }
+
+  // Method to determine the type of link and open accordingly
+  handleOpenLink() {
+    if (!this.contextMenuNode) return;
+
+    const link = this.contextMenuNode.getLink();
+    if (!link) {
+      alert("No link is set for this node.");
+      return;
+    }
+
+    const linkType = link.getType();
+    if (linkType === "MindmapLink") {
+      this.handleOpenMindmapLink();
+    } else if (linkType === "UrlLink") {
+      this.handleOpenUrlLink();
+    } else {
+      alert("Unsupported link type.");
+    }
+
+    this.hideContextMenu();
+  }
+
+  async handleSetUrlLink() {
+    if (!this.contextMenuNode) return;
+
+    const userInput = prompt("Enter the URL to link to this node:");
+
+    if (!userInput) {
+      alert("URL input canceled.");
+      return;
+    }
+
+    try {
+      // Set the URL link on the node
+      this.linkController.setUrlLink(this.contextMenuNode, userInput);
+      console.log(`URL link set to: ${userInput}`);
+    } catch (error) {
+      alert(`Error setting URL link: ${error.message}`);
     }
 
     this.hideContextMenu();
