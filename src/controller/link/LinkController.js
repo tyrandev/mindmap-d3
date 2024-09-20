@@ -23,7 +23,9 @@ export default class LinkController {
   setUrlLink(node, url) {
     if (!node) return;
     if (!UrlTextUtil.isValidUrl(url)) {
-      throw new Error(`Invalid URL: "${url}". Please provide a valid URL.`);
+      throw new Error(
+        `Invalid URL: "${url}". Please provide a valid URL. It must start with https`
+      );
     }
     const urlLink = new UrlLink(url);
     node.setLink(urlLink);
