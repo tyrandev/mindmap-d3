@@ -6,6 +6,9 @@ class SvgView {
       return SvgView.instance;
     }
     SvgView.instance = this;
+
+    this.isZoomEnabled = true; // Control zooming
+
     this.svg = d3
       .select("#svg-container")
       .append("svg")
@@ -44,15 +47,19 @@ class SvgView {
       .zoom()
       .scaleExtent([0.25, 5])
       .on("zoom", (event) => {
-        this.g.attr("transform", event.transform);
+        if (this.isZoomEnabled) {
+          this.g.attr("transform", event.transform);
+        }
       });
 
     this.svg.call(this.zoom);
   }
 
   zoomBy(factor) {
-    const transform = d3.zoomTransform(this.svg.node());
-    this.svg.transition().duration(500).call(this.zoom.scaleBy, factor);
+    if (this.isZoomEnabled) {
+      const transform = d3.zoomTransform(this.svg.node());
+      this.svg.transition().duration(500).call(this.zoom.scaleBy, factor);
+    }
   }
 
   zoomIn() {
@@ -120,6 +127,11 @@ class SvgView {
       .transition()
       .duration(500)
       .call(this.zoom.transform, identityTransform);
+  }
+
+  // Method to enable or disable zooming
+  setZoomEnabled(enabled) {
+    this.isZoomEnabled = enabled;
   }
 }
 

@@ -4,6 +4,7 @@ import NodeSelectionHandler from "../../../input/mouse/NodeSelectionHandler.js";
 import MouseModeState from "../../../state/MouseModeState.js";
 import * as mc from "../../../constants/MouseConstants.js";
 import ContextMenuEventEmitter from "../emitter/ContextMenuEventEmitter.js";
+import svgView from "../../../view/SvgView.js";
 
 export default class NodeEventAttacher {
   constructor(svg, controllerCore, linkController) {
@@ -31,6 +32,8 @@ export default class NodeEventAttacher {
 
     selection
       .on("mousedown", (event) => this.handleNodeClick(event, node))
+      .on("mouseenter", () => this.disableZoom()) // Disable zoom on hover
+      .on("mouseleave", () => this.enableZoom()) // Enable zoom on mouse leave
       .call(drag);
 
     selection
@@ -43,7 +46,6 @@ export default class NodeEventAttacher {
   handleNodeClick(event, node) {
     event.preventDefault();
     if (event.button === 0) {
-      console.log("Node clicked:", node);
       this.selectionController.selectNode(node);
       this.nodeSelectionHandler.handleNodeSelection(node);
       ContextMenuEventEmitter.emit("onHideContextMenu");
@@ -101,6 +103,13 @@ export default class NodeEventAttacher {
     this.selectionController.updateSelectedNodeDimensions(
       event.deltaY > 0 ? -5 : 5
     );
-    console.log("mouse wheel");
+  }
+
+  disableZoom() {
+    svgView.setZoomEnabled(false);
+  }
+
+  enableZoom() {
+    svgView.setZoomEnabled(true);
   }
 }
