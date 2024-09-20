@@ -86,73 +86,12 @@ export default class NodeContextMenu extends ContextMenu {
   }
 
   async handleSetUrlLink() {
-    if (!this.contextMenuNode) return;
-
-    const userInput = prompt("Enter the URL to link to this node:");
-
-    if (!userInput) {
-      alert("URL input canceled.");
-      return;
-    }
-
-    try {
-      // Set the URL link on the node
-      this.linkController.setUrlLink(this.contextMenuNode, userInput);
-      console.log(`URL link set to: ${userInput}`);
-    } catch (error) {
-      alert(`Error setting URL link: ${error.message}`);
-    }
-
+    await this.linkController.promptSetUrlLink(this.contextMenuNode);
     this.hideContextMenu();
   }
 
   async handleSetMindmap() {
-    if (!this.contextMenuNode) return;
-
-    // Get the list of available mindmaps
-    const mindmaps =
-      this.linkController.mindmapLocalStorage.listSavedMindMaps();
-    if (mindmaps.length === 0) {
-      alert("No mindmaps available to link.");
-      return;
-    }
-
-    // Prompt the user to choose a mindmap to link to the node
-    const userInput = prompt(
-      `Select a mindmap to link to this node (Available mindmaps: ${mindmaps.join(
-        ", "
-      )}):`
-    );
-
-    if (!userInput) {
-      alert("Mindmap selection canceled.");
-      return;
-    }
-
-    // Sanitize input: remove extra spaces and convert to lower case for comparison
-    const selectedMindmap = userInput.trim();
-
-    // Validate the user's selection
-    const mindmapExists = mindmaps.some(
-      (map) => map.toLowerCase() === selectedMindmap.toLowerCase()
-    );
-
-    if (mindmapExists) {
-      try {
-        // If valid, set the link to the selected mindmap
-        this.linkController.setMindmapLink(
-          this.contextMenuNode,
-          selectedMindmap
-        );
-        console.log(`Mindmap link set to: ${selectedMindmap}`);
-      } catch (error) {
-        alert(`Error setting mindmap link: ${error.message}`);
-      }
-    } else {
-      // If the mindmap name doesn't exist, show an error
-      alert(`Invalid mindmap name. Please select from: ${mindmaps.join(", ")}`);
-    }
-
+    await this.linkController.promptSetMindmapLink(this.contextMenuNode);
     this.hideContextMenu();
   }
 

@@ -81,4 +81,54 @@ export default class LinkController {
       throw new Error("Unsupported link type.");
     }
   }
+
+  async promptSetUrlLink(node) {
+    const userInput = prompt("Enter the URL to link to this node:");
+    if (!userInput) {
+      alert("URL input canceled.");
+      return;
+    }
+
+    try {
+      this.setUrlLink(node, userInput);
+      console.log(`URL link set to: ${userInput}`);
+    } catch (error) {
+      alert(`Error setting URL link: ${error.message}`);
+    }
+  }
+
+  async promptSetMindmapLink(node) {
+    const mindmaps = this.mindmapLocalStorage.listSavedMindMaps();
+    if (mindmaps.length === 0) {
+      alert("No mindmaps available to link.");
+      return;
+    }
+
+    const userInput = prompt(
+      `Select a mindmap to link to this node (Available mindmaps: ${mindmaps.join(
+        ", "
+      )}):`
+    );
+
+    if (!userInput) {
+      alert("Mindmap selection canceled.");
+      return;
+    }
+
+    const selectedMindmap = userInput.trim();
+    const mindmapExists = mindmaps.some(
+      (map) => map.toLowerCase() === selectedMindmap.toLowerCase()
+    );
+
+    if (mindmapExists) {
+      try {
+        this.setMindmapLink(node, selectedMindmap);
+        console.log(`Mindmap link set to: ${selectedMindmap}`);
+      } catch (error) {
+        alert(`Error setting mindmap link: ${error.message}`);
+      }
+    } else {
+      alert(`Invalid mindmap name. Please select from: ${mindmaps.join(", ")}`);
+    }
+  }
 }
