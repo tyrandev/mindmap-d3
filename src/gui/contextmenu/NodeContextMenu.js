@@ -14,7 +14,7 @@ export default class NodeContextMenu extends ContextMenu {
     this.handleBorderColorChange = this.handleBorderColorChange.bind(this);
     this.handleFillColorChange = this.handleFillColorChange.bind(this);
     this.addBorderlessRectangle = this.addBorderlessRectangle.bind(this);
-    this.handleOpenLink = this.handleOpenLink.bind(this);
+    this.handleOpenMindmapLink = this.handleOpenMindmapLink.bind(this);
     this.handleSetMindmap = this.handleSetMindmap.bind(this);
 
     this.colorPicker.addEventListener("input", this.handleFillColorChange);
@@ -51,7 +51,7 @@ export default class NodeContextMenu extends ContextMenu {
       .addEventListener("mousedown", this.randomColorNode.bind(this));
     document
       .getElementById("open-link")
-      .addEventListener("mousedown", this.handleOpenLink.bind(this));
+      .addEventListener("mousedown", this.handleOpenMindmapLink.bind(this));
     document
       .getElementById("set-mindmap-link")
       .addEventListener("mousedown", this.handleSetMindmap.bind(this));
@@ -74,7 +74,7 @@ export default class NodeContextMenu extends ContextMenu {
     }
   }
 
-  handleOpenLink() {
+  handleOpenMindmapLink() {
     if (!this.contextMenuNode) return;
 
     const link = this.contextMenuNode.getLink();

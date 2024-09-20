@@ -1,4 +1,6 @@
 import MindmapLink from "../../model/links/MindmapLink.js";
+import UrlLink from "../../model/links/UrlLink.js";
+import UrlTextUtil from "../../util/text/UrlTextUtil.js";
 
 export default class LinkController {
   constructor(mindmapLocalStorage) {
@@ -9,6 +11,7 @@ export default class LinkController {
   }
 
   setMindmapLink(node, mindmapName) {
+    if (!node) return;
     const savedMindmaps = this.mindmapLocalStorage.listSavedMindMaps();
     if (!savedMindmaps.includes(mindmapName)) {
       throw new Error(`Mindmap with the name "${mindmapName}" does not exist.`);
@@ -17,7 +20,16 @@ export default class LinkController {
     node.setLink(mindmapLink);
   }
 
-  removeMindmapLink(node) {
+  setUrlLink(node, url) {
+    if (!node) return;
+    if (!UrlTextUtil.isValidUrl(url)) {
+      throw new Error(`Invalid URL: "${url}". Please provide a valid URL.`);
+    }
+    const urlLink = new UrlLink(url);
+    node.setLink(urlLink);
+  }
+
+  removeLink(node) {
     node.setLink(null);
   }
 }
