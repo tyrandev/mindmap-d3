@@ -24,7 +24,7 @@ export default class LinkController {
     if (!node) return;
     if (!UrlTextUtil.isValidUrl(url)) {
       throw new Error(
-        `Invalid URL: "${url}". Please provide a valid URL. It must start with https`
+        `Invalid URL: "${url}". Please provide a valid URL starting with http or https.`
       );
     }
     const urlLink = new UrlLink(url);
@@ -33,5 +33,52 @@ export default class LinkController {
 
   removeLink(node) {
     node.setLink(null);
+  }
+
+  openMindmapLink(node) {
+    if (!node) return;
+
+    const link = node.getLink();
+    if (!link || link.getType() !== "MindmapLink") {
+      throw new Error("No MindmapLink set or invalid link type.");
+    }
+
+    const mindmapName = link.getMindmapName();
+    try {
+      console.log(`Opening mindmap: ${mindmapName}`);
+      this.mindmapLocalStorage.loadFromLocalStorage(mindmapName);
+    } catch (error) {
+      throw new Error(`Failed to load mindmap: ${error.message}`);
+    }
+  }
+
+  openUrlLink(node) {
+    if (!node) return;
+
+    const link = node.getLink();
+    if (!link || link.getType() !== "UrlLink") {
+      throw new Error("No UrlLink set or invalid link type.");
+    }
+
+    const url = link.getUrl();
+    window.open(url, "_blank");
+  }
+
+  openLink(node) {
+    if (!node) return;
+
+    const link = node.getLink();
+    if (!link) {
+      throw new Error("No link is set for this node.");
+    }
+
+    const linkType = link.getType();
+    if (linkType === "MindmapLink") {
+      this.openMindmapLink(node);
+    } else if (linkType === "UrlLink") {
+      this.openUrlLink(node);
+    } else {
+      throw new Error("Unsupported link type.");
+    }
   }
 }

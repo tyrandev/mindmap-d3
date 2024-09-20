@@ -14,7 +14,6 @@ export default class NodeContextMenu extends ContextMenu {
     this.handleBorderColorChange = this.handleBorderColorChange.bind(this);
     this.handleFillColorChange = this.handleFillColorChange.bind(this);
     this.addBorderlessRectangle = this.addBorderlessRectangle.bind(this);
-    this.handleOpenMindmapLink = this.handleOpenMindmapLink.bind(this);
     this.handleSetMindmap = this.handleSetMindmap.bind(this);
 
     this.colorPicker.addEventListener("input", this.handleFillColorChange);
@@ -60,8 +59,6 @@ export default class NodeContextMenu extends ContextMenu {
       .addEventListener("mousedown", this.handleSetUrlLink.bind(this));
   }
 
-  // TODO: add set url link functionnality. element id -> set-url-link
-
   showContextMenu(node) {
     const { x, y } = mousePositionInstance.getMouseCoordinates();
     this.prepareContextMenu(x, y);
@@ -79,71 +76,12 @@ export default class NodeContextMenu extends ContextMenu {
     }
   }
 
-  handleOpenMindmapLink() {
-    if (!this.contextMenuNode) return;
-
-    const link = this.contextMenuNode.getLink();
-    if (!link) {
-      alert("No link is set for this node.");
-      return;
-    }
-
-    if (link.getType() === "MindmapLink") {
-      const mindmapName = link.getMindmapName();
-      console.log(`Opening mindmap link: ${mindmapName}`);
-      try {
-        this.linkController.mindmapLocalStorage.loadFromLocalStorage(
-          mindmapName
-        );
-      } catch (error) {
-        alert(`Error: ${error.message}`);
-      }
-    } else {
-      alert("Unsupported link type.");
-    }
-
-    this.hideContextMenu();
-  }
-
-  handleOpenUrlLink() {
-    if (!this.contextMenuNode) return;
-
-    const link = this.contextMenuNode.getLink();
-    if (!link) {
-      alert("No link is set for this node.");
-      return;
-    }
-
-    if (link.getType() === "UrlLink") {
-      const url = link.getUrl(); // Assuming UrlLink has a getUrl method
-      console.log(`Opening URL: ${url}`);
-      window.open(url, "_blank"); // Open the URL in a new tab
-    } else {
-      alert("Unsupported link type.");
-    }
-
-    this.hideContextMenu();
-  }
-
-  // Method to determine the type of link and open accordingly
   handleOpenLink() {
-    if (!this.contextMenuNode) return;
-
-    const link = this.contextMenuNode.getLink();
-    if (!link) {
-      alert("No link is set for this node.");
-      return;
+    try {
+      this.linkController.openLink(this.contextMenuNode);
+    } catch (error) {
+      alert(error.message);
     }
-
-    const linkType = link.getType();
-    if (linkType === "MindmapLink") {
-      this.handleOpenMindmapLink();
-    } else if (linkType === "UrlLink") {
-      this.handleOpenUrlLink();
-    } else {
-      alert("Unsupported link type.");
-    }
-
     this.hideContextMenu();
   }
 
