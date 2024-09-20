@@ -22,12 +22,11 @@ export default class LinkController {
 
   setUrlLink(node, url) {
     if (!node) return;
-    if (!UrlTextUtil.isValidUrl(url)) {
-      throw new Error(
-        `Invalid URL: "${url}". Please provide a valid URL starting with http or https.`
-      );
+    const sanitizedUrl = UrlTextUtil.ensureHttps(url); // Ensure the URL has https
+    if (!UrlTextUtil.isValidUrl(sanitizedUrl)) {
+      throw new Error(`Invalid URL: "${url}". Please provide a valid URL.`);
     }
-    const urlLink = new UrlLink(url);
+    const urlLink = new UrlLink(sanitizedUrl);
     node.setLink(urlLink);
   }
 
@@ -60,7 +59,7 @@ export default class LinkController {
       throw new Error("No UrlLink set or invalid link type.");
     }
 
-    const url = link.getUrl();
+    const url = UrlTextUtil.ensureHttps(link.getUrl());
     window.open(url, "_blank");
   }
 

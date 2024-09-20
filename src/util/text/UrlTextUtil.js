@@ -11,4 +11,12 @@ export default class UrlTextUtil {
     );
     return urlPattern.test(url);
   }
+
+  static ensureHttps(url) {
+    if (!/^https?:\/\//i.test(url)) {
+      // If the URL doesn't start with http:// or https://, prepend https://
+      return `https://${url}`;
+    }
+    return url;
+  }
 }
