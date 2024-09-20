@@ -32,8 +32,8 @@ export default class NodeEventAttacher {
 
     selection
       .on("mousedown", (event) => this.handleNodeClick(event, node))
-      .on("mouseenter", () => this.mouseenter()) // Disable zoom on hover
-      .on("mouseleave", () => this.mouseleave()) // Enable zoom on mouse leave
+      .on("mouseenter", () => this.mouseenter())
+      .on("mouseleave", () => this.mouseleave())
       .call(drag);
 
     selection
@@ -104,5 +104,8 @@ export default class NodeEventAttacher {
 
   mouseenter() {}
 
-  mouseleave() {}
+  mouseleave() {
+    this.selectionController.unselectNode();
+    console.log("called mouse leave");
+  }
 }
