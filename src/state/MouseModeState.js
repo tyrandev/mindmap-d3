@@ -46,5 +46,5 @@ class MouseModeState {
     }
   }
 }
-
-export default MouseModeState.getInstance();
+const mouseModeState = MouseModeState.getInstance();
+export default mouseModeState;

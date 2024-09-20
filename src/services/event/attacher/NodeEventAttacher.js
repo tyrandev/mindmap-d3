@@ -86,7 +86,9 @@ export default class NodeEventAttacher {
       clearTimeout(this.grabbingTimeout);
       this.grabbingTimeout = null;
     }
-    MouseModeState.setMode(mc.MOUSE_MODES.NORMAL);
+    if (MouseModeState.getMode() === mc.MOUSE_MODES.GRABBING) {
+      MouseModeState.setMode(mc.MOUSE_MODES.NORMAL);
+    }
   }
 
   showNodeContextMenu(node) {
