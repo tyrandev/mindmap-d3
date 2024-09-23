@@ -34,6 +34,10 @@ class SvgView {
     return this.g;
   }
 
+  getSvgGElement() {
+    return this.g.node();
+  }
+
   getContainerWidth() {
     return d3.select("#svg-container").node().clientWidth;
   }

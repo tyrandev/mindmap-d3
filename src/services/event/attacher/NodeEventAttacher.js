@@ -4,11 +4,10 @@ import NodeSelectionHandler from "../../../input/mouse/NodeSelectionHandler.js";
 import MouseModeState from "../../../state/MouseModeState.js";
 import * as mc from "../../../constants/MouseConstants.js";
 import ContextMenuEventEmitter from "../emitter/ContextMenuEventEmitter.js";
-import svgView from "../../../view/SvgView.js";
 
 export default class NodeEventAttacher {
-  constructor(svg, controllerCore, linkController) {
-    this.svg = svg;
+  constructor(svgEl, controllerCore, linkController) {
+    this.svgEl = svgEl;
     this.controllerCore = controllerCore;
     this.linkController = linkController;
     this.selectionController = this.controllerCore.selectionController;
@@ -56,8 +55,7 @@ export default class NodeEventAttacher {
   }
 
   handleDragStart(event, node) {
-    const svgElement = this.svg.node();
-    const [x, y] = d3.pointer(event, svgElement);
+    const [x, y] = d3.pointer(event, this.svgEl);
 
     this.dragOffset = {
       x: x - node.x,
@@ -71,8 +69,7 @@ export default class NodeEventAttacher {
 
   handleDrag(event, node) {
     try {
-      const svgElement = this.svg.node();
-      const [x, y] = d3.pointer(event, svgElement);
+      const [x, y] = d3.pointer(event, this.svgEl);
       const newX = x - this.dragOffset.x;
       const newY = y - this.dragOffset.y;
       this.nodeMovementController.moveNode(node, newX, newY);

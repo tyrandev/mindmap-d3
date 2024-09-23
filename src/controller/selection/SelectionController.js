@@ -36,14 +36,6 @@ export default class SelectionController {
     this.nodeContainer.unselectNode();
   }
 
-  renameSelectedNode(newText) {
-    const selectedNode = this.nodeContainer.getSelectedNode();
-    if (!selectedNode) return;
-
-    StackEventEmitter.emitSaveStateForUndo();
-    selectedNode.setText(newText);
-  }
-
   renameSelectedNodePrompt() {
     const selectedNode = this.nodeContainer.getSelectedNode();
     if (!selectedNode) return;
@@ -51,7 +43,8 @@ export default class SelectionController {
     const currentName = selectedNode.text || "";
     const newName = prompt("Enter new name for the node:", currentName);
     if (!newName) return;
-    this.renameSelectedNode(newName);
+    StackEventEmitter.emitSaveStateForUndo();
+    selectedNode.setText(newName);
   }
 
   randomizeSelectedNodeColor() {
