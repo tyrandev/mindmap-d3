@@ -34,7 +34,7 @@ class SvgView {
     return this.g;
   }
 
-  getSvgGElement() {
+  getSvgGroupElement() {
     return this.g.node();
   }
 

@@ -1,8 +1,6 @@
-import svgView from "../../../view/SvgView.js";
-
 export default class CollapseIndicatorSvg {
-  constructor() {
-    this.svg = svgView.getSvgGroup();
+  constructor(svgGroup) {
+    this.svgGroup = svgGroup;
   }
 
   drawCollapseIndicator(node) {
@@ -11,7 +9,7 @@ export default class CollapseIndicatorSvg {
     const indicator = node.collapsed;
     const textY = indicator.calculateHeightOfCollapseIndicator(node);
 
-    this.svg
+    this.svgGroup
       .append("text")
       .attr("x", node.x)
       .attr("y", textY)

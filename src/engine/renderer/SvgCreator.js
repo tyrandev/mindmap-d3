@@ -2,26 +2,25 @@ import CircleSvg from "./shapes/CircleSvg.js";
 import RectangleSvg from "./shapes/RectangleSvg.js";
 import Rectangle from "../../model/geometric/rectangle/Rectangle.js";
 import Circle from "../../model/geometric/circle/Circle.js";
-import svgView from "../../view/SvgView.js";
 import ColorHandler from "../../util/color/ColorHandler.js";
 import BorderlessRectangle from "../../model/geometric/rectangle/BorderlessRectangle.js";
 import ConnectionLineSvg from "./lines/ConnectionLineSvg.js";
 import CollapseIndicatorSvg from "./indicators/CollapseIndicatorSvg.js";
 
 export default class SvgCreator {
-  constructor(svgG, nodeContainer, nodeEventAttacher) {
+  constructor(svgGroup, nodeContainer, nodeEventAttacher) {
     this.nodeContainer = nodeContainer;
     this.nodeEventAttacher = nodeEventAttacher;
-    this.svgG = svgG;
+    this.svgGroup = svgGroup;
     this.renderedNodes = new Set();
-    this.circleSvg = new CircleSvg(this.svgG);
-    this.rectangleSvg = new RectangleSvg(this.svgG);
-    this.connectionLineSvg = new ConnectionLineSvg(this.svgG);
-    this.collapseIndicatorSvg = new CollapseIndicatorSvg();
+    this.circleSvg = new CircleSvg(this.svgGroup);
+    this.rectangleSvg = new RectangleSvg(this.svgGroup);
+    this.connectionLineSvg = new ConnectionLineSvg(this.svgGroup);
+    this.collapseIndicatorSvg = new CollapseIndicatorSvg(this.svgGroup);
   }
 
   drawNodes() {
-    this.svgG.selectAll("*").remove();
+    this.svgGroup.selectAll("*").remove();
     this.renderedNodes.clear();
     this.nodeContainer.getNodes().forEach((node) => this.renderNode(node));
   }

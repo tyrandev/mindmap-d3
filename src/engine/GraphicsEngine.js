@@ -1,5 +1,4 @@
 import AnimationController from "./animation/AnimationController.js";
-import svgView from "../view/SvgView.js";
 
 export default class GraphicsEngine {
   constructor(nodeContainer, svgCreator) {

@@ -50,7 +50,7 @@ export default class SystemCore {
 
   initializeEventAttachers() {
     this.nodeEventAttacher = new NodeEventAttacher(
-      svgView.getSvgGElement(),
+      svgView.getSvgGroupElement(),
       this.controllerCore,
       this.linkController
     );
