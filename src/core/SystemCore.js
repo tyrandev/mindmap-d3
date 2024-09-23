@@ -63,6 +63,7 @@ export default class SystemCore {
 
   initializeEngine() {
     this.svgCreator = new SvgCreator(
+      svgView.getSvgGroup(),
       this.nodeContainer,
       this.nodeEventAttacher
     );

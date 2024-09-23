@@ -9,19 +9,19 @@ import ConnectionLineSvg from "./lines/ConnectionLineSvg.js";
 import CollapseIndicatorSvg from "./indicators/CollapseIndicatorSvg.js";
 
 export default class SvgCreator {
-  constructor(nodeContainer, nodeEventAttacher) {
+  constructor(svgG, nodeContainer, nodeEventAttacher) {
     this.nodeContainer = nodeContainer;
     this.nodeEventAttacher = nodeEventAttacher;
-    this.svg = svgView.getSvgGroup();
+    this.svgG = svgG;
     this.renderedNodes = new Set();
-    this.circleSvg = new CircleSvg(this.svg);
-    this.rectangleSvg = new RectangleSvg(this.svg);
-    this.connectionLineSvg = new ConnectionLineSvg(this.svg);
+    this.circleSvg = new CircleSvg(this.svgG);
+    this.rectangleSvg = new RectangleSvg(this.svgG);
+    this.connectionLineSvg = new ConnectionLineSvg(this.svgG);
     this.collapseIndicatorSvg = new CollapseIndicatorSvg();
   }
 
   drawNodes() {
-    this.svg.selectAll("*").remove();
+    this.svgG.selectAll("*").remove();
     this.renderedNodes.clear();
     this.nodeContainer.getNodes().forEach((node) => this.renderNode(node));
   }
