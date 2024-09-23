@@ -2,12 +2,11 @@ import SvgContextMenu from "../../../gui/contextmenu/SvgContextMenu.js";
 import MouseModeState from "../../../state/MouseModeState.js";
 import * as MouseConstants from "../../../constants/MouseConstants.js";
 import ContextMenuEventEmitter from "../emitter/ContextMenuEventEmitter.js";
-import svgView from "../../../view/SvgView.js";
 import * as d3 from "d3";
 
 export default class SvgEventAttacher {
-  constructor(controllerCore) {
-    this.svg = svgView.getSvg();
+  constructor(svg, controllerCore) {
+    this.svg = svg;
     this.controllerCore = controllerCore;
     this.selectionController = this.controllerCore.selectionController;
     this.svgContextMenu = new SvgContextMenu(controllerCore);
@@ -29,7 +28,6 @@ export default class SvgEventAttacher {
         passive: false,
       });
 
-    // Add mousedown event listener
     this.svg
       .node()
       .addEventListener("mousedown", this.handleMouseDown.bind(this));

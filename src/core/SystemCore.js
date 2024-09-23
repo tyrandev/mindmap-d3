@@ -54,7 +54,10 @@ export default class SystemCore {
       this.controllerCore,
       this.linkController
     );
-    this.svgEventAttacher = new SvgEventAttacher(this.controllerCore);
+    this.svgEventAttacher = new SvgEventAttacher(
+      svgView.getSvg(),
+      this.controllerCore
+    );
     this.svgEventAttacher.attachEventListeners();
   }
 
