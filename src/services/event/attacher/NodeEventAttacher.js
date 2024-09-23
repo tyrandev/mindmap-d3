@@ -102,7 +102,6 @@ export default class NodeEventAttacher {
   mouseenter() {}
 
   mouseleave() {
-    this.selectionController.unselectNode();
     console.log("called mouse leave");
   }
 }
