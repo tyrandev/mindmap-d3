@@ -14,32 +14,17 @@ export default class SvgEventAttacher {
 
   attachEventListeners() {
     if (!this.svg) {
-      console.error("SVG element is undefined or null");
-      return;
+      throw new Error("SVG element is undefined or null");
     }
-
     this.svg
       .on("click", (event) => this.handleSvgClick(event))
       .on("contextmenu", (event) => this.handleContextMenu(event));
-
-    this.svg
-      .node()
-      .addEventListener("wheel", this.handleMouseWheel.bind(this), {
-        passive: false,
-      });
-
-    this.svg
-      .node()
-      .addEventListener("mousedown", this.handleMouseDown.bind(this));
   }
 
   handleSvgClick(event) {
     event.preventDefault();
-    console.log("SVG background clicked");
-
     const [x, y] = d3.pointer(event, this.svg.node());
     console.log(`Click position: x=${x}, y=${y}`);
-
     if (event.button === 0) {
       MouseModeState.setMode(MouseConstants.MOUSE_MODES.NORMAL);
       this.selectionController.unselectNode();
@@ -51,29 +36,5 @@ export default class SvgEventAttacher {
     event.preventDefault();
     if (this.selectionController.getSelectedNode()) return;
     this.svgContextMenu.showContextMenu();
-  }
-
-  handleMouseWheel(event) {
-    event.preventDefault();
-    console.log("SVG mouse wheel working");
-  }
-
-  handleMouseDown(event) {
-    event.preventDefault();
-    console.log("Mouse down detected");
-
-    if (event.button === 0) {
-      // Left-click
-      // Handle node dragging or selection logic here
-      console.log("dragging mindmap");
-    } else if (event.button === 1) {
-      // Middle-click
-      // Handle any other functionality for middle click
-      console.log("Middle mouse button pressed");
-    } else if (event.button === 2) {
-      // Right-click
-      // The contextmenu event handles right-click, so no need for this.
-      console.log("Right-click ignored, handled by context menu.");
-    }
   }
 }
